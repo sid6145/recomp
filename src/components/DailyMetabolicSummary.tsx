@@ -229,60 +229,17 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = ({
         {/* BACK FACE: 52-Week Longitudinal Matrix (Heatmap)             */}
         {/* ============================================================ */}
         <div
+          aria-label="52-Week Longitudinal Matrix"
           style={{
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
-          className={`absolute inset-0 w-full rounded-3xl border border-white/5 bg-neutral-900/95 backdrop-blur-2xl p-6 sm:p-8 shadow-2xl flex flex-col justify-between overflow-hidden touch-pan-y ${
+          className={`absolute inset-0 w-full rounded-3xl border border-white/5 bg-neutral-900/95 backdrop-blur-2xl p-5 sm:p-6 shadow-2xl flex flex-col justify-between overflow-hidden touch-pan-y ${
             isFlipped ? 'pointer-events-auto' : 'pointer-events-none'
           }`}
         >
-          {/* Back Header */}
-          <div className="flex items-center justify-between border-b border-white/5 pb-4">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-white/5 text-neutral-300 border border-white/10 mb-1">
-                <Activity className="w-3 h-3 text-[#00FF41]" />
-                Yearly History
-              </div>
-              <h3 className="text-lg sm:text-xl font-bold tracking-tight text-neutral-100 font-sans">
-                52-Week Longitudinal Matrix
-              </h3>
-              <p className="text-xs text-neutral-400 font-sans">
-                Daily habit and calorie tracking over the past year
-              </p>
-            </div>
-
-            <button
-              type="button"
-              onClick={handleFlipToSummary}
-              className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-mono font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-300 hover:text-white transition-all cursor-pointer shadow-md hover:scale-[1.02] active:scale-[0.98]"
-              title="Return to Today's Summary"
-            >
-              <ArrowLeft className="w-3.5 h-3.5 text-neutral-400" />
-              <span>Summary</span>
-            </button>
-          </div>
-
-          {/* Matrix Content */}
-          <div className="my-auto py-2 overflow-x-auto">
-            <Heatmap />
-          </div>
-
-          {/* Telemetry Legend Footer */}
-          <div className="flex items-center justify-between text-[11px] font-mono text-neutral-400 border-t border-white/5 pt-3">
-            <span className="tabular-nums">52 Weeks &bull; 364 Days Telemetry</span>
-            <div className="flex items-center gap-2">
-              <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-sm bg-[#00FF41] shadow-[0_0_6px_rgba(0,255,65,0.4)]" />
-                Target
-              </span>
-              <span className="flex items-center gap-1">
-                <span className="w-2 h-2 rounded-sm bg-[#E60000] shadow-[0_0_6px_rgba(230,0,0,0.4)]" />
-                Surplus
-              </span>
-            </div>
-          </div>
+          <Heatmap onBack={handleFlipToSummary} />
         </div>
       </motion.div>
     </section>

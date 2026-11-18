@@ -1,8 +1,12 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Award, Info } from 'lucide-react';
+import { Award, ArrowLeft, Info } from 'lucide-react';
 import { useAppSelector } from '../store/store';
 import { fetchHeatmapLogs, type DailyCaloriesMap } from '../db/heatmapData';
+
+export interface HeatmapProps {
+  onBack?: () => void;
+}
 
 interface HeatmapDay {
   dateStr: string;
@@ -13,7 +17,7 @@ interface HeatmapDay {
   status: 'no_data' | 'deep_deficit' | 'target_hit' | 'slight_surplus' | 'surplus';
 }
 
-export const Heatmap: React.FC = () => {
+export const Heatmap: React.FC<HeatmapProps> = ({ onBack }) => {
   const targetCalories = useAppSelector((state) => state.user.dailyCaloricTarget);
   const logEntries = useAppSelector((state) => state.logs.entries);
 
@@ -113,46 +117,44 @@ export const Heatmap: React.FC = () => {
   };
 
   return (
-    <div className="w-full rounded-3xl border border-white/5 bg-neutral-900/90 backdrop-blur-2xl p-5 sm:p-7 shadow-2xl space-y-5 relative overflow-hidden">
+    <div className="w-full h-full flex flex-col justify-between relative overflow-hidden select-none">
       {/* Background Ambience */}
       <div className="pointer-events-none absolute -top-16 -right-16 w-56 h-56 bg-[#00FF41]/10 rounded-full blur-3xl transform-gpu will-change-transform" />
 
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
-        <div className="space-y-1">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold uppercase tracking-wider bg-white/5 text-neutral-300 border border-white/10">
-            <Calendar className="w-3.5 h-3.5 text-[#00FF41]" />
-            Yearly History
-          </div>
-          <h3 className="text-lg sm:text-xl font-bold tracking-tight text-neutral-100 font-sans">
-            Daily Habit Heatmap
-          </h3>
-          <p className="text-xs text-neutral-400 font-sans">
-            Your logging history and consistency over the past year.
-          </p>
-        </div>
+      {/* 1. Slim Consolidated Header */}
+      <div className="relative z-10 flex items-center justify-between gap-3 border-b border-white/5 pb-3">
+        {onBack ? (
+          <button
+            type="button"
+            onClick={onBack}
+            className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 text-neutral-300 hover:text-white transition-all cursor-pointer shadow-sm active:scale-95"
+            title="Return to Today's Summary"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 text-neutral-400" />
+            <span>← Summary</span>
+          </button>
+        ) : (
+          <div />
+        )}
 
-        {/* Aggregated Consistency Metric */}
-        <div className="flex items-center gap-3 bg-neutral-950/80 border border-white/5 px-4 py-2.5 rounded-2xl">
-          <Award className="w-5 h-5 text-[#00FF41]" />
-          <div>
-            <div className="text-[10px] uppercase font-mono tracking-wider text-neutral-500 font-semibold">
-              Consistency
-            </div>
-            <div className="text-lg font-black font-mono text-neutral-100 tabular-nums">
-              {stats.consistencyRate}%{' '}
-              <span className="text-xs text-neutral-500 font-normal">
-                ({stats.targetHitDays}/{stats.loggedDays || 1} days)
-              </span>
-            </div>
-          </div>
+        {/* Aggregated Consistency Metric Badge */}
+        <div className="inline-flex items-center gap-2 bg-neutral-950/80 border border-white/5 px-3 py-2 rounded-xl text-xs font-mono text-neutral-300 shadow-sm">
+          <Award className="w-4 h-4 text-[#00FF41]" />
+          <span>
+            Consistency:{' '}
+            <strong className="text-neutral-100 font-bold tabular-nums">
+              {stats.consistencyRate}%
+            </strong>{' '}
+            <span className="text-neutral-500 font-normal">
+              ({stats.targetHitDays}/{stats.loggedDays || 1} days)
+            </span>
+          </span>
         </div>
       </div>
 
-      {/* Matrix Display Container */}
-      <div className="space-y-3">
-        {/* Scrollable grid wrapper for small screens */}
-        <div className="overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-neutral-800">
+      {/* 2. Maximized 52-Week Grid */}
+      <div className="relative z-10 my-auto py-2">
+        <div className="overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-neutral-800">
           <div className="min-w-[680px]">
             {/* The 52x7 Grid (columns: 52 weeks, rows: 7 days) */}
             <div
@@ -171,55 +173,55 @@ export const Heatmap: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Dynamic Tooltip & Legend Bar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs pt-1 border-t border-white/5">
-          {/* Active Hover readout */}
-          <div className="min-h-[24px] flex items-center gap-2">
-            {hoveredDay ? (
-              <motion.div
-                initial={{ opacity: 0, x: -4 }}
-                animate={{ opacity: 1, x: 0 }}
-                className="flex items-center gap-2 text-neutral-300 font-mono text-[11px] tabular-nums"
-              >
-                <span className="font-semibold text-neutral-100">{hoveredDay.displayDate}:</span>
-                {hoveredDay.hasData ? (
-                  <>
-                    <span className="text-amber-400 font-bold">{hoveredDay.calories} kcal</span>
-                    <span className="text-neutral-500">/ target {targetCalories} kcal</span>
-                    <span
-                      className={`px-1.5 py-0.2 rounded font-bold ${
-                        hoveredDay.variance <= 0
-                          ? 'bg-[#00FF41]/20 text-[#00FF41]'
-                          : 'bg-[#E60000]/20 text-rose-400'
-                      }`}
-                    >
-                      {hoveredDay.variance > 0 ? `+${hoveredDay.variance}` : hoveredDay.variance} kcal
-                    </span>
-                  </>
-                ) : (
-                  <span className="text-neutral-500">No logs recorded</span>
-                )}
-              </motion.div>
-            ) : (
-              <span className="text-[11px] text-neutral-500 flex items-center gap-1.5 font-sans">
-                <Info className="w-3.5 h-3.5" />
-                Tap or hover a day to view details.
-              </span>
-            )}
-          </div>
+      {/* 3. Dynamic Tooltip & Legend Bar */}
+      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] pt-2 border-t border-white/5 font-mono text-neutral-400">
+        {/* Active Hover readout */}
+        <div className="min-h-[22px] flex items-center gap-2">
+          {hoveredDay ? (
+            <motion.div
+              initial={{ opacity: 0, x: -4 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="flex items-center gap-2 text-neutral-300 font-mono text-[11px] tabular-nums"
+            >
+              <span className="font-semibold text-neutral-100">{hoveredDay.displayDate}:</span>
+              {hoveredDay.hasData ? (
+                <>
+                  <span className="text-amber-400 font-bold">{hoveredDay.calories} kcal</span>
+                  <span className="text-neutral-500">/ target {targetCalories} kcal</span>
+                  <span
+                    className={`px-1.5 py-0.2 rounded font-bold ${
+                      hoveredDay.variance <= 0
+                        ? 'bg-[#00FF41]/20 text-[#00FF41]'
+                        : 'bg-[#E60000]/20 text-rose-400'
+                    }`}
+                  >
+                    {hoveredDay.variance > 0 ? `+${hoveredDay.variance}` : hoveredDay.variance} kcal
+                  </span>
+                </>
+              ) : (
+                <span className="text-neutral-500">No logs recorded</span>
+              )}
+            </motion.div>
+          ) : (
+            <span className="text-[11px] text-neutral-500 flex items-center gap-1.5 font-sans">
+              <Info className="w-3.5 h-3.5" />
+              Tap or hover a day to view details.
+            </span>
+          )}
+        </div>
 
-          {/* Color Legend */}
-          <div className="flex items-center gap-2 text-[10px] text-neutral-400 shrink-0 font-mono">
-            <span>Under Goal</span>
-            <div className="flex items-center gap-1">
-              <span className="w-2.5 h-2.5 rounded-xs bg-[#00FF41]" title="Under Goal" />
-              <span className="w-2.5 h-2.5 rounded-xs bg-[#00FF41]/80" title="On Target" />
-              <span className="w-2.5 h-2.5 rounded-xs bg-[#E60000]" title="Over Goal" />
-              <span className="w-2.5 h-2.5 rounded-xs bg-neutral-800" title="No Data" />
-            </div>
-            <span>Over Goal</span>
+        {/* Color Legend */}
+        <div className="flex items-center gap-2 text-[10px] text-neutral-400 shrink-0 font-mono">
+          <span>Under Goal</span>
+          <div className="flex items-center gap-1">
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#00FF41]" title="Under Goal" />
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#00FF41]/80" title="On Target" />
+            <span className="w-2.5 h-2.5 rounded-xs bg-[#E60000]" title="Over Goal" />
+            <span className="w-2.5 h-2.5 rounded-xs bg-neutral-800" title="No Data" />
           </div>
+          <span>Over Goal</span>
         </div>
       </div>
     </div>
