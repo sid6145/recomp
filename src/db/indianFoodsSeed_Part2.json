@@ -1,0 +1,6726 @@
+[
+  {
+    "id": "d_51",
+    "name": "Kashmiri Kahwa",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 25,
+      "protein": 0.5,
+      "carbs": 5,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_52",
+    "name": "Noon Chai (Pink Tea)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 45,
+      "protein": 1.2,
+      "carbs": 4,
+      "fats": 2.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_53",
+    "name": "Bael Sherbet (Wood Apple)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 65,
+      "protein": 0.8,
+      "carbs": 15.5,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_54",
+    "name": "Phalsa Sherbet",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 55,
+      "protein": 0.5,
+      "carbs": 13,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_55",
+    "name": "Soy Milk",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 43,
+      "protein": 3.3,
+      "carbs": 1.8,
+      "fats": 2
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_56",
+    "name": "Camel Milk",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 53,
+      "protein": 3.4,
+      "carbs": 4.3,
+      "fats": 2.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_57",
+    "name": "Turmeric Latte (Haldi Doodh)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 75,
+      "protein": 3.5,
+      "carbs": 6,
+      "fats": 4
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_58",
+    "name": "Wheatgrass Juice",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 15,
+      "protein": 1,
+      "carbs": 2,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_59",
+    "name": "Ginger Turmeric Shot",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 10,
+      "protein": 0.2,
+      "carbs": 2,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_60",
+    "name": "Sattu Drink (Sweet)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 110,
+      "protein": 4.5,
+      "carbs": 22,
+      "fats": 1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_61",
+    "name": "Sattu Drink (Salted)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 85,
+      "protein": 4.5,
+      "carbs": 16,
+      "fats": 1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_62",
+    "name": "Almond Milk (Unsweetened)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 15,
+      "protein": 0.6,
+      "carbs": 0.3,
+      "fats": 1.2
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_63",
+    "name": "Oat Milk",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 42,
+      "protein": 1,
+      "carbs": 7,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_64",
+    "name": "Piyush (Maharashtrian Drink)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 140,
+      "protein": 4,
+      "carbs": 20,
+      "fats": 5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_65",
+    "name": "Jigarthanda",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 165,
+      "protein": 4.5,
+      "carbs": 25,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_66",
+    "name": "Kanji (Fermented Carrot)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 25,
+      "protein": 0.5,
+      "carbs": 5.5,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_67",
+    "name": "Gondhoraj Ghol",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 45,
+      "protein": 1.5,
+      "carbs": 6,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_68",
+    "name": "Buransh Juice (Rhododendron)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 50,
+      "protein": 0.2,
+      "carbs": 12,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_69",
+    "name": "Kambu Koozh (Pearl Millet Drink)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 75,
+      "protein": 2,
+      "carbs": 15,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_70",
+    "name": "Ragi Malt",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 85,
+      "protein": 2.5,
+      "carbs": 18,
+      "fats": 0.6
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_71",
+    "name": "Kokum Agal (Concentrate)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 15,
+      "protein": 0.1,
+      "carbs": 3.5,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_72",
+    "name": "Nannari Sherbet",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 55,
+      "protein": 0,
+      "carbs": 14,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_73",
+    "name": "Panakam",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 45,
+      "protein": 0.1,
+      "carbs": 11,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_74",
+    "name": "Chandan Sherbet",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 50,
+      "protein": 0,
+      "carbs": 12.5,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_75",
+    "name": "Khus Sherbet",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 55,
+      "protein": 0,
+      "carbs": 13.5,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_76",
+    "name": "Bhang Thandai",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 130,
+      "protein": 4,
+      "carbs": 18,
+      "fats": 4.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_77",
+    "name": "Kesar Milk",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 75,
+      "protein": 3.2,
+      "carbs": 6.5,
+      "fats": 3.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_78",
+    "name": "Anjeer Milkshake",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 125,
+      "protein": 3.8,
+      "carbs": 20,
+      "fats": 3.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_79",
+    "name": "Chikoo Milkshake",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 130,
+      "protein": 3.5,
+      "carbs": 22,
+      "fats": 3.2
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_80",
+    "name": "Sitaphal Milkshake",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 140,
+      "protein": 3.8,
+      "carbs": 24,
+      "fats": 3.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_81",
+    "name": "Maha-Rasam (Clear Broth)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 35,
+      "protein": 1,
+      "carbs": 6,
+      "fats": 1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_82",
+    "name": "Clear Chicken Soup",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 45,
+      "protein": 6,
+      "carbs": 2,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_83",
+    "name": "Paya Soup (Trotters)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 110,
+      "protein": 9,
+      "carbs": 2.5,
+      "fats": 7.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_84",
+    "name": "Tomato Shorba",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 40,
+      "protein": 1,
+      "carbs": 7,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_85",
+    "name": "Kullad Chai",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 70,
+      "protein": 1.8,
+      "carbs": 10,
+      "fats": 2.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_86",
+    "name": "Tandoori Chai",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 75,
+      "protein": 1.8,
+      "carbs": 10.5,
+      "fats": 2.8
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_87",
+    "name": "Black Coffee (No Sugar)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 2,
+      "protein": 0.2,
+      "carbs": 0,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_88",
+    "name": "Ghee Coffee (Bulletproof)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 135,
+      "protein": 0.2,
+      "carbs": 0,
+      "fats": 15
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_89",
+    "name": "Kala Khatta Sherbet",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 55,
+      "protein": 0,
+      "carbs": 14,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_90",
+    "name": "Mint Coriander Juice",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 20,
+      "protein": 1,
+      "carbs": 4,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_91",
+    "name": "Ash Gourd Juice",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 15,
+      "protein": 0.4,
+      "carbs": 3,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_92",
+    "name": "Bitter Gourd Juice",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 18,
+      "protein": 1,
+      "carbs": 3.5,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_93",
+    "name": "Bottle Gourd Juice (Lauki)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 15,
+      "protein": 0.3,
+      "carbs": 3.2,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_94",
+    "name": "Mosambi Juice (No Sugar)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 35,
+      "protein": 0.8,
+      "carbs": 8.5,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_95",
+    "name": "Sugarcane Juice (Mint & Lemon)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 41,
+      "protein": 0.2,
+      "carbs": 10.2,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_96",
+    "name": "Plum Juice",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 45,
+      "protein": 0.5,
+      "carbs": 11,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_97",
+    "name": "Amla Aloe Vera Juice",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 18,
+      "protein": 0.4,
+      "carbs": 4,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_98",
+    "name": "Barley Water",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 25,
+      "protein": 0.5,
+      "carbs": 6,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_99",
+    "name": "Sabja Water (Sweet Basil)",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 20,
+      "protein": 0.5,
+      "carbs": 4,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "d_100",
+    "name": "Jeera Water",
+    "category": "Drinks & Juices",
+    "baseMacrosPer100g": {
+      "calories": 5,
+      "protein": 0.1,
+      "carbs": 1,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "ml",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "glass (large)",
+        "weightInGrams": 250
+      },
+      {
+        "unit": "cup (small)",
+        "weightInGrams": 150
+      }
+    ]
+  },
+  {
+    "id": "h_51",
+    "name": "Ragi Mudde",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 145,
+      "protein": 3.5,
+      "carbs": 32,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_52",
+    "name": "Appam",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 155,
+      "protein": 2.5,
+      "carbs": 34,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_53",
+    "name": "Puttu (Rice & Coconut)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 185,
+      "protein": 3.5,
+      "carbs": 36,
+      "fats": 3.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_54",
+    "name": "Sarson Ka Saag",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 95,
+      "protein": 4.5,
+      "carbs": 10.5,
+      "fats": 4.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_55",
+    "name": "Makki Ki Roti",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 290,
+      "protein": 7,
+      "carbs": 60,
+      "fats": 2.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_56",
+    "name": "Kosambari (Moong Dal Salad)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 85,
+      "protein": 5,
+      "carbs": 14,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_57",
+    "name": "Pitla (Besan Curry)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 125,
+      "protein": 6.5,
+      "carbs": 15,
+      "fats": 4.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_58",
+    "name": "Ennai Kathirikai (Stuffed Brinjal)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 165,
+      "protein": 2.5,
+      "carbs": 12,
+      "fats": 12.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_59",
+    "name": "Fish Molee",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 185,
+      "protein": 14,
+      "carbs": 6.5,
+      "fats": 11.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_60",
+    "name": "Chicken Chettinad",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 215,
+      "protein": 16.5,
+      "carbs": 8.5,
+      "fats": 13.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_61",
+    "name": "Mutton Rogan Josh",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 245,
+      "protein": 17.5,
+      "carbs": 5,
+      "fats": 16.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_62",
+    "name": "Laal Maas",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 265,
+      "protein": 18,
+      "carbs": 6.5,
+      "fats": 18
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_63",
+    "name": "Kosha Mangsho",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 275,
+      "protein": 17.5,
+      "carbs": 8,
+      "fats": 19.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_64",
+    "name": "Aloo Posto",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 135,
+      "protein": 2.5,
+      "carbs": 18,
+      "fats": 6.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_65",
+    "name": "Shukto",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 115,
+      "protein": 3,
+      "carbs": 14,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_66",
+    "name": "Chor Chori (Mixed Veg)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 105,
+      "protein": 2.5,
+      "carbs": 12.5,
+      "fats": 5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_67",
+    "name": "Gatte Ki Sabzi",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 175,
+      "protein": 7.5,
+      "carbs": 16,
+      "fats": 9.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_68",
+    "name": "Ker Sangri",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 195,
+      "protein": 6,
+      "carbs": 18,
+      "fats": 11.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_69",
+    "name": "Dal Baati (Mashed together)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 320,
+      "protein": 9.5,
+      "carbs": 45,
+      "fats": 12.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_70",
+    "name": "Churma",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 415,
+      "protein": 5.5,
+      "carbs": 55,
+      "fats": 19.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_71",
+    "name": "Akki Roti",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 275,
+      "protein": 5.5,
+      "carbs": 55,
+      "fats": 4.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_72",
+    "name": "Jolada Roti (Jowar Roti)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 265,
+      "protein": 7.5,
+      "carbs": 58,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_73",
+    "name": "Thalipeeth",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 285,
+      "protein": 8.5,
+      "carbs": 52,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_74",
+    "name": "Puran Poli (Dal Stuffed Flatbread)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 310,
+      "protein": 7.5,
+      "carbs": 58,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_75",
+    "name": "Amti (Maharashtrian Dal)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 115,
+      "protein": 5.5,
+      "carbs": 15,
+      "fats": 3.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_76",
+    "name": "Zunka",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 145,
+      "protein": 7.5,
+      "carbs": 16.5,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_77",
+    "name": "Bharli Vangi",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 155,
+      "protein": 3.5,
+      "carbs": 14.5,
+      "fats": 9.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_78",
+    "name": "Chicken Sukka",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 210,
+      "protein": 18.5,
+      "carbs": 6.5,
+      "fats": 12
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_79",
+    "name": "Pork Vindaloo",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 285,
+      "protein": 16,
+      "carbs": 8,
+      "fats": 21
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_80",
+    "name": "Goan Fish Curry",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 175,
+      "protein": 15,
+      "carbs": 7,
+      "fats": 9.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_81",
+    "name": "Chicken Xacuti",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 225,
+      "protein": 16.5,
+      "carbs": 9.5,
+      "fats": 13.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_82",
+    "name": "Bamboo Shoot Curry",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 95,
+      "protein": 2.5,
+      "carbs": 12,
+      "fats": 4.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_83",
+    "name": "Iromba (Manipuri Veg)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 85,
+      "protein": 3.5,
+      "carbs": 14,
+      "fats": 2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_84",
+    "name": "Machher Jhol (Fish Curry)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 145,
+      "protein": 14.5,
+      "carbs": 5.5,
+      "fats": 7.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_85",
+    "name": "Chicken Dak Bungalow",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 215,
+      "protein": 16,
+      "carbs": 7.5,
+      "fats": 13
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_86",
+    "name": "Bisi Bele Bath (Karnataka)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 165,
+      "protein": 4.5,
+      "carbs": 28,
+      "fats": 4.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_87",
+    "name": "Puliyogare (Tamarind Rice)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 175,
+      "protein": 3.5,
+      "carbs": 30,
+      "fats": 5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_88",
+    "name": "Vangi Bath (Brinjal Rice)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 160,
+      "protein": 3,
+      "carbs": 28,
+      "fats": 4.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_89",
+    "name": "Kuzhi Paniyaram",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 195,
+      "protein": 5.5,
+      "carbs": 35,
+      "fats": 4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_90",
+    "name": "Idiyappam",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 155,
+      "protein": 3,
+      "carbs": 34,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "h_91",
+    "name": "Kadala Curry (Black Chickpeas)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 145,
+      "protein": 6.5,
+      "carbs": 18.5,
+      "fats": 5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_92",
+    "name": "Erissery (Pumpkin Curry)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 135,
+      "protein": 3.5,
+      "carbs": 16,
+      "fats": 6.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_93",
+    "name": "Olan (Ash Gourd Stew)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 95,
+      "protein": 2,
+      "carbs": 8.5,
+      "fats": 6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_94",
+    "name": "Kalan (Yam Curry)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 125,
+      "protein": 3.5,
+      "carbs": 15,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_95",
+    "name": "Pachadi (Yogurt Mix)",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 85,
+      "protein": 3,
+      "carbs": 10,
+      "fats": 3.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_96",
+    "name": "Gongura Pachadi",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 115,
+      "protein": 2.5,
+      "carbs": 12,
+      "fats": 6.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_97",
+    "name": "Gongura Mutton",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 235,
+      "protein": 17,
+      "carbs": 6,
+      "fats": 15.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_98",
+    "name": "Hyderabadi Haleem",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 215,
+      "protein": 15,
+      "carbs": 14,
+      "fats": 11
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_99",
+    "name": "Nihari",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 255,
+      "protein": 18,
+      "carbs": 5,
+      "fats": 17.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "h_100",
+    "name": "Galouti Kebab",
+    "category": "Home Cooked",
+    "baseMacrosPer100g": {
+      "calories": 285,
+      "protein": 16.5,
+      "carbs": 8,
+      "fats": 21
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_51",
+    "name": "Raj Kachori",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 245,
+      "protein": 6,
+      "carbs": 34,
+      "fats": 10
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_52",
+    "name": "Basket Chaat (Tokri Chaat)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 225,
+      "protein": 5.5,
+      "carbs": 31,
+      "fats": 9
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_53",
+    "name": "Mirchi Vada",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 255,
+      "protein": 4.5,
+      "carbs": 28,
+      "fats": 14.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_54",
+    "name": "Pesarattu (Moong Dal Dosa)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 185,
+      "protein": 7.5,
+      "carbs": 32,
+      "fats": 3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_55",
+    "name": "Kothu Parotta",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 265,
+      "protein": 8,
+      "carbs": 38,
+      "fats": 9.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "s_56",
+    "name": "Litti (Dry, No Chokha)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 275,
+      "protein": 8,
+      "carbs": 48,
+      "fats": 6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_57",
+    "name": "Tunday Kabab",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 295,
+      "protein": 15.5,
+      "carbs": 10,
+      "fats": 21.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_58",
+    "name": "Gobi 65",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 210,
+      "protein": 4,
+      "carbs": 28,
+      "fats": 9.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_59",
+    "name": "Egg Bhurji Pav",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 245,
+      "protein": 12,
+      "carbs": 28,
+      "fats": 9.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_60",
+    "name": "Paneer Bhurji Pav",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 265,
+      "protein": 10.5,
+      "carbs": 28,
+      "fats": 12.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_61",
+    "name": "Chicken 65",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 245,
+      "protein": 16.5,
+      "carbs": 12,
+      "fats": 14.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_62",
+    "name": "Paneer 65",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 285,
+      "protein": 12.5,
+      "carbs": 18,
+      "fats": 18.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_63",
+    "name": "Aloo Bonda",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 255,
+      "protein": 3.5,
+      "carbs": 32,
+      "fats": 12.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_64",
+    "name": "Mangalore Buns",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 310,
+      "protein": 5.5,
+      "carbs": 48,
+      "fats": 10.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_65",
+    "name": "Punugulu",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 285,
+      "protein": 6.5,
+      "carbs": 42,
+      "fats": 10
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_66",
+    "name": "Kuzhi Paniyaram (Sweet)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 215,
+      "protein": 3.5,
+      "carbs": 38,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_67",
+    "name": "Bonda Soup",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 185,
+      "protein": 6,
+      "carbs": 24,
+      "fats": 7.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "s_68",
+    "name": "Chaat Papdi",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 195,
+      "protein": 4.5,
+      "carbs": 28,
+      "fats": 7.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_69",
+    "name": "Katori Chaat",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 215,
+      "protein": 5,
+      "carbs": 30,
+      "fats": 8.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_70",
+    "name": "Moong Dal Chilla",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 165,
+      "protein": 8.5,
+      "carbs": 24,
+      "fats": 4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_71",
+    "name": "Besan Chilla",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 175,
+      "protein": 7.5,
+      "carbs": 26,
+      "fats": 4.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_72",
+    "name": "Khandvi",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 145,
+      "protein": 6,
+      "carbs": 18,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_73",
+    "name": "Patra (Colocasia Leaves)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 165,
+      "protein": 5.5,
+      "carbs": 22,
+      "fats": 6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_74",
+    "name": "Fafda Jalebi (Mixed)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 385,
+      "protein": 6,
+      "carbs": 58,
+      "fats": 15.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_75",
+    "name": "Gathiya Chaat",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 245,
+      "protein": 6.5,
+      "carbs": 32,
+      "fats": 10
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_76",
+    "name": "Indori Poha",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 155,
+      "protein": 3.5,
+      "carbs": 28,
+      "fats": 3.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "s_77",
+    "name": "Kachori (Pyaz/Onion)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 320,
+      "protein": 5.5,
+      "carbs": 38,
+      "fats": 16.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_78",
+    "name": "Kachori (Mawa)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 365,
+      "protein": 6.5,
+      "carbs": 42,
+      "fats": 19.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_79",
+    "name": "Jhal Muri",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 145,
+      "protein": 4,
+      "carbs": 26,
+      "fats": 3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_80",
+    "name": "Ghugni",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 135,
+      "protein": 6.5,
+      "carbs": 22,
+      "fats": 2.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "s_81",
+    "name": "Phuchka (Kolkata)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 160,
+      "protein": 4,
+      "carbs": 31,
+      "fats": 2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_82",
+    "name": "Aloo Kabli",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 125,
+      "protein": 3.5,
+      "carbs": 24,
+      "fats": 2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_83",
+    "name": "Churmur",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 155,
+      "protein": 4.5,
+      "carbs": 28,
+      "fats": 3.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_84",
+    "name": "Egg Mughlai Paratha",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 345,
+      "protein": 12,
+      "carbs": 38,
+      "fats": 16
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_85",
+    "name": "Chicken Roll (Kolkata Style)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 285,
+      "protein": 14,
+      "carbs": 34,
+      "fats": 11
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_86",
+    "name": "Fish Fry (Street Style)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 245,
+      "protein": 16,
+      "carbs": 12,
+      "fats": 14.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_87",
+    "name": "Fish Finger",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 265,
+      "protein": 14,
+      "carbs": 16,
+      "fats": 16.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_88",
+    "name": "Prawn Koliwada",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 225,
+      "protein": 18,
+      "carbs": 10,
+      "fats": 12.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_89",
+    "name": "Chicken Lollipop (Fried)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 285,
+      "protein": 18,
+      "carbs": 12,
+      "fats": 18.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_90",
+    "name": "Veg Manchurian (Dry)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 215,
+      "protein": 4,
+      "carbs": 32,
+      "fats": 8.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_91",
+    "name": "Gobi Manchurian (Gravy)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 185,
+      "protein": 3.5,
+      "carbs": 28,
+      "fats": 6.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "s_92",
+    "name": "Chilli Chicken (Dry)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 255,
+      "protein": 16.5,
+      "carbs": 18,
+      "fats": 12.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_93",
+    "name": "Dragon Chicken",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 275,
+      "protein": 16,
+      "carbs": 20,
+      "fats": 14.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_94",
+    "name": "American Chopsuey (Veg)",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 295,
+      "protein": 5,
+      "carbs": 48,
+      "fats": 9.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "s_95",
+    "name": "Schezwan Fried Rice",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 215,
+      "protein": 4.5,
+      "carbs": 36,
+      "fats": 6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "s_96",
+    "name": "Triple Schezwan Rice",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 285,
+      "protein": 8,
+      "carbs": 42,
+      "fats": 9.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "s_97",
+    "name": "Mushroom Tikka",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 145,
+      "protein": 5.5,
+      "carbs": 12,
+      "fats": 8.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_98",
+    "name": "Soya Chaap Tikka",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 195,
+      "protein": 14.5,
+      "carbs": 12,
+      "fats": 10.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_99",
+    "name": "Malai Soya Chaap",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 265,
+      "protein": 12.5,
+      "carbs": 14,
+      "fats": 18
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "s_100",
+    "name": "Afghani Soya Chaap",
+    "category": "Street Food",
+    "baseMacrosPer100g": {
+      "calories": 245,
+      "protein": 13.5,
+      "carbs": 12,
+      "fats": 16
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_51",
+    "name": "Drumsticks (Moringa)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 37,
+      "protein": 2.1,
+      "carbs": 8.5,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_52",
+    "name": "Colocasia (Arbi Root)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 112,
+      "protein": 1.5,
+      "carbs": 26.5,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_53",
+    "name": "Pointed Gourd (Parwal)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 20,
+      "protein": 1.2,
+      "carbs": 3.1,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_54",
+    "name": "Ivy Gourd (Tindora)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 18,
+      "protein": 1.2,
+      "carbs": 3.1,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_55",
+    "name": "Taro Root",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 142,
+      "protein": 1.5,
+      "carbs": 34.6,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_56",
+    "name": "Star Fruit (Kamrakh)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 31,
+      "protein": 1,
+      "carbs": 6.7,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_57",
+    "name": "Wood Apple (Bael Fruit)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 137,
+      "protein": 1.8,
+      "carbs": 31.8,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_58",
+    "name": "Water Chestnut (Singhara)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 97,
+      "protein": 1.4,
+      "carbs": 23.9,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_59",
+    "name": "Lotus Stem (Kamal Kakdi)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 74,
+      "protein": 2.6,
+      "carbs": 17.2,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_60",
+    "name": "Snake Gourd",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 18,
+      "protein": 0.6,
+      "carbs": 3.9,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_61",
+    "name": "Sponge Gourd (Nenua)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 15,
+      "protein": 1.2,
+      "carbs": 2.9,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_62",
+    "name": "Ash Gourd",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 13,
+      "protein": 0.4,
+      "carbs": 3,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_63",
+    "name": "Teasel Gourd (Kantola)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 17,
+      "protein": 1,
+      "carbs": 3.1,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_64",
+    "name": "Yam (Suran/Jimikand)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 118,
+      "protein": 1.5,
+      "carbs": 27.9,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_65",
+    "name": "Sweet Potato (Shakarkandi)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 86,
+      "protein": 1.6,
+      "carbs": 20.1,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_66",
+    "name": "Tapioca (Cassava/Kapppa)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 160,
+      "protein": 1.4,
+      "carbs": 38.1,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_67",
+    "name": "Jackfruit (Raw/Green)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 73,
+      "protein": 1.5,
+      "carbs": 18,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_68",
+    "name": "Plantain (Raw Banana)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 122,
+      "protein": 1.3,
+      "carbs": 31.9,
+      "fats": 0.4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_69",
+    "name": "Banana Flower (Kele ka Phool)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 51,
+      "protein": 1.6,
+      "carbs": 9.9,
+      "fats": 0.6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_70",
+    "name": "Banana Stem",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 35,
+      "protein": 0.5,
+      "carbs": 8.5,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_71",
+    "name": "Pumpkin Leaves",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 19,
+      "protein": 3.2,
+      "carbs": 2.3,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_72",
+    "name": "Tamarind Leaves",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 58,
+      "protein": 3.1,
+      "carbs": 11.4,
+      "fats": 0.6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_73",
+    "name": "Curry Leaves",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 97,
+      "protein": 6.1,
+      "carbs": 18.7,
+      "fats": 1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_74",
+    "name": "Colocasia Leaves (Arbi Patta)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 42,
+      "protein": 3,
+      "carbs": 6.7,
+      "fats": 0.7
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_75",
+    "name": "Amaranth (Red/Lal Math)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 23,
+      "protein": 2.5,
+      "carbs": 4,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_76",
+    "name": "Bathua Leaves (Chenopodium)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 43,
+      "protein": 4.2,
+      "carbs": 7.3,
+      "fats": 0.8
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_77",
+    "name": "Gongura Leaves",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 47,
+      "protein": 3.2,
+      "carbs": 7.1,
+      "fats": 0.9
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_78",
+    "name": "Poi Saag (Malabar Spinach)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 19,
+      "protein": 1.8,
+      "carbs": 3.4,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_79",
+    "name": "Cholai (Green Amaranth)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 23,
+      "protein": 2.5,
+      "carbs": 4,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_80",
+    "name": "Water Spinach (Kalmi Saag)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 19,
+      "protein": 2.6,
+      "carbs": 3.1,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_81",
+    "name": "Cluster Beans (Gawar)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 16,
+      "protein": 3.2,
+      "carbs": 6.9,
+      "fats": 0.4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_82",
+    "name": "French Beans",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 31,
+      "protein": 1.8,
+      "carbs": 7.1,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_83",
+    "name": "Broad Beans (Sem)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 47,
+      "protein": 3.8,
+      "carbs": 8.1,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_84",
+    "name": "Yardlong Beans (Bora)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 47,
+      "protein": 2.8,
+      "carbs": 8.3,
+      "fats": 0.4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_85",
+    "name": "Green Peas (Matar)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 81,
+      "protein": 5.4,
+      "carbs": 14.5,
+      "fats": 0.4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_86",
+    "name": "Snow Peas",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 42,
+      "protein": 2.8,
+      "carbs": 7.5,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_87",
+    "name": "Spring Onion (Scallion)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 32,
+      "protein": 1.8,
+      "carbs": 7.3,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_88",
+    "name": "Leek",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 61,
+      "protein": 1.5,
+      "carbs": 14.2,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_89",
+    "name": "Mushroom (Button)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 22,
+      "protein": 3.1,
+      "carbs": 3.3,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_90",
+    "name": "Bamboo Shoot",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 27,
+      "protein": 2.6,
+      "carbs": 5.2,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "f_91",
+    "name": "Gooseberry (Amla)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 44,
+      "protein": 0.9,
+      "carbs": 10.2,
+      "fats": 0.6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_92",
+    "name": "Phalsa (Grewia Asiatica)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 90,
+      "protein": 1.5,
+      "carbs": 21,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_93",
+    "name": "Karonda (Carandas Plum)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 42,
+      "protein": 1.1,
+      "carbs": 10.5,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_94",
+    "name": "Jujube (Ber)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 79,
+      "protein": 1.2,
+      "carbs": 20.2,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_95",
+    "name": "Ice Apple (Targola/Munjal)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 43,
+      "protein": 0.8,
+      "carbs": 10.5,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_96",
+    "name": "Mulberry (Shahtoot)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 43,
+      "protein": 1.4,
+      "carbs": 9.8,
+      "fats": 0.4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_97",
+    "name": "Rose Apple (Safed Jamun)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 25,
+      "protein": 0.6,
+      "carbs": 5.7,
+      "fats": 0.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_98",
+    "name": "Persimmon (Amarphal)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 81,
+      "protein": 0.6,
+      "carbs": 18.6,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_99",
+    "name": "Dragon Fruit (Pitaya)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 60,
+      "protein": 1.2,
+      "carbs": 12.9,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "f_100",
+    "name": "Sweet Lime (Mosambi)",
+    "category": "Fruits & Veg",
+    "baseMacrosPer100g": {
+      "calories": 43,
+      "protein": 0.8,
+      "carbs": 10.5,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "r_51",
+    "name": "Ragi Flour (Finger Millet)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 328,
+      "protein": 7.3,
+      "carbs": 72,
+      "fats": 1.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_52",
+    "name": "Bajra Flour (Pearl Millet)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 378,
+      "protein": 11.6,
+      "carbs": 67.5,
+      "fats": 5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_53",
+    "name": "Jowar Flour (Sorghum)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 349,
+      "protein": 10.4,
+      "carbs": 72.6,
+      "fats": 1.9
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_54",
+    "name": "Sattu (Roasted Gram Flour)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 413,
+      "protein": 25.4,
+      "carbs": 61.5,
+      "fats": 5.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_55",
+    "name": "Amaranth Flour (Rajgira)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 371,
+      "protein": 13.6,
+      "carbs": 65.2,
+      "fats": 7
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_56",
+    "name": "Horse Gram (Kulthi)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 321,
+      "protein": 22,
+      "carbs": 57.2,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_57",
+    "name": "Moth Bean (Matki)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 343,
+      "protein": 22.9,
+      "carbs": 61.5,
+      "fats": 1.6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_58",
+    "name": "Nutmeg (Jaiphal)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 525,
+      "protein": 5.8,
+      "carbs": 49.3,
+      "fats": 36.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_59",
+    "name": "Mace (Javitri)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 475,
+      "protein": 6.7,
+      "carbs": 50.5,
+      "fats": 32.4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_60",
+    "name": "Black Cardamom (Badi Elaichi)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 311,
+      "protein": 10.8,
+      "carbs": 68.5,
+      "fats": 6.7
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_61",
+    "name": "Dry Mango Powder (Amchur)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 315,
+      "protein": 2.5,
+      "carbs": 78,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_62",
+    "name": "Poppy Seeds (Khus Khus)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 525,
+      "protein": 18,
+      "carbs": 28.1,
+      "fats": 41.6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_63",
+    "name": "Watermelon Seeds (Magaj)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 557,
+      "protein": 28.3,
+      "carbs": 15.3,
+      "fats": 47.4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_64",
+    "name": "Pumpkin Seeds",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 559,
+      "protein": 30.2,
+      "carbs": 10.7,
+      "fats": 49
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_65",
+    "name": "Fox Nuts (Makhana Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 347,
+      "protein": 9.7,
+      "carbs": 76.9,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_66",
+    "name": "Sago (Sabudana)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 351,
+      "protein": 0.2,
+      "carbs": 87.1,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_67",
+    "name": "Barnyard Millet (Sanwa)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 341,
+      "protein": 11.2,
+      "carbs": 65.5,
+      "fats": 3.9
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_68",
+    "name": "Foxtail Millet (Kangni)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 331,
+      "protein": 12.3,
+      "carbs": 60.9,
+      "fats": 4.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_69",
+    "name": "Little Millet (Kutki)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 341,
+      "protein": 9.7,
+      "carbs": 67,
+      "fats": 4.7
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_70",
+    "name": "Kodo Millet",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 353,
+      "protein": 8.3,
+      "carbs": 65.9,
+      "fats": 1.4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_71",
+    "name": "Proso Millet (Chena)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 356,
+      "protein": 12.5,
+      "carbs": 70.4,
+      "fats": 1.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_72",
+    "name": "Brown Rice",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 370,
+      "protein": 7.9,
+      "carbs": 77.2,
+      "fats": 2.9
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_73",
+    "name": "Red Rice",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 405,
+      "protein": 7,
+      "carbs": 86,
+      "fats": 2.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_74",
+    "name": "Black Rice",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 356,
+      "protein": 8.5,
+      "carbs": 75,
+      "fats": 3.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_75",
+    "name": "Basmati Rice (Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 358,
+      "protein": 8.2,
+      "carbs": 78.5,
+      "fats": 0.6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_76",
+    "name": "Rice Flakes (Poha Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 346,
+      "protein": 6.6,
+      "carbs": 77.3,
+      "fats": 1.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_77",
+    "name": "Puffed Rice (Murmura Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 396,
+      "protein": 6.3,
+      "carbs": 89.8,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_78",
+    "name": "Rice Vermicelli (Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 364,
+      "protein": 8,
+      "carbs": 81.5,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_79",
+    "name": "Wheat Vermicelli (Seviyan Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 365,
+      "protein": 12.5,
+      "carbs": 75,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_80",
+    "name": "Semolina (Sooji/Rava)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 360,
+      "protein": 12.7,
+      "carbs": 72.8,
+      "fats": 1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_81",
+    "name": "Maida (Refined Flour)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 364,
+      "protein": 10.3,
+      "carbs": 76.3,
+      "fats": 1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_82",
+    "name": "Soya Chunks (Nutrela Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 345,
+      "protein": 52,
+      "carbs": 33,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_83",
+    "name": "Soybean (Raw Seeds)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 446,
+      "protein": 36.5,
+      "carbs": 30.2,
+      "fats": 19.9
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_84",
+    "name": "Green Gram (Moong Whole)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 347,
+      "protein": 23.9,
+      "carbs": 62.6,
+      "fats": 1.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_85",
+    "name": "Bengal Gram (Chana Whole)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 364,
+      "protein": 20.5,
+      "carbs": 60.9,
+      "fats": 5.3
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_86",
+    "name": "Black Gram (Urad Whole)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 341,
+      "protein": 25.2,
+      "carbs": 58.9,
+      "fats": 1.6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_87",
+    "name": "Red Lentil (Masoor Whole)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 352,
+      "protein": 24.6,
+      "carbs": 60.1,
+      "fats": 1.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_88",
+    "name": "Pigeon Pea (Toor Whole)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 343,
+      "protein": 21.7,
+      "carbs": 62.8,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_89",
+    "name": "Kidney Beans (Rajma Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 333,
+      "protein": 23.6,
+      "carbs": 60,
+      "fats": 0.8
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_90",
+    "name": "Cowpea (Lobia/Chawli Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 336,
+      "protein": 23.5,
+      "carbs": 60,
+      "fats": 1.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_91",
+    "name": "Chickpeas (Kabuli Chana Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 364,
+      "protein": 19.3,
+      "carbs": 60.6,
+      "fats": 6
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_92",
+    "name": "Dry Peas (Matar Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 341,
+      "protein": 24.5,
+      "carbs": 60.4,
+      "fats": 1.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_93",
+    "name": "Black Eyed Peas (Raw)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 336,
+      "protein": 23.5,
+      "carbs": 60,
+      "fats": 1.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "r_94",
+    "name": "Palm Jaggery (Karupatti)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 383,
+      "protein": 0.4,
+      "carbs": 95,
+      "fats": 0.1
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_95",
+    "name": "Coconut Sugar",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 375,
+      "protein": 1,
+      "carbs": 92,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_96",
+    "name": "Rock Sugar (Mishri)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 395,
+      "protein": 0,
+      "carbs": 99.5,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_97",
+    "name": "Stevia Leaf Powder",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 0,
+      "protein": 0,
+      "carbs": 0,
+      "fats": 0
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_98",
+    "name": "Dry Ginger (Saunth)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 335,
+      "protein": 9,
+      "carbs": 71.6,
+      "fats": 4.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_99",
+    "name": "Nigella Seeds (Kalonji)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 345,
+      "protein": 16,
+      "carbs": 52,
+      "fats": 15
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "r_100",
+    "name": "Fenugreek Leaves (Kasuri Methi Dry)",
+    "category": "Sugars & Spices",
+    "baseMacrosPer100g": {
+      "calories": 315,
+      "protein": 22,
+      "carbs": 48,
+      "fats": 4
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "teaspoon",
+        "weightInGrams": 5
+      },
+      {
+        "unit": "tablespoon",
+        "weightInGrams": 15
+      }
+    ]
+  },
+  {
+    "id": "sn_51",
+    "name": "Thekua",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 485,
+      "protein": 5.5,
+      "carbs": 65,
+      "fats": 22.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_52",
+    "name": "Anarsa",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 425,
+      "protein": 4.5,
+      "carbs": 72,
+      "fats": 14.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_53",
+    "name": "Patishapta (Coconut Filled)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 215,
+      "protein": 4,
+      "carbs": 38,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_54",
+    "name": "Bebinca (Goan Layered Sweet)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 365,
+      "protein": 5.5,
+      "carbs": 42,
+      "fats": 21
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_55",
+    "name": "Qubani Ka Meetha (Apricot Dessert)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 195,
+      "protein": 2.5,
+      "carbs": 48,
+      "fats": 0.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_56",
+    "name": "Pootharekulu (Paper Sweet)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 385,
+      "protein": 3.5,
+      "carbs": 78,
+      "fats": 8
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_57",
+    "name": "Petha (Agra Sweet, Dry)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 320,
+      "protein": 0.5,
+      "carbs": 78,
+      "fats": 0.2
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_58",
+    "name": "Khaja",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 495,
+      "protein": 4.5,
+      "carbs": 62,
+      "fats": 26.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_59",
+    "name": "Gavvalu (Sweet Shells)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 465,
+      "protein": 5.5,
+      "carbs": 68,
+      "fats": 19.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_60",
+    "name": "Peanut Pakoda (Palli Pakodi)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 545,
+      "protein": 18.5,
+      "carbs": 38,
+      "fats": 36.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_61",
+    "name": "Ribbon Pakoda",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 485,
+      "protein": 8.5,
+      "carbs": 58,
+      "fats": 25.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_62",
+    "name": "Karanji (Gujiya)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 455,
+      "protein": 6.5,
+      "carbs": 55,
+      "fats": 24.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_63",
+    "name": "Nankhatai (Indian Cookie)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 525,
+      "protein": 6.5,
+      "carbs": 54,
+      "fats": 32.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_64",
+    "name": "Peda (Dharwad)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 385,
+      "protein": 14.5,
+      "carbs": 52,
+      "fats": 14.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_65",
+    "name": "Malpua (Syrup Soaked)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 345,
+      "protein": 5.5,
+      "carbs": 52,
+      "fats": 12.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_66",
+    "name": "Imarti",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 315,
+      "protein": 4.5,
+      "carbs": 65,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_67",
+    "name": "Kaju Roll",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 475,
+      "protein": 12.5,
+      "carbs": 50,
+      "fats": 26
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_68",
+    "name": "Dodha Barfi",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 415,
+      "protein": 8.5,
+      "carbs": 54,
+      "fats": 19.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_69",
+    "name": "Milk Cake (Alwar Ka Mawa)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 395,
+      "protein": 14,
+      "carbs": 48,
+      "fats": 16.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_70",
+    "name": "Coconut Ladoo",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 425,
+      "protein": 4.5,
+      "carbs": 55,
+      "fats": 22.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_71",
+    "name": "Rava Ladoo",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 385,
+      "protein": 5.5,
+      "carbs": 68,
+      "fats": 11.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_72",
+    "name": "Panjiri",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 465,
+      "protein": 8.5,
+      "carbs": 52,
+      "fats": 25.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_73",
+    "name": "Pinni",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 495,
+      "protein": 9.5,
+      "carbs": 48,
+      "fats": 31.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_74",
+    "name": "Gajak (Sesame & Jaggery)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 485,
+      "protein": 12.5,
+      "carbs": 58,
+      "fats": 24.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_75",
+    "name": "Rewari",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 465,
+      "protein": 11.5,
+      "carbs": 62,
+      "fats": 21.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_76",
+    "name": "Singhada Barfi",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 345,
+      "protein": 3.5,
+      "carbs": 75,
+      "fats": 4.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_77",
+    "name": "Lauki Halwa",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 215,
+      "protein": 3.5,
+      "carbs": 32,
+      "fats": 8.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "sn_78",
+    "name": "Badam Halwa",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 465,
+      "protein": 10.5,
+      "carbs": 45,
+      "fats": 28.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "katori (medium)",
+        "weightInGrams": 150
+      },
+      {
+        "unit": "bowl (large)",
+        "weightInGrams": 250
+      }
+    ]
+  },
+  {
+    "id": "sn_79",
+    "name": "Karachi Halwa (Bombay Halwa)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 345,
+      "protein": 0.5,
+      "carbs": 75,
+      "fats": 6.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_80",
+    "name": "Mihidana",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 335,
+      "protein": 4.5,
+      "carbs": 68,
+      "fats": 6.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_81",
+    "name": "Sitabhog",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 315,
+      "protein": 5.5,
+      "carbs": 62,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_82",
+    "name": "Jolbhora Sandesh",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 295,
+      "protein": 12,
+      "carbs": 38,
+      "fats": 10.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_83",
+    "name": "Ledikeni",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 285,
+      "protein": 6.5,
+      "carbs": 54,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_84",
+    "name": "Rosogolla (Sponge)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 225,
+      "protein": 5.5,
+      "carbs": 48,
+      "fats": 1.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_85",
+    "name": "Chenna Poda",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 315,
+      "protein": 12.5,
+      "carbs": 36,
+      "fats": 14.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_86",
+    "name": "Ariselu",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 415,
+      "protein": 4.5,
+      "carbs": 72,
+      "fats": 13.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_87",
+    "name": "Sunnundalu (Urad Dal Ladoo)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 465,
+      "protein": 16.5,
+      "carbs": 58,
+      "fats": 19.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_88",
+    "name": "Bandar Ladoo",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 425,
+      "protein": 8.5,
+      "carbs": 62,
+      "fats": 16.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_89",
+    "name": "Kakinada Kaja",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 475,
+      "protein": 5.5,
+      "carbs": 65,
+      "fats": 22.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_90",
+    "name": "Putharekulu (Dry Fruit)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 415,
+      "protein": 6.5,
+      "carbs": 72,
+      "fats": 12.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_91",
+    "name": "Medu Pakoda",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 385,
+      "protein": 9.5,
+      "carbs": 45,
+      "fats": 19.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_92",
+    "name": "Maddur Vada",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 415,
+      "protein": 7.5,
+      "carbs": 48,
+      "fats": 22.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_93",
+    "name": "Congress Kadalekai (Spiced Peanuts)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 565,
+      "protein": 21.5,
+      "carbs": 24,
+      "fats": 44.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "sn_94",
+    "name": "Benne Murukku (Butter Murukku)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 515,
+      "protein": 7.5,
+      "carbs": 52,
+      "fats": 31.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_95",
+    "name": "Kodubale",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 495,
+      "protein": 8.5,
+      "carbs": 56,
+      "fats": 27.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "piece (medium)",
+        "weightInGrams": 80
+      }
+    ]
+  },
+  {
+    "id": "sn_96",
+    "name": "Khara Boondi",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 485,
+      "protein": 11.5,
+      "carbs": 48,
+      "fats": 28.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "sn_97",
+    "name": "Makhana (Caramelized/Sweet)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 415,
+      "protein": 6.5,
+      "carbs": 82,
+      "fats": 6.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "sn_98",
+    "name": "Diet Chivda (Roasted Poha, Low Oil)",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 385,
+      "protein": 8.5,
+      "carbs": 75,
+      "fats": 5.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "sn_99",
+    "name": "Soya Sticks",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 425,
+      "protein": 18.5,
+      "carbs": 56,
+      "fats": 14.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  },
+  {
+    "id": "sn_100",
+    "name": "Quinoa Puffs",
+    "category": "Sweets",
+    "baseMacrosPer100g": {
+      "calories": 395,
+      "protein": 12.5,
+      "carbs": 68,
+      "fats": 8.5
+    },
+    "servings": [
+      {
+        "unit": "gram",
+        "weightInGrams": 1
+      },
+      {
+        "unit": "100g",
+        "weightInGrams": 100
+      }
+    ]
+  }
+]

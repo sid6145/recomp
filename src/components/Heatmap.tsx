@@ -1,0 +1,227 @@
+import React, { useEffect, useState, useMemo } from 'react';
+import { motion } from 'framer-motion';
+import { Calendar, Award, Info } from 'lucide-react';
+import { useAppSelector } from '../store/store';
+import { fetchHeatmapLogs, type DailyCaloriesMap } from '../db/heatmapData';
+
+interface HeatmapDay {
+  dateStr: string;
+  displayDate: string;
+  calories: number;
+  hasData: boolean;
+  variance: number; // calories - target
+  status: 'no_data' | 'deep_deficit' | 'target_hit' | 'slight_surplus' | 'surplus';
+}
+
+export const Heatmap: React.FC = () => {
+  const targetCalories = useAppSelector((state) => state.user.dailyCaloricTarget);
+  const logEntries = useAppSelector((state) => state.logs.entries);
+
+  const [caloriesByDate, setCaloriesByDate] = useState<DailyCaloriesMap>({});
+  const [hoveredDay, setHoveredDay] = useState<HeatmapDay | null>(null);
+
+  // Sync heatmap data from Dexie whenever logs change
+  useEffect(() => {
+    let isMounted = true;
+    fetchHeatmapLogs().then((data) => {
+      if (isMounted) {
+        setCaloriesByDate(data);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [logEntries]);
+
+  // Generate the last 364 calendar days (52 weeks x 7 days)
+  const heatmapDays = useMemo<HeatmapDay[]>(() => {
+    const days: HeatmapDay[] = [];
+    const now = new Date();
+
+    for (let i = 363; i >= 0; i--) {
+      const d = new Date(now);
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split('T')[0];
+
+      const calories = caloriesByDate[dateStr] || 0;
+      const hasData = Boolean(caloriesByDate[dateStr]);
+      const variance = calories - targetCalories;
+
+      let status: HeatmapDay['status'] = 'no_data';
+      if (hasData) {
+        if (calories < targetCalories - 200) {
+          status = 'deep_deficit';
+        } else if (calories <= targetCalories + 100) {
+          status = 'target_hit';
+        } else if (calories <= targetCalories + 200) {
+          status = 'slight_surplus';
+        } else {
+          status = 'surplus';
+        }
+      }
+
+      const displayDate = d.toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+      });
+
+      days.push({
+        dateStr,
+        displayDate,
+        calories,
+        hasData,
+        variance,
+        status,
+      });
+    }
+
+    return days;
+  }, [caloriesByDate, targetCalories]);
+
+  // Aggregate consistency metrics
+  const stats = useMemo(() => {
+    let loggedDays = 0;
+    let targetHitDays = 0;
+
+    for (const d of heatmapDays) {
+      if (d.hasData) {
+        loggedDays++;
+        if (d.status === 'target_hit' || d.status === 'deep_deficit') {
+          targetHitDays++;
+        }
+      }
+    }
+
+    const consistencyRate = loggedDays > 0 ? Math.round((targetHitDays / loggedDays) * 100) : 0;
+    return { loggedDays, targetHitDays, consistencyRate };
+  }, [heatmapDays]);
+
+  const getColorClass = (status: HeatmapDay['status']) => {
+    switch (status) {
+      case 'deep_deficit':
+        return 'bg-[#00FF41] hover:ring-2 hover:ring-[#00FF41]/80 shadow-[0_0_6px_rgba(0,255,65,0.4)]';
+      case 'target_hit':
+        return 'bg-[#00FF41]/80 hover:ring-2 hover:ring-[#00FF41]/60';
+      case 'slight_surplus':
+        return 'bg-amber-400 hover:ring-2 hover:ring-amber-300';
+      case 'surplus':
+        return 'bg-[#E60000] hover:ring-2 hover:ring-[#E60000]/60 shadow-[0_0_6px_rgba(230,0,0,0.4)]';
+      default:
+        return 'bg-neutral-800/80 hover:bg-neutral-700';
+    }
+  };
+
+  return (
+    <div className="w-full rounded-3xl border border-white/5 bg-neutral-900/90 backdrop-blur-2xl p-5 sm:p-7 shadow-2xl space-y-5 relative overflow-hidden">
+      {/* Background Ambience */}
+      <div className="pointer-events-none absolute -top-16 -right-16 w-56 h-56 bg-[#00FF41]/10 rounded-full blur-3xl transform-gpu will-change-transform" />
+
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-4">
+        <div className="space-y-1">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold uppercase tracking-wider bg-white/5 text-neutral-300 border border-white/10">
+            <Calendar className="w-3.5 h-3.5 text-[#00FF41]" />
+            Yearly History
+          </div>
+          <h3 className="text-lg sm:text-xl font-bold tracking-tight text-neutral-100 font-sans">
+            Daily Habit Heatmap
+          </h3>
+          <p className="text-xs text-neutral-400 font-sans">
+            Your logging history and consistency over the past year.
+          </p>
+        </div>
+
+        {/* Aggregated Consistency Metric */}
+        <div className="flex items-center gap-3 bg-neutral-950/80 border border-white/5 px-4 py-2.5 rounded-2xl">
+          <Award className="w-5 h-5 text-[#00FF41]" />
+          <div>
+            <div className="text-[10px] uppercase font-mono tracking-wider text-neutral-500 font-semibold">
+              Consistency
+            </div>
+            <div className="text-lg font-black font-mono text-neutral-100 tabular-nums">
+              {stats.consistencyRate}%{' '}
+              <span className="text-xs text-neutral-500 font-normal">
+                ({stats.targetHitDays}/{stats.loggedDays || 1} days)
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Matrix Display Container */}
+      <div className="space-y-3">
+        {/* Scrollable grid wrapper for small screens */}
+        <div className="overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-neutral-800">
+          <div className="min-w-[680px]">
+            {/* The 52x7 Grid (columns: 52 weeks, rows: 7 days) */}
+            <div
+              className="grid grid-flow-col grid-rows-7 grid-cols-[repeat(52,minmax(0,1fr))] gap-1"
+              onMouseLeave={() => setHoveredDay(null)}
+            >
+              {heatmapDays.map((day) => (
+                <div
+                  key={day.dateStr}
+                  onMouseEnter={() => setHoveredDay(day)}
+                  className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-xs transition-all duration-150 cursor-pointer ${getColorClass(
+                    day.status
+                  )}`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Dynamic Tooltip & Legend Bar */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs pt-1 border-t border-white/5">
+          {/* Active Hover readout */}
+          <div className="min-h-[24px] flex items-center gap-2">
+            {hoveredDay ? (
+              <motion.div
+                initial={{ opacity: 0, x: -4 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="flex items-center gap-2 text-neutral-300 font-mono text-[11px] tabular-nums"
+              >
+                <span className="font-semibold text-neutral-100">{hoveredDay.displayDate}:</span>
+                {hoveredDay.hasData ? (
+                  <>
+                    <span className="text-amber-400 font-bold">{hoveredDay.calories} kcal</span>
+                    <span className="text-neutral-500">/ target {targetCalories} kcal</span>
+                    <span
+                      className={`px-1.5 py-0.2 rounded font-bold ${
+                        hoveredDay.variance <= 0
+                          ? 'bg-[#00FF41]/20 text-[#00FF41]'
+                          : 'bg-[#E60000]/20 text-rose-400'
+                      }`}
+                    >
+                      {hoveredDay.variance > 0 ? `+${hoveredDay.variance}` : hoveredDay.variance} kcal
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-neutral-500">No logs recorded</span>
+                )}
+              </motion.div>
+            ) : (
+              <span className="text-[11px] text-neutral-500 flex items-center gap-1.5 font-sans">
+                <Info className="w-3.5 h-3.5" />
+                Tap or hover a day to view details.
+              </span>
+            )}
+          </div>
+
+          {/* Color Legend */}
+          <div className="flex items-center gap-2 text-[10px] text-neutral-400 shrink-0 font-mono">
+            <span>Under Goal</span>
+            <div className="flex items-center gap-1">
+              <span className="w-2.5 h-2.5 rounded-xs bg-[#00FF41]" title="Under Goal" />
+              <span className="w-2.5 h-2.5 rounded-xs bg-[#00FF41]/80" title="On Target" />
+              <span className="w-2.5 h-2.5 rounded-xs bg-[#E60000]" title="Over Goal" />
+              <span className="w-2.5 h-2.5 rounded-xs bg-neutral-800" title="No Data" />
+            </div>
+            <span>Over Goal</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};

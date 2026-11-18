@@ -1,0 +1,48 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production build artifacts
+dist/
+dist-ssr/
+*.local
+
+# Testing and test results
+coverage/
+test-results/
+playwright-report/
+blob-report/
+.last-run.json
+
+# TypeScript / Vite cache
+*.tsbuildinfo
+.vite/
+
+# Large dataset raw downloads (> 100MB exceeds GitHub push limits)
+scripts/*.json
+scripts/*.zip
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Environment
+.env
+.env.local
+.env.*.local
