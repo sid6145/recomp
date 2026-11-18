@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import indianFoods from '../src/db/indianFoodsSeed.json';
 import indianFoodsPart2 from '../src/db/indianFoodsSeed_Part2.json';
+import indianFoodsPart3 from '../src/db/indianFoodsSeed_Part3.json';
 
 describe('Curated Indian Foods Dataset - Part 1 (indianFoodsSeed.json)', () => {
   it('contains exactly 300 structured items', () => {
@@ -161,5 +162,74 @@ describe('Curated Indian Foods Dataset - Part 2 (indianFoodsSeed_Part2.json)', (
       allIds.add(f.id);
     }
     expect(allIds.size).toBe(600);
+  });
+});
+
+describe('Curated Indian Foods Dataset - Part 3 Heavy Non-Veg (indianFoodsSeed_Part3.json)', () => {
+  it('contains exactly 600 structured items', () => {
+    expect(Array.isArray(indianFoodsPart3)).toBe(true);
+    expect(indianFoodsPart3.length).toBe(600);
+  });
+
+  it('validates schema integrity across all items in Part 3', () => {
+    for (const food of indianFoodsPart3) {
+      expect(typeof food.id).toBe('string');
+      expect(food.id.length).toBeGreaterThan(0);
+
+      expect(typeof food.name).toBe('string');
+      expect(food.name.length).toBeGreaterThan(0);
+
+      expect(typeof food.category).toBe('string');
+      expect(food.category.length).toBeGreaterThan(0);
+
+      const m = food.baseMacrosPer100g;
+      expect(typeof m.calories).toBe('number');
+      expect(m.calories).toBeGreaterThanOrEqual(0);
+      expect(typeof m.protein).toBe('number');
+      expect(m.protein).toBeGreaterThanOrEqual(0);
+      expect(typeof m.carbs).toBe('number');
+      expect(m.carbs).toBeGreaterThanOrEqual(0);
+      expect(typeof m.fats).toBe('number');
+      expect(m.fats).toBeGreaterThanOrEqual(0);
+
+      expect(Array.isArray(food.servings)).toBe(true);
+      expect(food.servings.length).toBeGreaterThanOrEqual(2);
+      for (const s of food.servings) {
+        expect(typeof s.unit).toBe('string');
+        expect(typeof s.weightInGrams).toBe('number');
+        expect(s.weightInGrams).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('contains 100 items across each of the 6 culinary categories in Part 3', () => {
+    const categoryCounts: Record<string, number> = {};
+    for (const food of indianFoodsPart3) {
+      categoryCounts[food.category] = (categoryCounts[food.category] || 0) + 1;
+    }
+
+    expect(categoryCounts['Drinks & Juices']).toBe(100);
+    expect(categoryCounts['Home Cooked']).toBe(100);
+    expect(categoryCounts['Street Food']).toBe(100);
+    expect(categoryCounts['Fruits & Veg']).toBe(100);
+    expect(categoryCounts['Sugars & Spices']).toBe(100);
+    expect(categoryCounts['Sweets']).toBe(100);
+  });
+
+  it('has zero ID collisions across Part 1, Part 2, and Part 3 (1,200 unique Indian food items)', () => {
+    const allIds = new Set<string>();
+    for (const f of indianFoods) {
+      expect(allIds.has(f.id)).toBe(false);
+      allIds.add(f.id);
+    }
+    for (const f of indianFoodsPart2) {
+      expect(allIds.has(f.id)).toBe(false);
+      allIds.add(f.id);
+    }
+    for (const f of indianFoodsPart3) {
+      expect(allIds.has(f.id)).toBe(false);
+      allIds.add(f.id);
+    }
+    expect(allIds.size).toBe(1200);
   });
 });

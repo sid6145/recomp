@@ -20,38 +20,39 @@ function normalizeFoodItem(item: FoodItem): FoodItem {
 }
 
 /**
- * Lazy loads the 2,040 seed food items on demand.
- * Prevents 1.2MB of raw JSON from blocking initial JavaScript parse time.
+ * Lazy loads the 1,200 Indian seed food items on demand across Batch 1, 2, and 3.
+ * Prevents raw JSON from blocking initial JavaScript parse time.
  */
 async function loadSeedDatasets(): Promise<FoodItem[]> {
-  const [globalModule, indianModule, indianPart2Module] = await Promise.all([
-    import('./globalFoods.json'),
+  const [batch1Module, batch2Module, batch3Module] = await Promise.all([
     import('./indianFoodsSeed.json'),
     import('./indianFoodsSeed_Part2.json'),
+    import('./indianFoodsSeed_Part3.json'),
   ]);
-  const batch1 = (indianModule.default || indianModule) as FoodItem[];
-  const batch2 = (indianPart2Module.default || indianPart2Module) as FoodItem[];
-  const global = (globalModule.default || globalModule) as FoodItem[];
-  return [...global, ...batch1, ...batch2];
+  const batch1 = (batch1Module.default || batch1Module) as FoodItem[];
+  const batch2 = (batch2Module.default || batch2Module) as FoodItem[];
+  const batch3 = (batch3Module.default || batch3Module) as FoodItem[];
+  return [...batch1, ...batch2, ...batch3];
 }
 
 /**
- * Target count of all combined local datasets (1440 global + 300 Indian pt 1 + 300 Indian pt 2 = 2,040)
+ * Target count of all combined Indian datasets (300 Part 1 + 300 Part 2 + 600 Part 3 = 1,200)
  */
-export const TARGET_FOOD_COUNT = 2040;
+export const TARGET_FOOD_COUNT = 1200;
 
 /**
- * Initializes the Dexie database by merging Batch 1, Batch 2, and global datasets.
+ * Initializes the Dexie database by merging Batch 1, Batch 2, and Batch 3 datasets (1,200 items).
  * Protects existing records and vector embeddings from being overwritten.
  * Once seeded, identifies unvectorized foods and dispatches them to the Web Worker.
  */
 export async function initializeDatabase(worker?: Worker): Promise<FoodItem[]> {
   try {
     const count = await db.foods.count();
+    const hasBatch3Sample = await db.foods.get('d_101');
 
-    // If database is empty or has fewer entries than the full dataset, dynamically load and seed items
-    if (count < TARGET_FOOD_COUNT) {
-      console.log(`[dbSeeder] Current IndexedDB count (${count}) < target (${TARGET_FOOD_COUNT}). Loading datasets...`);
+    // If database is empty, has fewer entries than the full 1,200 dataset, or lacks Batch 3 items, seed items
+    if (count < TARGET_FOOD_COUNT || !hasBatch3Sample) {
+      console.log(`[dbSeeder] Current IndexedDB count (${count}) or missing Batch 3 sample. Loading datasets...`);
       const allFoods = await loadSeedDatasets();
       const formattedFoods: FoodItem[] = allFoods.map(normalizeFoodItem);
 
