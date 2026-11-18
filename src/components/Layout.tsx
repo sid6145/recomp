@@ -2,6 +2,7 @@ import React from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { HeaderNav } from './HeaderNav';
 import { BottomNav } from './BottomNav';
+import { GlobalBackground } from './GlobalBackground';
 import type { NavigationTab } from './CommandBar';
 
 export interface LayoutProps {
@@ -28,7 +29,10 @@ export const Layout: React.FC<LayoutProps> = ({
   hideBottomNav = false,
 }) => {
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col">
+    <div className="relative min-h-screen bg-neutral-950 text-neutral-100 flex flex-col">
+      {/* Global Dark-Luxury Biometric Background (Grid + Ambient Mesh + Noise) */}
+      <GlobalBackground />
+
       {/* Desktop Top Navigation (hidden on mobile, flex on md and above) */}
       <HeaderNav
         activeTab={activeTab}

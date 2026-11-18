@@ -131,7 +131,7 @@ export const Heatmap: React.FC<HeatmapProps> = ({ onBack }) => {
             title="Return to Today's Summary"
           >
             <ArrowLeft className="w-3.5 h-3.5 text-neutral-400" />
-            <span>← Summary</span>
+            <span>Summary</span>
           </button>
         ) : (
           <div />
@@ -191,11 +191,10 @@ export const Heatmap: React.FC<HeatmapProps> = ({ onBack }) => {
                   <span className="text-amber-400 font-bold">{hoveredDay.calories} kcal</span>
                   <span className="text-neutral-500">/ target {targetCalories} kcal</span>
                   <span
-                    className={`px-1.5 py-0.2 rounded font-bold ${
-                      hoveredDay.variance <= 0
+                    className={`px-1.5 py-0.2 rounded font-bold ${hoveredDay.variance <= 0
                         ? 'bg-[#00FF41]/20 text-[#00FF41]'
                         : 'bg-[#E60000]/20 text-rose-400'
-                    }`}
+                      }`}
                   >
                     {hoveredDay.variance > 0 ? `+${hoveredDay.variance}` : hoveredDay.variance} kcal
                   </span>
