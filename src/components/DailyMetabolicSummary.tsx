@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Activity, Sparkles, ArrowRight, ArrowLeft } from 'lucide-react';
+import { Activity, Sparkles, ArrowRight } from 'lucide-react';
 import { AnimatedCounter } from './AnimatedCounter';
 import { Heatmap } from './Heatmap';
 import { useHaptics } from '../hooks/useHaptics';
