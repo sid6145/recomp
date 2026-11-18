@@ -59,6 +59,7 @@ export default defineConfig({
         ],
       },
       workbox: {
+        maximumFileSizeToCacheInBytes: 10000000,
         globPatterns: ['**/*.{js,css,html,ico,png,svg,wasm,bin}'],
         runtimeCaching: [
           {
@@ -121,6 +122,9 @@ export default defineConfig({
       },
     }),
   ],
+  build: {
+    target: 'esnext',
+  },
   worker: {
     format: 'es',
     plugins: () => [],
