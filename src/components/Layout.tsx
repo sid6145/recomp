@@ -29,7 +29,7 @@ export const Layout: React.FC<LayoutProps> = ({
   hideBottomNav = false,
 }) => {
   return (
-    <div className="relative min-h-screen bg-neutral-950 text-neutral-100 flex flex-col">
+    <div className="relative min-h-[100dvh] bg-neutral-950 text-neutral-100 flex flex-col">
       {/* Global Dark-Luxury Biometric Background (Grid + Ambient Mesh + Noise) */}
       <GlobalBackground />
 
@@ -40,9 +40,9 @@ export const Layout: React.FC<LayoutProps> = ({
         onOpenSOS={onOpenSOS}
       />
 
-      {/* Main Content Area with Platform-Specific Responsive Padding */}
+      {/* Main Content Area with Platform-Specific Responsive Padding and Desktop Containment */}
       <main className="flex-1 w-full flex flex-col items-center pt-0 md:pt-20 pb-24 md:pb-8 px-4 sm:px-6">
-        <div className="w-full max-w-4xl flex-1 flex flex-col items-center">
+        <div className="w-full max-w-3xl mx-auto flex-1 flex flex-col items-center">
           {children}
         </div>
       </main>

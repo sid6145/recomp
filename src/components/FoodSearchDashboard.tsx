@@ -49,6 +49,7 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
   const [savedCustomIds, setSavedCustomIds] = useState<Set<string>>(new Set());
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const haptics = useHaptics();
 
   const handleSelectFoodForLog = (food: FoodItem | null) => {
@@ -58,10 +59,27 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
 
   const handleClearQuery = () => {
     haptics.tick();
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
     setQuery('');
     search('');
     inputRef.current?.focus();
   };
+
+  // Keyboard shortcut listener: Cmd+K (Mac) / Ctrl+K (Windows)
+  useEffect(() => {
+    const handleGlobalKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        inputRef.current?.focus();
+        inputRef.current?.select();
+      }
+    };
+
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
 
   const handleOpenScanner = () => {
     haptics.tick();
@@ -115,12 +133,49 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
     };
   }, [refreshRecentFoods, worker]);
 
+  // Debounced search trigger (300ms) to prevent UI thread lockup on rapid typing
+  const debouncedSearch = useCallback(
+    (nextQuery: string) => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+      debounceTimerRef.current = setTimeout(() => {
+        search(nextQuery);
+      }, 300);
+    },
+    [search]
+  );
+
+  // Clear debounce timer on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, []);
+
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const nextQuery = e.target.value;
     setQuery(nextQuery);
-    search(nextQuery);
+    debouncedSearch(nextQuery);
     if (globalSearchError) {
       setGlobalSearchError(null);
+    }
+  };
+
+  // Form submission handler: dismisses mobile keyboard and searches
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Blur inputs immediately to dismiss mobile virtual keyboard
+    inputRef.current?.blur();
+    (document.activeElement as HTMLElement)?.blur();
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+    search(query);
+    if (query.trim()) {
+      handleSearchOnline();
     }
   };
 
@@ -243,11 +298,16 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
   const isQueryEmpty = query.trim() === '';
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 touch-pan-y">
+    <div className="w-full max-w-3xl mx-auto p-4 sm:p-6 lg:p-8 touch-pan-y">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={AgenticTransition}
+        onTouchMove={() => {
+          if (document.activeElement === inputRef.current) {
+            inputRef.current?.blur();
+          }
+        }}
         className="relative overflow-hidden rounded-3xl border border-white/5 bg-neutral-900/90 backdrop-blur-2xl shadow-2xl p-6 sm:p-8 space-y-6 touch-pan-y"
       >
         {/* Ambient Glows */}
@@ -269,8 +329,8 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
 
         {/* Search Bar & Action Buttons Container */}
         <div className="space-y-3">
-          {/* Main Input */}
-          <div className="relative group">
+          {/* Main Input Form with mobile submit & dismiss */}
+          <form onSubmit={handleFormSubmit} action="#" className="relative group w-full">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-[#00FF41] transition-colors">
               {isSearchingLocal ? (
                 <Loader2 className="w-5 h-5 animate-spin text-[#00FF41]" />
@@ -294,11 +354,6 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
                   e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }, 150);
               }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && query.trim()) {
-                  handleSearchOnline();
-                }
-              }}
               placeholder={
                 dbReady
                   ? 'Semantic search (e.g., "dal", "egg", "rice", "Oreo", "Nutella")...'
@@ -306,7 +361,7 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
               }
               className="w-full bg-neutral-950/90 border border-white/5 rounded-2xl pl-12 pr-12 py-3.5 text-base sm:text-sm font-medium text-neutral-100 placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-[#00FF41]/50 focus:border-[#00FF41]/60 shadow-lg shadow-black/40 transition-all disabled:opacity-50 font-sans"
             />
-            {query.length > 0 && (
+            {query.length > 0 ? (
               <button
                 type="button"
                 onClick={handleClearQuery}
@@ -315,8 +370,14 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
               >
                 <X className="w-4 h-4" />
               </button>
+            ) : (
+              <div className="hidden sm:flex absolute inset-y-0 right-0 pr-4 items-center pointer-events-none">
+                <kbd className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-lg border border-white/10 bg-neutral-900 text-[10px] font-mono text-neutral-400">
+                  <span className="text-xs">⌘</span>K
+                </kbd>
+              </div>
             )}
-          </div>
+          </form>
 
           {/* Action Row: Direct "Search Online" & "Scan Barcode" Buttons (min 44px touch targets) */}
           <div className="flex flex-wrap items-center justify-between gap-2.5 pt-0.5">
@@ -369,8 +430,18 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
           onAddAndLog={handleAddAndLogGlobalFood}
         />
 
-        {/* Local Results / Recently Logged Section */}
-        <div className="space-y-3 pt-2">
+        {/* Local Results / Recently Logged Section with Touch-to-Dismiss */}
+        <div
+          onTouchMove={() => {
+            inputRef.current?.blur();
+            (document.activeElement as HTMLElement)?.blur();
+          }}
+          onScroll={() => {
+            inputRef.current?.blur();
+            (document.activeElement as HTMLElement)?.blur();
+          }}
+          className="space-y-3 pt-2"
+        >
           <div className="flex items-center justify-between px-1">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2 font-sans">
               <Compass className="w-3.5 h-3.5 text-[#00FF41]" />
