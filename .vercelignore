@@ -1,0 +1,10 @@
+node_modules
+dist
+test-results
+playwright-report
+blob-report
+scripts/*.json
+scripts/*.zip
+*.log
+.git
+.vercel
