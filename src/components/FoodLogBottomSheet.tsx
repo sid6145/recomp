@@ -9,6 +9,8 @@ import { useAppDispatch } from '../store/store';
 import { logFoodItem } from '../store/logsSlice';
 import { useHaptics } from '../hooks/useHaptics';
 import { AgenticTransition } from '../utils/motionPresets';
+import { useMomentum } from '../context/MomentumContext';
+import { playLogTick, playProteinGoalChime } from '../utils/soundEngine';
 
 export interface FoodLogBottomSheetProps {
   food: FoodItem | null;
@@ -36,7 +38,9 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const haptics = useHaptics();
+  const { isOverdrive, momentumTier, springPhysics, triggerEnergyPulse, dailyProteinTarget, currentProtein } = useMomentum();
   const [mounted, setMounted] = useState(false);
+  const [ringFlash, setRingFlash] = useState(false);
 
   // Unit and Quantity state
   const [selectedUnit, setSelectedUnit] = useState<string>('');
@@ -124,6 +128,25 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
     try {
       setIsLogging(true);
       haptics.tick();
+      playLogTick();
+
+      // In 3.0x (Overdrive), fire triggerEnergyPulse, ring flash, and mobile haptic tap
+      if (isOverdrive || momentumTier >= 3.0) {
+        triggerEnergyPulse();
+        setRingFlash(true);
+        setTimeout(() => setRingFlash(false), 600);
+        if (typeof navigator !== 'undefined' && typeof navigator.vibrate === 'function') {
+          try {
+            navigator.vibrate(8);
+          } catch {
+            // Ignored
+          }
+        }
+        // Check if hitting 100% daily protein target in Overdrive
+        if (currentProtein < dailyProteinTarget && currentProtein + calculatedMacros.protein >= dailyProteinTarget) {
+          playProteinGoalChime();
+        }
+      }
 
       // 1. Add to Dexie IndexedDB
       const savedLog = await addDynamicFoodLog(
@@ -320,19 +343,28 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
               </div>
             </div>
 
-            {/* Action Button (min 48px touch target) */}
-            <button
+            {/* Action Button (min 48px touch target with Overdrive tactile spring physics) */}
+            <motion.button
               type="button"
               disabled={isLogging || numericQuantity <= 0}
               onClick={handleLog}
-              className={`w-full min-h-[48px] py-3.5 px-6 rounded-2xl font-bold text-sm tracking-wide transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer ${
+              whileTap={{ scale: 0.96 }}
+              transition={springPhysics}
+              className={`relative overflow-hidden w-full min-h-[48px] py-3.5 px-6 rounded-2xl font-bold text-sm tracking-wide transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer ${
+                ringFlash ? 'ring-4 ring-emerald-400 shadow-[0_0_30px_rgba(52,211,153,0.8)] ' : ''
+              }${
                 loggedSuccess
-                  ? 'bg-[#00FF41] text-neutral-950 shadow-[0_0_20px_rgba(0,255,65,0.3)] scale-[0.99]'
+                  ? 'bg-[#00FF41] text-neutral-950 shadow-[0_0_25px_rgba(0,255,65,0.4)] scale-[0.99]'
                   : numericQuantity <= 0
                   ? 'bg-neutral-800 text-neutral-500 cursor-not-allowed border border-white/5'
+                  : isOverdrive
+                  ? 'bg-[#00FF41] hover:bg-[#00FF41]/95 text-neutral-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] active:scale-95 ring-1 ring-emerald-400 cta-sheen'
                   : 'bg-[#00FF41] hover:bg-[#00FF41]/90 text-neutral-950 shadow-[0_0_15px_rgba(0,255,65,0.2)] active:scale-95'
               }`}
             >
+              {isOverdrive && (
+                <span className="pointer-events-none absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full hover:translate-x-full transition-transform duration-700" />
+              )}
               {loggedSuccess ? (
                 <>
                   <Check className="w-5 h-5 text-neutral-950" />
@@ -346,7 +378,7 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
                   </span>
                 </>
               )}
-            </button>
+            </motion.button>
           </motion.div>
         </div>
       )}

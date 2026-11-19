@@ -83,12 +83,34 @@ export interface UserProfileRecord {
   updatedAt?: number;
 }
 
+export interface DodgedLog {
+  id?: number;
+  date: string; // ISO format YYYY-MM-DD
+  foodName: string;
+  calories: number;
+  timestamp: number;
+}
+
+export type MomentumTier = 1.0 | 1.5 | 2.0 | 3.0;
+
+export interface UserTelemetryRecord {
+  id: 1; // Singleton row constraint
+  momentumTier: MomentumTier;
+  consecutiveHitDays: number;
+  bankedCalories: number; // accumulated Mon–Fri surplus deficit
+  bankSpentWeekend: number;
+  lastCalculatedDate?: string;
+  updatedAt?: number;
+}
+
 export class InterventionDatabase extends Dexie {
   foods!: EntityTable<FoodItem, 'id'>;
   customFoods!: EntityTable<FoodItem, 'id'>;
   recipes!: EntityTable<RecipeItem, 'id'>;
   logs!: EntityTable<ConsumptionLog, 'id'>;
   profile!: EntityTable<UserProfileRecord, 'id'>;
+  dodgedLogs!: EntityTable<DodgedLog, 'id'>;
+  userTelemetry!: EntityTable<UserTelemetryRecord, 'id'>;
 
   constructor() {
     super('InterventionDB');
@@ -108,6 +130,17 @@ export class InterventionDatabase extends Dexie {
       recipes: '++id, name, totalWeightInGrams, *embedding_vector',
       logs: '++id, date, foodId, timestamp',
       profile: 'id, gender, age, heightCm, weightKg, activityMultiplier, weeklyLossKg, dailyCaloricTarget',
+    });
+
+    // Version 5: Added dodgedLogs and userTelemetry tables for gamification systems
+    this.version(5).stores({
+      foods: 'id, name, *embedding_vector',
+      customFoods: 'id, name, *embedding_vector',
+      recipes: '++id, name, totalWeightInGrams, *embedding_vector',
+      logs: '++id, date, foodId, timestamp',
+      profile: 'id, gender, age, heightCm, weightKg, activityMultiplier, weeklyLossKg, dailyCaloricTarget',
+      dodgedLogs: '++id, date, foodName, calories, timestamp',
+      userTelemetry: 'id, momentumTier, consecutiveHitDays, bankedCalories, bankSpentWeekend',
     });
   }
 }

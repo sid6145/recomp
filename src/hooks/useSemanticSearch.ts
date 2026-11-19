@@ -161,9 +161,7 @@ export function useSemanticSearch(): UseSemanticSearchReturn {
       .then(([foods, custom]) => {
         const all = [...custom, ...foods];
         const immediateMatches = executeTextSearch(trimmed, all).slice(0, 15);
-        if (immediateMatches.length > 0) {
-          setResults(immediateMatches);
-        }
+        setResults(immediateMatches);
       })
       .catch((err) => {
         console.warn('[useSemanticSearch] Instant text fallback error:', err);

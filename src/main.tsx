@@ -16,6 +16,8 @@ import { getFoodLogsForDate, deleteFoodLog } from './db/logManager';
 import { setLogEntries, removeLogEntry } from './store/logsSlice';
 import { initializeDatabase } from './db/dbSeeder';
 import { useHaptics } from './hooks/useHaptics';
+import { MomentumProvider } from './context/MomentumContext';
+import { MomentumHudPill } from './components/MomentumHudPill';
 import './index.css';
 
 interface DailyDiaryProps {
@@ -94,24 +96,32 @@ const App: React.FC = () => {
     >
       {/* Mobile Top Brand Bar & SOS Craving Trigger (hidden on md and above) */}
       <div className="w-full flex md:hidden items-center justify-between py-3 mb-2">
-        <div className="flex items-center gap-2.5">
-          <div className="w-2.5 h-2.5 rounded-full bg-[#00FF41] shadow-[0_0_10px_#00FF41]" />
+        <div className="flex items-center gap-2">
+          <img
+            src="/pwa-192x192.png"
+            alt="Recomp Logo"
+            className="w-6 h-6 rounded-md object-cover shadow-[0_0_8px_rgba(16,185,129,0.3)] shrink-0 border border-emerald-500/20"
+          />
+          <div className="w-2 h-2 rounded-full bg-[#00FF41] shadow-[0_0_10px_#00FF41]" />
           <span className="font-mono text-xs font-bold tracking-widest uppercase text-neutral-200">
             recomp
           </span>
         </div>
 
-        <button
-          type="button"
-          onClick={() => {
-            haptics.heartbeat(0.8);
-            dispatch(openSOS());
-          }}
-          className="min-h-[44px] min-w-[44px] inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-all cursor-pointer shadow-lg shadow-rose-950/40 active:scale-95"
-        >
-          <ShieldAlert className="w-4 h-4 text-rose-500 animate-pulse" />
-          <span>SOS Craving</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <MomentumHudPill compact />
+          <button
+            type="button"
+            onClick={() => {
+              haptics.heartbeat(0.8);
+              dispatch(openSOS());
+            }}
+            className="min-h-[44px] min-w-[44px] inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-all cursor-pointer shadow-lg shadow-rose-950/40 active:scale-95"
+          >
+            <ShieldAlert className="w-4 h-4 text-rose-500 animate-pulse" />
+            <span>SOS Craving</span>
+          </button>
+        </div>
       </div>
 
       {/* Screen Views */}
@@ -137,7 +147,9 @@ const App: React.FC = () => {
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <MomentumProvider>
+        <App />
+      </MomentumProvider>
     </Provider>
   </React.StrictMode>
 );

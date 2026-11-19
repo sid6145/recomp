@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Flame, Activity, ShieldAlert, Sparkles, Scale, User, Ruler, Calendar } from 'lucide-react';
+import { Flame, Activity, ShieldAlert, Sparkles, Scale, User, Ruler, Calendar, Zap, Volume2, VolumeX, AlertTriangle, Download } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { updateProfile, type ProfileState } from '../store/userSlice';
 import { syncProfileToDb, loadProfileFromDb } from '../db/profileSync';
 import { type Gender } from '../utils/thermodynamics';
 import { useHaptics } from '../hooks/useHaptics';
 import { AgenticTransition } from '../utils/motionPresets';
+import { useMomentum } from '../context/MomentumContext';
+import { isSoundEnabled, toggleSound, playLogTick } from '../utils/soundEngine';
+import type { MomentumTier } from '../db/db';
 
 interface GoalOption {
   label: string;
@@ -34,6 +37,8 @@ export const GoalSetter: React.FC = () => {
   const dispatch = useAppDispatch();
   const profile = useAppSelector((state) => state.user);
   const haptics = useHaptics();
+  const { momentumTier, tierName, cycleTier, setOverrideTier, isOverdrive, isUnstable, toggleUnstableOverride } = useMomentum();
+  const [soundActive, setSoundActive] = useState<boolean>(() => isSoundEnabled());
 
   // On initial mount, hydrate profile from IndexedDB if saved
   useEffect(() => {
@@ -68,7 +73,9 @@ export const GoalSetter: React.FC = () => {
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={AgenticTransition}
-        className="relative overflow-hidden rounded-3xl border border-white/5 bg-neutral-900/90 backdrop-blur-2xl shadow-2xl p-6 sm:p-8 space-y-8 touch-pan-y"
+        className={`relative overflow-hidden rounded-3xl border border-[var(--surface-border)] bg-[var(--surface-card)] backdrop-blur-2xl shadow-[var(--surface-highlight),var(--accent-glow)] p-6 sm:p-8 space-y-8 touch-pan-y transition-all duration-500 ${
+          isOverdrive ? 'ring-1 ring-emerald-400/30' : ''
+        }`}
       >
         {/* Glow Accents */}
         <div className="pointer-events-none absolute -top-32 -left-32 w-80 h-80 bg-[#00FF41]/10 rounded-full blur-3xl transform-gpu will-change-transform" />
@@ -100,7 +107,11 @@ export const GoalSetter: React.FC = () => {
                 initial={{ scale: 1.15, opacity: 0.8 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={AgenticTransition}
-                className="text-4xl sm:text-5xl font-black tracking-tight text-[#00FF41] drop-shadow-[0_0_15px_rgba(0,255,65,0.25)] font-mono tabular-nums"
+                className={`text-4xl sm:text-5xl font-black tracking-tight text-[#00FF41] font-mono tabular-nums ${
+                  isOverdrive
+                    ? 'drop-shadow-[0_0_20px_rgba(52,211,153,0.5)]'
+                    : 'drop-shadow-[0_0_15px_rgba(0,255,65,0.25)]'
+                }`}
               >
                 {profile.dailyCaloricTarget.toLocaleString()}
               </motion.span>
@@ -294,6 +305,142 @@ export const GoalSetter: React.FC = () => {
                 </button>
               );
             })}
+          </div>
+        </div>
+
+        {/* Section: Sound Effects & Dev Telemetry Controls */}
+        <div className="space-y-4 pt-4 border-t border-white/5">
+          {/* Sound Effects Toggle */}
+          <div className="flex items-center justify-between p-3.5 rounded-2xl bg-neutral-950/60 border border-white/5">
+            <div className="flex items-center gap-3">
+              <div className={`p-2 rounded-xl border ${soundActive ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' : 'bg-white/5 border-white/10 text-neutral-400'}`}>
+                {soundActive ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+              </div>
+              <div>
+                <div className="text-xs font-mono font-bold uppercase tracking-wider text-neutral-200">
+                  Micro-Sound Effects
+                </div>
+                <div className="text-[11px] text-neutral-400 font-sans">
+                  Synthesized Web Audio clicks on log &amp; harmonic chime on goal hit
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                const next = toggleSound();
+                setSoundActive(next);
+                if (next) playLogTick();
+                haptics.tick();
+              }}
+              className={`min-h-[38px] px-3.5 py-1.5 rounded-xl font-mono text-xs font-bold uppercase tracking-wider border transition-all cursor-pointer ${
+                soundActive
+                  ? 'bg-emerald-500/20 border-emerald-500/40 text-emerald-300 shadow-[0_0_12px_rgba(16,185,129,0.2)]'
+                  : 'bg-white/5 border-white/10 text-neutral-400 hover:text-neutral-200'
+              }`}
+            >
+              {soundActive ? 'Sound: ON' : 'Sound: OFF'}
+            </button>
+          </div>
+
+          {/* Dev Preview: Cycle Momentum Tier (Testing & Verification) */}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Zap className="w-4 h-4 text-emerald-400" />
+                <label className="text-xs font-semibold uppercase tracking-wider text-neutral-300 font-sans">
+                  Dev Preview: Cycle Momentum Tier
+                </label>
+              </div>
+              <span className="text-xs font-mono font-bold text-emerald-400 uppercase">
+                Current: {tierName} ({momentumTier.toFixed(1)}x)
+              </span>
+            </div>
+
+            <p className="text-xs text-neutral-400 font-sans">
+              Instantly preview app-wide 1.0x (Standby) &rarr; 1.5x (Ignition) &rarr; 2.0x (Velocity) &rarr; 3.0x (OVERDRIVE) visual progression and tactile feedback.
+            </p>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              {([1.0, 1.5, 2.0, 3.0] as MomentumTier[]).map((tier) => {
+                const isSelected = momentumTier === tier;
+                const name = tier === 3.0 ? 'OVERDRIVE' : tier === 2.0 ? '2.0x Velocity' : tier === 1.5 ? '1.5x Ignition' : '1.0x Standby';
+                return (
+                  <button
+                    key={tier}
+                    type="button"
+                    data-testid={`dev-tier-${tier.toFixed(1)}`}
+                    onClick={() => {
+                      haptics.tick();
+                      setOverrideTier(tier);
+                    }}
+                    className={`min-h-[44px] p-2.5 rounded-xl border text-center transition-all cursor-pointer font-mono text-xs ${
+                      isSelected
+                        ? tier === 3.0
+                          ? 'bg-emerald-950/70 border-emerald-400 text-emerald-300 shadow-[0_0_20px_rgba(16,185,129,0.3)] font-bold'
+                          : 'bg-emerald-950/40 border-emerald-500/40 text-emerald-400 font-bold'
+                        : 'bg-neutral-950/60 border-white/5 hover:border-white/10 text-neutral-400'
+                    }`}
+                  >
+                    <div className="font-extrabold">{tier.toFixed(1)}x</div>
+                    <div className="text-[10px] opacity-80 uppercase mt-0.5">{tier === 3.0 ? 'OVERDRIVE' : name.split(' ')[1]}</div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                haptics.tick();
+                cycleTier();
+              }}
+              className="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200 transition-all cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Dev Preview: Cycle Next Momentum Tier</span>
+            </button>
+          </div>
+
+          {/* Dev Preview: Toggle Unstable State */}
+          <div className="pt-2">
+            <button
+              type="button"
+              data-testid="toggle-unstable-btn"
+              onClick={() => {
+                haptics.tick();
+                toggleUnstableOverride();
+              }}
+              className={`w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider border transition-all cursor-pointer ${
+                isUnstable
+                  ? 'bg-amber-950/70 border-amber-500/60 text-amber-300 shadow-[0_0_18px_rgba(245,158,11,0.3)]'
+                  : 'bg-white/5 hover:bg-white/10 border-white/10 text-neutral-300'
+              }`}
+            >
+              <AlertTriangle className={`w-3.5 h-3.5 ${isUnstable ? 'text-amber-400 animate-pulse' : 'text-neutral-400'}`} />
+              <span>Dev Preview: Toggle Unstable State [{isUnstable ? 'ACTIVE: AMBER PULSE' : 'INACTIVE'}]</span>
+            </button>
+          </div>
+
+          {/* Dev Preview: Show PWA Install Popup */}
+          <div className="pt-2">
+            <button
+              type="button"
+              data-testid="dev-preview-pwa-btn"
+              onClick={() => {
+                haptics.tick();
+                window.dispatchEvent(
+                  new CustomEvent('recomp_preview_pwa_install', {
+                    detail: { platform: 'android' },
+                  })
+                );
+              }}
+              className="w-full min-h-[44px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-300 transition-all cursor-pointer active:scale-98"
+            >
+              <Download className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Dev Preview: Show PWA Install Popup</span>
+            </button>
           </div>
         </div>
       </motion.div>

@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import { Award, ArrowLeft, Info } from 'lucide-react';
 import { useAppSelector } from '../store/store';
 import { fetchHeatmapLogs, type DailyCaloriesMap } from '../db/heatmapData';
+import { isWeekendCoveredByBank } from '../utils/calorieBank';
+import { useMomentum } from '../context/MomentumContext';
 
 export interface HeatmapProps {
   onBack?: () => void;
@@ -20,6 +22,7 @@ interface HeatmapDay {
 export const Heatmap: React.FC<HeatmapProps> = ({ onBack }) => {
   const targetCalories = useAppSelector((state) => state.user.dailyCaloricTarget);
   const logEntries = useAppSelector((state) => state.logs.entries);
+  const { isOverdrive } = useMomentum();
 
   const [caloriesByDate, setCaloriesByDate] = useState<DailyCaloriesMap>({});
   const [hoveredDay, setHoveredDay] = useState<HeatmapDay | null>(null);
@@ -61,6 +64,14 @@ export const Heatmap: React.FC<HeatmapProps> = ({ onBack }) => {
           status = 'slight_surplus';
         } else {
           status = 'surplus';
+        }
+
+        // Safe Heatmap Integration: If Sat/Sun overage was covered by banked calories, evaluate as target_hit (Emerald)
+        if (
+          (status === 'slight_surplus' || status === 'surplus') &&
+          isWeekendCoveredByBank(dateStr, caloriesByDate, targetCalories)
+        ) {
+          status = 'target_hit';
         }
       }
 
@@ -165,9 +176,15 @@ export const Heatmap: React.FC<HeatmapProps> = ({ onBack }) => {
                 <div
                   key={day.dateStr}
                   onMouseEnter={() => setHoveredDay(day)}
-                  className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-xs transition-all duration-150 cursor-pointer ${getColorClass(
+                  className={`heatmap-cell w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-xs transition-all duration-150 cursor-pointer ${getColorClass(
                     day.status
-                  )}`}
+                  )} ${
+                    isOverdrive
+                      ? (day.status === 'target_hit' || day.status === 'deep_deficit'
+                          ? 'shadow-[0_0_6px_rgba(16,185,129,0.5)] '
+                          : '') + 'hover:shadow-[0_0_12px_rgba(52,211,153,0.9)] hover:scale-125 z-10'
+                      : ''
+                  }`}
                 />
               ))}
             </div>

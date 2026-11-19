@@ -3,7 +3,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { PlusCircle, Flame, Trash2, Scale } from 'lucide-react';
 import { DailyMetabolicSummary } from './DailyMetabolicSummary';
 import { AnimatedCounter } from './AnimatedCounter';
+import { WeekendVaultCard } from './WeekendVaultCard';
+import { DodgedVaultCard } from './DodgedVaultCard';
 import { useHaptics } from '../hooks/useHaptics';
+import { useMomentum } from '../context/MomentumContext';
 import type { LoggedEntry } from '../store/logsSlice';
 
 export interface DiaryViewProps {
@@ -25,6 +28,7 @@ export const DiaryView: React.FC<DiaryViewProps> = ({
   onDeleteEntry,
 }) => {
   const haptics = useHaptics();
+  const { isOverdrive, springPhysics } = useMomentum();
 
   const totalConsumed = entries.reduce(
     (acc, curr) => acc + (curr.totalCalories || 0),
@@ -65,6 +69,14 @@ export const DiaryView: React.FC<DiaryViewProps> = ({
       />
 
       {/* ============================================================ */}
+      {/* GAMIFICATION VAULTS: Weekend Calorie Bank & Dodged Vault     */}
+      {/* ============================================================ */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <WeekendVaultCard />
+        <DodgedVaultCard />
+      </div>
+
+      {/* ============================================================ */}
       {/* BOTTOM HALF: Today's Logged Foods List                       */}
       {/* ============================================================ */}
       <div className="space-y-3">
@@ -86,7 +98,12 @@ export const DiaryView: React.FC<DiaryViewProps> = ({
               onNavigateToSearch();
             }}
             whileTap={{ scale: 0.95 }}
-            className="min-h-[44px] min-w-[44px] inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-mono font-semibold text-emerald-400 hover:text-emerald-300 transition-colors cursor-pointer"
+            transition={springPhysics}
+            className={`min-h-[44px] min-w-[44px] inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-mono font-semibold rounded-xl transition-all cursor-pointer ${
+              isOverdrive
+                ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 font-bold shadow-[0_0_15px_rgba(16,185,129,0.35)]'
+                : 'text-emerald-400 hover:text-emerald-300'
+            }`}
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Add Entry</span>
@@ -95,7 +112,7 @@ export const DiaryView: React.FC<DiaryViewProps> = ({
 
         {/* Empty State */}
         {entries.length === 0 ? (
-          <div className="py-14 border border-dashed border-white/10 rounded-3xl text-center space-y-3 bg-neutral-900/30 backdrop-blur-sm">
+          <div className="py-14 border border-dashed border-white/10 rounded-3xl text-center space-y-3 bg-[var(--surface-card)] backdrop-blur-sm transition-colors duration-500">
             <Flame className="w-8 h-8 text-neutral-600 mx-auto" />
             <p className="text-sm font-medium text-neutral-300 font-sans">
               No entries logged for today.
@@ -110,7 +127,12 @@ export const DiaryView: React.FC<DiaryViewProps> = ({
                 onNavigateToSearch();
               }}
               whileTap={{ scale: 0.96 }}
-              className="mt-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold bg-emerald-500 hover:bg-emerald-400 text-neutral-950 transition-all cursor-pointer shadow-lg shadow-emerald-500/20"
+              transition={springPhysics}
+              className={`mt-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+                isOverdrive
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] font-bold'
+                  : 'bg-emerald-500 hover:bg-emerald-400 text-neutral-950 shadow-lg shadow-emerald-500/20'
+              }`}
             >
               Search Foods
             </motion.button>
@@ -127,7 +149,11 @@ export const DiaryView: React.FC<DiaryViewProps> = ({
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, x: -16 }}
                   transition={{ duration: 0.2 }}
-                  className="group p-4 rounded-2xl bg-neutral-900/70 hover:bg-neutral-900 border border-white/5 hover:border-white/10 flex items-center justify-between gap-4 transition-all touch-pan-y"
+                  className={`group p-4 rounded-2xl border transition-all duration-500 touch-pan-y flex items-center justify-between gap-4 ${
+                    isOverdrive
+                      ? 'bg-[var(--surface-card)] border-[var(--surface-border)] shadow-[var(--surface-highlight)]'
+                      : 'bg-neutral-900/70 hover:bg-neutral-900 border-white/5 hover:border-white/10'
+                  }`}
                 >
                   {/* Left: Food Identity and Portion */}
                   <div className="min-w-0 flex-1 space-y-1">

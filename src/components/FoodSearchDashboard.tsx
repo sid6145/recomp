@@ -118,6 +118,13 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
   useEffect(() => {
     let isMounted = true;
 
+    // Fast-path: immediately unblock input if Dexie is already populated
+    db.foods.count().then((count) => {
+      if (count > 0 && isMounted) {
+        setDbReady(true);
+      }
+    }).catch(() => {});
+
     initializeDatabase(worker ?? undefined)
       .then(async () => {
         if (!isMounted) return;
@@ -131,7 +138,7 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
     return () => {
       isMounted = false;
     };
-  }, [refreshRecentFoods, worker]);
+  }, [refreshRecentFoods]);
 
   // Debounced search trigger (300ms) to prevent UI thread lockup on rapid typing
   const debouncedSearch = useCallback(

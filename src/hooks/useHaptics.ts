@@ -1,4 +1,4 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useMemo } from 'react';
 
 export interface UseHapticsReturn {
   tick: () => void;
@@ -18,32 +18,42 @@ export function useHaptics(): UseHapticsReturn {
   const heartbeatTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isSupported = typeof window !== 'undefined' && 'vibrate' in navigator;
 
+  const canVibrate = useCallback(() => {
+    if (!isSupported) return false;
+    if (typeof navigator !== 'undefined' && 'userActivation' in navigator) {
+      if (!navigator.userActivation.hasBeenActive) {
+        return false;
+      }
+    }
+    return true;
+  }, [isSupported]);
+
   const cancel = useCallback(() => {
     if (heartbeatTimerRef.current) {
       clearTimeout(heartbeatTimerRef.current);
       heartbeatTimerRef.current = null;
     }
-    if (isSupported) {
+    if (canVibrate()) {
       try {
         navigator.vibrate(0);
       } catch {
         // Silently catch browser policy errors
       }
     }
-  }, [isSupported]);
+  }, [canVibrate]);
 
   /**
    * Micro-tap: Exactly 10ms light tick for typing, keystrokes, log selections, and incremental inputs.
    */
   const tick = useCallback(() => {
-    if (isSupported) {
+    if (canVibrate()) {
       try {
         navigator.vibrate(10);
       } catch {
         // Ignored in non-vibration or security-restricted frames
       }
     }
-  }, [isSupported]);
+  }, [canVibrate]);
 
   /**
    * Dynamic heartbeat pulse for the SOS Craving Engine.
@@ -52,7 +62,7 @@ export function useHaptics(): UseHapticsReturn {
    */
   const heartbeat = useCallback(
     (intensity: number = 0.5) => {
-      if (!isSupported) return;
+      if (!canVibrate()) return;
       try {
         // Clamped intensity between 0.1 and 1.0
         const clamped = Math.max(0.1, Math.min(1.0, intensity));
@@ -65,41 +75,44 @@ export function useHaptics(): UseHapticsReturn {
         // Ignored
       }
     },
-    [isSupported]
+    [canVibrate]
   );
 
   /**
    * Success double-pulse for log confirmations and database updates.
    */
   const success = useCallback(() => {
-    if (isSupported) {
+    if (canVibrate()) {
       try {
         navigator.vibrate([20, 35, 20]);
       } catch {
         // Ignored
       }
     }
-  }, [isSupported]);
+  }, [canVibrate]);
 
   /**
    * Warning heavy buzz for caloric threshold exceeded or emergency alert.
    */
   const warning = useCallback(() => {
-    if (isSupported) {
+    if (canVibrate()) {
       try {
         navigator.vibrate(45);
       } catch {
         // Ignored
       }
     }
-  }, [isSupported]);
+  }, [canVibrate]);
 
-  return {
-    tick,
-    heartbeat,
-    success,
-    warning,
-    cancel,
-    isSupported,
-  };
+  return useMemo(
+    () => ({
+      tick,
+      heartbeat,
+      success,
+      warning,
+      cancel,
+      isSupported,
+    }),
+    [tick, heartbeat, success, warning, cancel, isSupported]
+  );
 }

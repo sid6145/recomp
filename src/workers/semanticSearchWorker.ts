@@ -20,9 +20,10 @@ let pipelinePromise: Promise<FeatureExtractionPipeline> | null = null;
 
 // In-worker in-memory cache of searchable foods to prevent heavy IndexedDB deserialization on each search
 let cachedSearchableItems: FoodItem[] | null = null;
+let isGeneratingEmbeddings = false;
 
 async function getSearchableItems(forceRefresh = false): Promise<FoodItem[]> {
-  if (!cachedSearchableItems || forceRefresh) {
+  if (!cachedSearchableItems || cachedSearchableItems.length === 0 || forceRefresh) {
     const [foods, customFoods] = await Promise.all([
       db.foods.toArray(),
       db.customFoods.toArray(),
@@ -129,6 +130,11 @@ self.onmessage = async (e: MessageEvent<IncomingWorkerMessage>) => {
   // PHASE 2: BATCHED EMBEDDING GENERATION (20 items per batch)
   // -------------------------------------------------------------
   if (data.type === 'GENERATE_EMBEDDINGS') {
+    if (isGeneratingEmbeddings) {
+      console.log('[Worker] Batch embedding generation already in progress, skipping duplicate.');
+      return;
+    }
+    isGeneratingEmbeddings = true;
     try {
       const activePipeline = await getOrCreatePipeline();
       const items = data.payload || [];
@@ -178,6 +184,8 @@ self.onmessage = async (e: MessageEvent<IncomingWorkerMessage>) => {
         type: 'ERROR',
         error: batchErr instanceof Error ? batchErr.message : String(batchErr),
       });
+    } finally {
+      isGeneratingEmbeddings = false;
     }
     return;
   }
