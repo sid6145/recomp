@@ -1,10 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Plus } from 'lucide-react';
 import type { FoodItem } from '../db/db';
 import type { SemanticSearchResult } from '../hooks/useSemanticSearch';
 import { useHaptics } from '../hooks/useHaptics';
-import { AgenticTransition } from '../utils/motionPresets';
 
 export interface FoodSearchResultCellProps {
   food: FoodItem | SemanticSearchResult;
@@ -46,10 +44,7 @@ export const FoodSearchResultCell: React.FC<FoodSearchResultCellProps> = React.m
   const fatDisplay = fats ?? (food.baseMacrosPer100g as unknown as { fat?: number }).fat ?? 0;
 
   return (
-    <motion.div
-      whileHover={{ y: -2, scale: 1.01 }}
-      whileTap={{ scale: 0.98 }}
-      transition={AgenticTransition}
+    <div
       onClick={handleClick}
       role="button"
       tabIndex={0}
@@ -59,7 +54,7 @@ export const FoodSearchResultCell: React.FC<FoodSearchResultCellProps> = React.m
           handleClick();
         }
       }}
-      className={`group relative p-4 rounded-xl bg-neutral-900 hover:bg-neutral-900/95 border border-white/5 hover:border-[#00FF41]/40 shadow-lg shadow-black/40 transition-colors cursor-pointer flex flex-col justify-between gap-3 overflow-hidden select-none outline-none focus-visible:ring-1 focus-visible:ring-[#00FF41] touch-pan-y ${className}`}
+      className={`group relative p-4 rounded-xl bg-neutral-900 hover:bg-neutral-900/95 border border-white/5 hover:border-[#00FF41]/40 shadow-lg shadow-black/40 hover:-translate-y-0.5 hover:scale-[1.01] active:scale-[0.98] transition-transform duration-100 ease-out cursor-pointer flex flex-col justify-between gap-3 overflow-hidden select-none outline-none focus-visible:ring-1 focus-visible:ring-[#00FF41] touch-pan-y ${className}`}
     >
       {/* Ambient Neon Matrix hover glow line */}
       <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-[#00FF41]/0 to-transparent group-hover:via-[#00FF41]/50 transition-all duration-300" />
@@ -138,6 +133,6 @@ export const FoodSearchResultCell: React.FC<FoodSearchResultCellProps> = React.m
           <span className="hidden sm:inline">Log Food</span>
         </button>
       </div>
-    </motion.div>
+    </div>
   );
 });

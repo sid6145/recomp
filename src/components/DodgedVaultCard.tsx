@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Flame, Scale, ChevronDown, ChevronUp } from 'lucide-react';
 import { getAllDodgedLogs, getTotalDodgedCalories } from '../db/dodgedLogs';
 import type { DodgedLog } from '../db/db';
@@ -132,11 +132,11 @@ export const DodgedVaultCard: React.FC = React.memo(() => {
         {/* Expandable History Drawer */}
         <AnimatePresence>
           {isExpanded && recentLogs.length > 0 && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
+            <m.div
+              initial={{ opacity: 0, y: -6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.15 }}
               className="overflow-hidden"
             >
               <div className="mt-3 pt-2.5 border-t border-white/5 space-y-1.5">
@@ -168,7 +168,7 @@ export const DodgedVaultCard: React.FC = React.memo(() => {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>
@@ -182,11 +182,11 @@ export const DodgedVaultCard: React.FC = React.memo(() => {
           </span>
         </div>
         <div className="w-full h-1.5 rounded-full bg-zinc-950/80 border border-white/5 overflow-hidden p-0">
-          <motion.div
-            initial={{ width: 0 }}
-            animate={{ width: `${progressToNextKg}%` }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
-            className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+          <m.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: Math.min(1, Math.max(0, progressToNextKg / 100)) }}
+            transition={{ duration: 0.6, ease: 'easeOut' }}
+            className="h-full origin-left w-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_10px_rgba(16,185,129,0.3)]"
           />
         </div>
       </div>

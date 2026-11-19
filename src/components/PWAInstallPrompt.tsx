@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { X, Download, Share2, PlusSquare } from 'lucide-react';
 import { useHaptics } from '../hooks/useHaptics';
 
@@ -160,13 +160,13 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({ splashDone =
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
+        <m.div
           key="pwa-install-popup"
           data-testid="pwa-install-prompt"
-          initial={{ opacity: 0, y: 30, scale: 0.96 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.96 }}
-          transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 16 }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           className="fixed bottom-20 left-3 right-3 z-40 md:hidden bg-zinc-900/95 backdrop-blur-2xl border border-emerald-500/25 rounded-2xl p-4 shadow-[0_12px_40px_rgba(0,0,0,0.65)]"
         >
           <div className="flex items-start gap-3">
@@ -247,7 +247,7 @@ export const PWAInstallPrompt: React.FC<PWAInstallPromptProps> = ({ splashDone =
               )}
             </div>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

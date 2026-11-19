@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { PlusCircle, Flame, Trash2, Scale } from 'lucide-react';
 import { DailyMetabolicSummary } from './DailyMetabolicSummary';
 import { AnimatedCounter } from './AnimatedCounter';
@@ -28,7 +28,7 @@ const DiaryEntryRow: React.FC<DiaryEntryRowProps> = React.memo(({
   onDelete,
 }) => {
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, x: -16 }}
@@ -86,7 +86,7 @@ const DiaryEntryRow: React.FC<DiaryEntryRowProps> = React.memo(({
           <Trash2 className="w-4 h-4" />
         </button>
       </div>
-    </motion.div>
+    </m.div>
   );
 });
 
@@ -102,7 +102,7 @@ export const DiaryView: React.FC<DiaryViewProps> = React.memo(({
   onDeleteEntry,
 }) => {
   const haptics = useHaptics();
-  const { isOverdrive, springPhysics } = useMomentum();
+  const { isOverdrive } = useMomentum();
 
   const totalConsumed = entries.reduce(
     (acc, curr) => acc + (curr.totalCalories || 0),
@@ -165,15 +165,13 @@ export const DiaryView: React.FC<DiaryViewProps> = React.memo(({
             </span>
           </div>
 
-          <motion.button
+          <button
             type="button"
             onClick={() => {
               haptics.tick();
               onNavigateToSearch();
             }}
-            whileTap={{ scale: 0.95 }}
-            transition={springPhysics}
-            className={`min-h-[44px] min-w-[44px] inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-mono font-semibold rounded-xl transition-all cursor-pointer ${
+            className={`min-h-[44px] min-w-[44px] inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-mono font-semibold rounded-xl transition-all active:scale-[0.97] transition-transform duration-100 ease-out cursor-pointer ${
               isOverdrive
                 ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 font-bold shadow-[0_0_15px_rgba(16,185,129,0.35)]'
                 : 'text-emerald-400 hover:text-emerald-300'
@@ -181,7 +179,7 @@ export const DiaryView: React.FC<DiaryViewProps> = React.memo(({
           >
             <PlusCircle className="w-3.5 h-3.5" />
             <span>Add Entry</span>
-          </motion.button>
+          </button>
         </div>
 
         {/* Empty State */}
@@ -194,22 +192,20 @@ export const DiaryView: React.FC<DiaryViewProps> = React.memo(({
             <p className="text-xs text-neutral-500 font-sans max-w-xs mx-auto">
               Search and add foods you&apos;ve eaten to track your daily calories.
             </p>
-            <motion.button
+            <button
               type="button"
               onClick={() => {
                 haptics.tick();
                 onNavigateToSearch();
               }}
-              whileTap={{ scale: 0.96 }}
-              transition={springPhysics}
-              className={`mt-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all cursor-pointer ${
+              className={`mt-2 inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all active:scale-[0.97] transition-transform duration-100 ease-out cursor-pointer ${
                 isOverdrive
                   ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] font-bold'
                   : 'bg-emerald-500 hover:bg-emerald-400 text-neutral-950 shadow-lg shadow-emerald-500/20'
               }`}
             >
               Search Foods
-            </motion.button>
+            </button>
           </div>
         ) : (
           /* Populated Entries List */

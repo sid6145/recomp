@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { PiggyBank, Sparkles, ShieldCheck } from 'lucide-react';
 import {
   calculateCurrentWeekBank,
@@ -109,11 +109,11 @@ export const WeekendVaultCard: React.FC = React.memo(() => {
           </div>
 
           <div className="w-full h-1.5 rounded-full bg-zinc-950/80 border border-white/5 overflow-hidden p-0">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: `${fillPercentage}%` }}
-              transition={{ duration: 0.8, ease: 'easeOut' }}
-              className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 shadow-[0_0_10px_rgba(6,182,212,0.3)]"
+            <m.div
+              initial={{ scaleX: 0 }}
+              animate={{ scaleX: Math.min(1, Math.max(0, fillPercentage / 100)) }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              className="h-full origin-left w-full rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 shadow-[0_0_10px_rgba(6,182,212,0.3)]"
             />
           </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Zap, ShieldCheck, ChevronRight, X, Sparkles } from 'lucide-react';
 import { useMomentum } from '../context/MomentumContext';
 import { useHaptics } from '../hooks/useHaptics';
@@ -39,11 +39,10 @@ export const MomentumHudPill: React.FC<{ compact?: boolean }> = ({ compact = fal
   return (
     <div className="relative inline-block select-none">
       {/* Multiplier Trigger Pill */}
-      <motion.button
+      <button
         type="button"
         onClick={handleToggle}
-        whileTap={{ scale: 0.94 }}
-        className={`min-h-[36px] inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-bold tracking-tight border cursor-pointer transition-all ${getTierColor()}`}
+        className={`min-h-[36px] inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-bold tracking-tight border cursor-pointer transition-all active:scale-[0.97] transition-transform duration-100 ease-out ${getTierColor()}`}
         title="View Momentum Multiplier & Anti-Quit Status"
       >
         {isOverdrive ? (
@@ -68,7 +67,7 @@ export const MomentumHudPill: React.FC<{ compact?: boolean }> = ({ compact = fal
             ? `${momentumTier.toFixed(1)}x`
             : `${momentumTier.toFixed(1)}x ${tierName.toUpperCase()}`}
         </span>
-      </motion.button>
+      </button>
 
       {/* Popover Card */}
       <AnimatePresence>
@@ -80,7 +79,7 @@ export const MomentumHudPill: React.FC<{ compact?: boolean }> = ({ compact = fal
               onClick={() => setIsOpen(false)}
             />
 
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: -8, scale: 0.96 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8, scale: 0.96 }}
@@ -162,7 +161,7 @@ export const MomentumHudPill: React.FC<{ compact?: boolean }> = ({ compact = fal
                 </span>
                 <ChevronRight className="w-3.5 h-3.5 text-zinc-400" />
               </button>
-            </motion.div>
+            </m.div>
           </>
         )}
       </AnimatePresence>

@@ -81,14 +81,18 @@ export const AmbientBackdrop: React.FC = () => {
 
     const resize = () => {
       if (!canvas) return;
-      const isMobile = window.innerWidth < 768;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      if (w <= 0 || h <= 0) return;
+
+      const isMobile = w < 768;
       // Cap DPR: 1 on mobile, max 1.5 on desktop
       const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
-      logicalWidth = window.innerWidth;
-      logicalHeight = window.innerHeight;
+      logicalWidth = w;
+      logicalHeight = h;
 
-      canvas.width = Math.floor(logicalWidth * dpr);
-      canvas.height = Math.floor(logicalHeight * dpr);
+      canvas.width = Math.max(1, Math.floor(logicalWidth * dpr));
+      canvas.height = Math.max(1, Math.floor(logicalHeight * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
@@ -174,8 +178,11 @@ export const AmbientBackdrop: React.FC = () => {
 
     const render = (now: number) => {
       animFrameId = requestAnimationFrame(render);
-      // Skip updates when document is hidden or user is scrolling/typing
-      if (!isVisible || document.hidden || isScrolling || isTyping) {
+      // Skip updates when document is hidden, user is scrolling/typing, or modal/drawer is open
+      const isModalOpen =
+        document.body.style.overflow === 'hidden' ||
+        document.querySelector('[role="dialog"]') !== null;
+      if (!isVisible || document.hidden || isScrolling || isTyping || isModalOpen) {
         lastTime = now;
         return;
       }

@@ -20,6 +20,7 @@ import { MomentumProvider } from './context/MomentumContext';
 import { MomentumHudPill } from './components/MomentumHudPill';
 import { loadProfileFromDb, syncProfileToDb } from './db/profileSync';
 import { setHydratedProfile, markHydrated } from './store/userSlice';
+import { LazyMotion, domAnimation } from 'framer-motion';
 import './index.css';
 
 interface DailyDiaryProps {
@@ -177,7 +178,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
       <MomentumProvider>
-        <App />
+        <LazyMotion features={domAnimation} strict>
+          <App />
+        </LazyMotion>
       </MomentumProvider>
     </Provider>
   </React.StrictMode>

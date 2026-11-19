@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Zap, ArrowDown, X } from 'lucide-react';
 import { useMomentum } from '../context/MomentumContext';
 import { useHaptics } from '../hooks/useHaptics';
@@ -75,7 +75,7 @@ export const OverdriveEngagementCelebration: React.FC = () => {
       <AnimatePresence>
         {showOverdrivePulse && (
           <div className="fixed inset-0 pointer-events-none z-[60] flex items-center justify-center overflow-hidden">
-            <motion.div
+            <m.div
               initial={{ scale: 0.1, opacity: 0.95 }}
               animate={{ scale: 3.2, opacity: 0 }}
               exit={{ opacity: 0 }}
@@ -90,7 +90,7 @@ export const OverdriveEngagementCelebration: React.FC = () => {
       <AnimatePresence>
         {showDropPulse && (
           <div className="fixed inset-0 pointer-events-none z-[60] flex items-center justify-center overflow-hidden">
-            <motion.div
+            <m.div
               initial={{ opacity: 0.4 }}
               animate={{ opacity: 0 }}
               exit={{ opacity: 0 }}
@@ -106,11 +106,11 @@ export const OverdriveEngagementCelebration: React.FC = () => {
         {/* Overdrive Toast */}
         <AnimatePresence>
           {showOverdriveToast && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -16, scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 450, damping: 25 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="px-4 py-3 rounded-2xl bg-zinc-950/95 border border-emerald-400/50 backdrop-blur-2xl shadow-[0_0_35px_rgba(16,185,129,0.35)] flex items-center justify-between gap-3 select-none pointer-events-none"
             >
               <div className="flex items-center gap-3">
@@ -137,18 +137,18 @@ export const OverdriveEngagementCelebration: React.FC = () => {
               >
                 <X className="w-3.5 h-3.5" />
               </button>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
 
         {/* Momentum Dropped Toast */}
         <AnimatePresence>
           {showDropToast && (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, y: -20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -16, scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 450, damping: 25 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="mt-2 px-4 py-3 rounded-2xl bg-zinc-950/95 border border-amber-500/40 backdrop-blur-2xl shadow-[0_0_30px_rgba(245,158,11,0.25)] flex items-center justify-between gap-3 select-none pointer-events-none"
             >
               <div className="flex items-center gap-3">
@@ -173,7 +173,7 @@ export const OverdriveEngagementCelebration: React.FC = () => {
               >
                 <X className="w-3.5 h-3.5" />
               </button>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </div>

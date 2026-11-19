@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { X, Flame, Check, Scale } from 'lucide-react';
 import type { FoodItem } from '../db/db';
 import { calculateDynamicMacros } from '../utils/nutritionMath';
@@ -8,7 +8,6 @@ import { addDynamicFoodLog } from '../db/logManager';
 import { useAppDispatch } from '../store/store';
 import { logFoodItem } from '../store/logsSlice';
 import { useHaptics } from '../hooks/useHaptics';
-import { AgenticTransition } from '../utils/motionPresets';
 import { useMomentum } from '../context/MomentumContext';
 import { playLogTick, playProteinGoalChime } from '../utils/soundEngine';
 
@@ -38,7 +37,7 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const haptics = useHaptics();
-  const { isOverdrive, momentumTier, springPhysics, triggerEnergyPulse, dailyProteinTarget, currentProtein } = useMomentum();
+  const { isOverdrive, momentumTier, triggerEnergyPulse, dailyProteinTarget, currentProtein } = useMomentum();
   const [mounted, setMounted] = useState(false);
   const [ringFlash, setRingFlash] = useState(false);
 
@@ -200,7 +199,7 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
           className="fixed inset-0 z-[80] flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-auto"
         >
           {/* Backdrop (z-[80] Isolation) */}
-          <motion.div
+          <m.div
             key="food-log-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -211,12 +210,12 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
           />
 
           {/* Modal / Bottom Sheet Container (Safe Area padded on iOS) */}
-          <motion.div
+          <m.div
             key="food-log-sheet"
             initial={{ y: '100%', opacity: 0.5 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '100%', opacity: 0 }}
-            transition={AgenticTransition}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="relative w-full max-w-lg rounded-t-3xl sm:rounded-3xl border border-white/5 bg-neutral-900/95 backdrop-blur-2xl shadow-2xl p-6 sm:p-7 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] space-y-6 z-10 max-h-[88vh] overflow-y-auto overscroll-contain touch-pan-y"
           >
             {/* Subtle Ambient Radial Glow */}
@@ -344,13 +343,11 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
             </div>
 
             {/* Action Button (min 48px touch target with Overdrive tactile spring physics) */}
-            <motion.button
+            <button
               type="button"
               disabled={isLogging || numericQuantity <= 0}
               onClick={handleLog}
-              whileTap={{ scale: 0.96 }}
-              transition={springPhysics}
-              className={`relative overflow-hidden w-full min-h-[48px] py-3.5 px-6 rounded-2xl font-bold text-sm tracking-wide transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer ${
+              className={`relative overflow-hidden w-full min-h-[48px] py-3.5 px-6 rounded-2xl font-bold text-sm tracking-wide transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer active:scale-[0.97] transition-transform duration-100 ease-out ${
                 ringFlash ? 'ring-4 ring-emerald-400 shadow-[0_0_30px_rgba(52,211,153,0.8)] ' : ''
               }${
                 loggedSuccess
@@ -358,8 +355,8 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
                   : numericQuantity <= 0
                   ? 'bg-neutral-800 text-neutral-500 cursor-not-allowed border border-white/5'
                   : isOverdrive
-                  ? 'bg-[#00FF41] hover:bg-[#00FF41]/95 text-neutral-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] active:scale-95 ring-1 ring-emerald-400 cta-sheen'
-                  : 'bg-[#00FF41] hover:bg-[#00FF41]/90 text-neutral-950 shadow-[0_0_15px_rgba(0,255,65,0.2)] active:scale-95'
+                  ? 'bg-[#00FF41] hover:bg-[#00FF41]/95 text-neutral-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] ring-1 ring-emerald-400 cta-sheen'
+                  : 'bg-[#00FF41] hover:bg-[#00FF41]/90 text-neutral-950 shadow-[0_0_15px_rgba(0,255,65,0.2)]'
               }`}
             >
               {isOverdrive && (
@@ -378,8 +375,8 @@ export const FoodLogBottomSheet: React.FC<FoodLogBottomSheetProps> = ({
                   </span>
                 </>
               )}
-            </motion.button>
-          </motion.div>
+            </button>
+          </m.div>
         </div>
       )}
     </AnimatePresence>

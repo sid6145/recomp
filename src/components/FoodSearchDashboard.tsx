@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import {
   Search,
   Sparkles,
@@ -26,7 +26,6 @@ import {
 } from '../utils/openFoodFacts';
 import { db, type FoodItem } from '../db/db';
 import { useHaptics } from '../hooks/useHaptics';
-import { AgenticTransition } from '../utils/motionPresets';
 
 export interface FoodSearchDashboardProps {
   onBottomSheetToggle?: (isOpen: boolean) => void;
@@ -306,10 +305,10 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
 
   return (
     <div className="w-full max-w-3xl mx-auto p-4 sm:p-6 lg:p-8 touch-pan-y">
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={AgenticTransition}
+      <m.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.12 }}
         onTouchMove={() => {
           if (document.activeElement === inputRef.current) {
             inputRef.current?.blur();
@@ -518,7 +517,7 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
             )}
           </AnimatePresence>
         </div>
-      </motion.div>
+      </m.div>
 
       {/* Food Log Modal Bottom Sheet */}
       <FoodLogBottomSheet

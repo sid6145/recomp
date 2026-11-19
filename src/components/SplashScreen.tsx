@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 
 export interface SplashScreenProps {
   onComplete?: () => void;
@@ -63,7 +63,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete, forceSho
   return (
     <AnimatePresence onExitComplete={handleExitComplete}>
       {isVisible && (
-        <motion.div
+        <m.div
           key="recomp-splash-screen"
           data-testid="splash-screen"
           initial={{ opacity: 1 }}
@@ -77,7 +77,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete, forceSho
           {/* Centerpiece: Logo + Radial Halo */}
           <div className="relative flex flex-col items-center justify-center">
             {/* Soft Pulsing Emerald Halo */}
-            <motion.div
+            <m.div
               animate={{
                 scale: [1, 1.25, 1],
                 opacity: [0.35, 0.65, 0.35],
@@ -91,7 +91,7 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete, forceSho
             />
 
             {/* Logo Image */}
-            <motion.div
+            <m.div
               initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{
@@ -106,29 +106,29 @@ export const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete, forceSho
                 alt="Recomp Logo"
                 className="w-full h-full object-cover rounded-2xl"
               />
-            </motion.div>
+            </m.div>
 
             {/* Brand Title: RECOMP */}
-            <motion.span
+            <m.span
               initial={{ opacity: 0, y: 6 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15, duration: 0.4 }}
               className="font-mono text-sm font-black tracking-[0.35em] text-zinc-100 uppercase mt-5"
             >
               RECOMP
-            </motion.span>
+            </m.span>
 
-            {/* 900ms Sweeping Boot Bar */}
+            {/* 900ms Sweeping Boot Bar (Zero-Re-Render Compositing via scaleX) */}
             <div className="w-28 h-[2px] bg-zinc-900 rounded-full overflow-hidden mt-3.5 border border-white/5">
-              <motion.div
-                initial={{ width: '0%' }}
-                animate={{ width: '100%' }}
+              <m.div
+                initial={{ scaleX: 0 }}
+                animate={{ scaleX: 1 }}
                 transition={{ duration: 0.9, ease: 'easeInOut' }}
-                className="h-full bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_10px_#10b981]"
+                className="h-full origin-left w-full bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_10px_#10b981]"
               />
             </div>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

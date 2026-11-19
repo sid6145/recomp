@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Flame, Activity, ShieldAlert, Sparkles, Scale, User, Ruler, Calendar, Zap, Volume2, VolumeX, AlertTriangle, Download } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { updateProfile, setHydratedProfile, markHydrated, type ProfileState } from '../store/userSlice';
@@ -72,10 +72,10 @@ export const GoalSetter: React.FC = () => {
   return (
     <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 touch-pan-y">
       {/* Container with Glassmorphism */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={AgenticTransition}
+      <m.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.12 }}
         className={`relative overflow-hidden rounded-3xl border border-[var(--surface-border)] bg-[var(--surface-card)] backdrop-blur-2xl shadow-[var(--surface-highlight),var(--accent-glow)] p-6 sm:p-8 space-y-8 touch-pan-y transition-all duration-500 ${
           isOverdrive ? 'ring-1 ring-emerald-400/30' : ''
         }`}
@@ -105,7 +105,7 @@ export const GoalSetter: React.FC = () => {
               Daily Target
             </span>
             <div className="flex items-baseline gap-2">
-              <motion.span
+              <m.span
                 key={profile.dailyCaloricTarget}
                 data-testid="goal-target-calories"
                 initial={{ scale: 1.15, opacity: 0.8 }}
@@ -118,14 +118,14 @@ export const GoalSetter: React.FC = () => {
                 }`}
               >
                 {profile.dailyCaloricTarget.toLocaleString()}
-              </motion.span>
+              </m.span>
               <span className="text-sm font-mono font-semibold text-neutral-400">kcal/day</span>
             </div>
 
             {/* Safety Floor Alert */}
             <AnimatePresence>
               {isSafetyFloor && (
-                <motion.div
+                <m.div
                   initial={{ opacity: 0, y: 4 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -4 }}
@@ -133,7 +133,7 @@ export const GoalSetter: React.FC = () => {
                 >
                   <ShieldAlert className="w-3.5 h-3.5" />
                   <span>1,200 kcal is the recommended daily minimum</span>
-                </motion.div>
+                </m.div>
               )}
             </AnimatePresence>
           </div>
@@ -290,10 +290,8 @@ export const GoalSetter: React.FC = () => {
                   }`}
                 >
                   {isSelected && (
-                    <motion.div
-                      layoutId="selectedIndicator"
-                      className="absolute inset-0 rounded-2xl border-2 border-[#00FF41]/80 pointer-events-none shadow-[0_0_15px_rgba(0,255,65,0.2)]"
-                      transition={AgenticTransition}
+                    <div
+                      className="absolute inset-0 rounded-2xl border-2 border-[#00FF41]/80 pointer-events-none shadow-[0_0_15px_rgba(0,255,65,0.2)] transition-all duration-150"
                     />
                   )}
                   <div>
@@ -448,7 +446,7 @@ export const GoalSetter: React.FC = () => {
             </button>
           </div>
         </div>
-      </motion.div>
+      </m.div>
     </div>
   );
 };

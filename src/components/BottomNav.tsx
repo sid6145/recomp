@@ -1,8 +1,7 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { BookOpen, Search, UtensilsCrossed, Target } from 'lucide-react';
 import { useHaptics } from '../hooks/useHaptics';
-import { AgenticTransition } from '../utils/motionPresets';
 import { useMomentum } from '../context/MomentumContext';
 import type { NavigationTab } from './CommandBar';
 
@@ -48,12 +47,12 @@ export const BottomNav: React.FC<BottomNavProps> = ({
         isOverdrive ? 'shadow-[0_-1px_20px_rgba(16,185,129,0.18)]' : ''
       }`}
     >
-      <motion.nav
+      <m.nav
         aria-label="Mobile Bottom Navigation"
         initial={{ y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 32, opacity: 0 }}
-        transition={AgenticTransition}
+        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
         className="w-full px-4 py-2 flex items-center justify-around gap-1"
       >
         {/* Daily Diary Tab */}
@@ -111,7 +110,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
           <Target className="w-4 h-4 shrink-0" />
           <span className="text-[10px] truncate">Goals</span>
         </button>
-      </motion.nav>
+      </m.nav>
     </aside>
   );
 };

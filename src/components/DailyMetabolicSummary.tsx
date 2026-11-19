@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Activity, Sparkles, ArrowRight, PiggyBank, ShieldCheck } from 'lucide-react';
 import { AnimatedCounter } from './AnimatedCounter';
 import { AnimatedNumber } from './AnimatedNumber';
@@ -45,7 +45,7 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [caloriesByDate, setCaloriesByDate] = useState<DailyCaloriesMap>({});
   const haptics = useHaptics();
-  const { momentumTier, isOverdrive, springPhysics } = useMomentum();
+  const { momentumTier, isOverdrive } = useMomentum();
 
   // Load heatmap data for calorie bank calculation
   useEffect(() => {
@@ -82,7 +82,7 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
 
   return (
     <section aria-label="Daily Metabolic Telemetry" className="w-full [perspective:1200px] select-none touch-pan-y">
-      <motion.div
+      <m.div
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={CinematicTransition}
         style={{ transformStyle: 'preserve-3d' }}
@@ -106,7 +106,7 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
           )}
 
           {/* Breathing Neon Matrix Green (#00FF41) or Deep Crimson (#E60000) Radial Gradient */}
-          <motion.div
+          <m.div
             animate={{
               scale: [1, 1.15, 1],
               opacity: currentStatus === 'surplus' ? [0.2, 0.35, 0.2] : [0.15, 0.3, 0.15],
@@ -211,12 +211,10 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
               </div>
 
               {/* View Telemetry Button (triggers 3D Y-axis flip with 44px touch target) */}
-              <motion.button
+              <button
                 type="button"
                 onClick={handleFlipToTelemetry}
-                whileTap={{ scale: 0.96 }}
-                transition={springPhysics}
-                className={`inline-flex min-h-[44px] min-w-[44px] items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200 hover:text-white transition-all cursor-pointer shadow-md ${
+                className={`inline-flex min-h-[44px] min-w-[44px] items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200 hover:text-white transition-all active:scale-[0.97] transition-transform duration-100 ease-out cursor-pointer shadow-md ${
                   isOverdrive
                     ? 'hover:border-emerald-400/40 hover:shadow-[0_0_15px_rgba(16,185,129,0.25)]'
                     : ''
@@ -226,7 +224,7 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
                 <Activity className="w-4 h-4 text-[#00FF41]" />
                 <span className="hidden sm:inline">View Telemetry</span>
                 <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
-              </motion.button>
+              </button>
             </div>
           </div>
 
@@ -244,13 +242,13 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
               </span>
             </div>
             <div className="w-full h-2.5 rounded-full bg-neutral-950/80 border border-white/5 overflow-hidden p-0.5">
-              <motion.div
-                initial={{ width: 0 }}
+              <m.div
+                initial={{ scaleX: 0 }}
                 animate={{
-                  width: `${Math.min(100, (totalConsumed / (targetCalories || 1)) * 100)}%`,
+                  scaleX: Math.min(1, totalConsumed / (targetCalories || 1)),
                 }}
-                transition={{ duration: 1.0, ease: 'easeOut' }}
-                className={`h-full rounded-full transition-colors ${
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                className={`h-full origin-left w-full rounded-full transition-colors ${
                   isSurplus
                     ? 'bg-[#E60000] shadow-[0_0_15px_rgba(230,0,0,0.4)]'
                     : isWeekendOverageCovered
@@ -327,7 +325,7 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
           )}
           <Heatmap onBack={handleFlipToSummary} />
         </div>
-      </motion.div>
+      </m.div>
     </section>
   );
 });

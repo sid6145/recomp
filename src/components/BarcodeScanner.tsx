@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { Camera, X, AlertCircle, Barcode, Loader2 } from 'lucide-react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { useHaptics } from '../hooks/useHaptics';
-import { AgenticTransition } from '../utils/motionPresets';
 
 interface BarcodeScannerProps {
   isOpen: boolean;
@@ -124,18 +123,18 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   const content = (
     <AnimatePresence>
       {isOpen && (
-        <motion.div
+        <m.div
           key="barcode-scanner-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[85] flex items-center justify-center p-4 bg-neutral-950/85 backdrop-blur-2xl"
         >
-          <motion.div
+          <m.div
             initial={{ scale: 0.95, opacity: 0, y: 16 }}
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.95, opacity: 0, y: 16 }}
-            transition={AgenticTransition}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="relative w-full max-w-sm rounded-3xl border border-white/5 bg-neutral-900/95 backdrop-blur-2xl p-5 sm:p-6 space-y-4 shadow-2xl text-neutral-100"
           >
             {/* Header */}
@@ -216,8 +215,8 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
             >
               Cancel
             </button>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

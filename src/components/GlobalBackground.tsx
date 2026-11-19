@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 /**
  * GlobalBackground Component
@@ -44,7 +44,7 @@ export const GlobalBackground: React.FC = () => {
       {/* ============================================================ */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
         {/* Blob 1: Deep Oceanic Blue (Top-Left) */}
-        <motion.div
+        <m.div
           animate={{
             scale: [1, 1.15, 1],
             opacity: [0.15, 0.22, 0.15],
@@ -60,7 +60,7 @@ export const GlobalBackground: React.FC = () => {
         />
 
         {/* Blob 2: Deep Amethyst / Purple (Top-Right) */}
-        <motion.div
+        <m.div
           animate={{
             scale: [1.15, 1, 1.15],
             opacity: [0.18, 0.12, 0.18],
@@ -77,7 +77,7 @@ export const GlobalBackground: React.FC = () => {
         />
 
         {/* Blob 3: Deep Biometric Emerald Matrix (Mid-Bottom Center) */}
-        <motion.div
+        <m.div
           animate={{
             scale: [1, 1.12, 1],
             opacity: [0.10, 0.18, 0.10],

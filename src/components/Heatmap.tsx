@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Award, ArrowLeft, Info } from 'lucide-react';
 import { useAppSelector } from '../store/store';
 import { fetchHeatmapLogs, type DailyCaloriesMap } from '../db/heatmapData';
@@ -197,7 +197,7 @@ export const Heatmap: React.FC<HeatmapProps> = React.memo(({ onBack }) => {
         {/* Active Hover readout */}
         <div className="min-h-[22px] flex items-center gap-2">
           {hoveredDay ? (
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: -4 }}
               animate={{ opacity: 1, x: 0 }}
               className="flex items-center gap-2 text-neutral-300 font-mono text-[11px] tabular-nums"
@@ -219,7 +219,7 @@ export const Heatmap: React.FC<HeatmapProps> = React.memo(({ onBack }) => {
               ) : (
                 <span className="text-neutral-500">No logs recorded</span>
               )}
-            </motion.div>
+            </m.div>
           ) : (
             <span className="text-[11px] text-neutral-500 flex items-center gap-1.5 font-sans">
               <Info className="w-3.5 h-3.5" />

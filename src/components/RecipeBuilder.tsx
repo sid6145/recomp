@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import {
   UtensilsCrossed,
   Plus,
@@ -14,7 +14,6 @@ import { useSemanticSearch } from '../hooks/useSemanticSearch';
 import { calculateCompositeRecipe, type IngredientInput } from '../utils/recipeMath';
 import { db, type FoodItem } from '../db/db';
 import { useHaptics } from '../hooks/useHaptics';
-import { AgenticTransition } from '../utils/motionPresets';
 
 interface RecipeBuilderProps {
   onRecipeSaved?: () => void;
@@ -146,10 +145,10 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ onRecipeSaved }) =
   return (
     <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6 touch-pan-y">
       {/* Header & Live Aggregated Nutrition Card */}
-      <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={AgenticTransition}
+      <m.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.12 }}
         className="relative overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/95 md:bg-neutral-900/90 md:backdrop-blur-xl shadow-2xl p-6 sm:p-8 space-y-6 touch-pan-y"
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-5">
@@ -262,11 +261,11 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ onRecipeSaved }) =
           {/* Quick Dropdown of Results */}
           <AnimatePresence>
             {searchQuery.trim() && results.length > 0 && (
-              <motion.div
+              <m.div
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -4 }}
-                transition={AgenticTransition}
+                transition={{ duration: 0.15 }}
                 className="rounded-2xl border border-white/5 bg-neutral-900/95 shadow-2xl p-2 space-y-1 max-h-56 overflow-y-auto"
               >
                 {results.map((food) => (
@@ -290,7 +289,7 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ onRecipeSaved }) =
                     </button>
                   </div>
                 ))}
-              </motion.div>
+              </m.div>
             )}
           </AnimatePresence>
         </div>
@@ -332,11 +331,11 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ onRecipeSaved }) =
                 };
 
                 return (
-                  <motion.div
+                  <m.div
                     key={`${item.food.id}-${index}`}
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={AgenticTransition}
+                    transition={{ duration: 0.15 }}
                     className="p-3.5 rounded-2xl bg-neutral-950/60 border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
                   >
                     <div className="space-y-0.5 flex-1">
@@ -384,7 +383,7 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ onRecipeSaved }) =
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
-                  </motion.div>
+                  </m.div>
                 );
               })}
             </div>
@@ -423,7 +422,7 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ onRecipeSaved }) =
             </>
           )}
         </button>
-      </motion.div>
+      </m.div>
     </div>
   );
 };

@@ -424,10 +424,10 @@ async function runSeleniumSuite() {
     try {
       // Navigate to Settings / Goals tab
       const goalsTabBtn = await driver.wait(
-        until.elementLocated(By.xpath('//button[contains(., "Goal") or contains(., "goal")]')),
+        until.elementLocated(By.xpath('//header//button[contains(., "Goal") or contains(., "goal")] | //button[contains(., "Goal") or contains(., "goal")]')),
         5000
       );
-      await goalsTabBtn.click();
+      await driver.executeScript('arguments[0].click();', goalsTabBtn);
       await sleep(600);
 
       // Step 1: 1.0x Standby
@@ -444,26 +444,35 @@ async function runSeleniumSuite() {
       }
 
       // Step 2: 1.5x Ignition
-      const tier15Btn = await driver.findElement(By.css('button[data-testid="dev-tier-1.5"]'));
-      await tier15Btn.click();
-      await sleep(300);
+      const tier15Btn = await driver.wait(
+        until.elementLocated(By.css('button[data-testid="dev-tier-1.5"]')),
+        5000
+      );
+      await driver.executeScript('arguments[0].click();', tier15Btn);
+      await sleep(400);
       momentum = await driver.executeScript('return document.documentElement.dataset.momentum;');
       if (momentum !== 'ignition') {
         throw new Error(`Expected dataset.momentum='ignition' at 1.5x, received '${momentum}'`);
       }
 
       // Step 3: 2.0x Velocity
-      const tier2Btn = await driver.findElement(By.css('button[data-testid="dev-tier-2.0"]'));
-      await tier2Btn.click();
-      await sleep(300);
+      const tier2Btn = await driver.wait(
+        until.elementLocated(By.css('button[data-testid="dev-tier-2.0"]')),
+        5000
+      );
+      await driver.executeScript('arguments[0].click();', tier2Btn);
+      await sleep(400);
       momentum = await driver.executeScript('return document.documentElement.dataset.momentum;');
       if (momentum !== 'velocity') {
         throw new Error(`Expected dataset.momentum='velocity' at 2.0x, received '${momentum}'`);
       }
 
       // Step 4: 3.0x Overdrive
-      const tier3Btn = await driver.findElement(By.css('button[data-testid="dev-tier-3.0"]'));
-      await tier3Btn.click();
+      const tier3Btn = await driver.wait(
+        until.elementLocated(By.css('button[data-testid="dev-tier-3.0"]')),
+        5000
+      );
+      await driver.executeScript('arguments[0].click();', tier3Btn);
       await sleep(500);
       momentum = await driver.executeScript('return document.documentElement.dataset.momentum;');
       if (momentum !== 'overdrive') {
@@ -525,6 +534,14 @@ async function runSeleniumSuite() {
         5000
       );
       const isCardClickable = await paneerCard.isDisplayed();
+
+      // Clean up search input & return to Diary
+      await searchInputInOverdrive.clear();
+      const diaryNav = await driver.findElement(
+        By.xpath('//header//button[contains(., "Diary") or contains(., "diary")] | //button[contains(., "Diary") or contains(., "diary")]')
+      );
+      await driver.executeScript('arguments[0].click();', diaryNav);
+      await sleep(500);
 
       recordTest(
         '6. Stepped Overdrive UI & Aurora + Motes',

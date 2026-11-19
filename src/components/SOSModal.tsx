@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ShieldAlert, Sparkles, CheckCircle2, X, Trophy } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { closeSOS } from '../store/sosSlice';
@@ -94,7 +94,7 @@ const SOSTimerLeaf: React.FC<SOSTimerLeafProps> = React.memo(({ onTimeUp }) => {
   return (
     <div className="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
       {/* Dynamic Animated Pulse Ring */}
-      <motion.div
+      <m.div
         animate={{
           scale: breathPhase === 'Inhale' ? 1.08 : breathPhase === 'Hold' ? 1.08 : 0.94,
         }}
@@ -136,7 +136,7 @@ const SOSTimerLeaf: React.FC<SOSTimerLeafProps> = React.memo(({ onTimeUp }) => {
             </linearGradient>
           </defs>
         </svg>
-      </motion.div>
+      </m.div>
 
       {/* Inner Content: Timer & Breathing cue */}
       <div className="relative z-10 flex flex-col items-center justify-center text-center p-4">
@@ -150,7 +150,7 @@ const SOSTimerLeaf: React.FC<SOSTimerLeafProps> = React.memo(({ onTimeUp }) => {
         </div>
 
         {/* Breathing Phase Tag */}
-        <motion.div
+        <m.div
           key={breathPhase}
           initial={{ opacity: 0, y: 3 }}
           animate={{ opacity: 1, y: 0 }}
@@ -168,7 +168,7 @@ const SOSTimerLeaf: React.FC<SOSTimerLeafProps> = React.memo(({ onTimeUp }) => {
           <span className="text-zinc-200">
             {breathPhase} ({breathSeconds}s)
           </span>
-        </motion.div>
+        </m.div>
       </div>
     </div>
   );
@@ -292,12 +292,12 @@ export const SOSModal: React.FC = () => {
   const content = (
     <AnimatePresence>
       {isSOSActive && (
-        <motion.div
+        <m.div
           key="sos-system-override"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
+          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
           className="fixed inset-0 z-[100] flex flex-col items-center justify-between p-6 sm:p-10 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] bg-zinc-950/95 backdrop-blur-2xl text-zinc-100 overflow-y-auto"
           role="dialog"
           aria-modal="true"
@@ -349,16 +349,16 @@ export const SOSModal: React.FC = () => {
                 {/* Grounded Motivational Quotes (Rotating every 45s) */}
                 <div className="w-full max-w-md min-h-[64px] flex items-center justify-center text-center px-4 mt-6">
                   <AnimatePresence mode="wait">
-                    <motion.p
+                    <m.p
                       key={quoteIndex}
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.35 }}
+                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                       className="text-xs sm:text-sm font-sans font-medium text-zinc-300 italic leading-relaxed"
                     >
                       &ldquo;{MOTIVATIONAL_QUOTES[quoteIndex]}&rdquo;
-                    </motion.p>
+                    </m.p>
                   </AnimatePresence>
                 </div>
               </div>
@@ -366,15 +366,14 @@ export const SOSModal: React.FC = () => {
               {/* Bottom Actions: Early Victory & Bypass Friction */}
               <footer className="relative z-10 w-full max-w-sm flex flex-col items-center gap-4 pb-2">
                 {/* Early Victory Button ("I Beat the Urge") */}
-                <motion.button
+                <button
                   type="button"
                   onClick={handleEarlyVictory}
-                  whileTap={{ scale: 0.96 }}
-                  className="w-full min-h-[48px] py-3 px-6 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] transition-all flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full min-h-[48px] py-3 px-6 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] transition-all active:scale-[0.97] transition-transform duration-100 ease-out flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Trophy className="w-4 h-4" />
                   <span>I Beat the Urge</span>
-                </motion.button>
+                </button>
 
                 {/* 5-Second Friction Bypass Hold Button */}
                 <div className="w-full relative flex flex-col items-center">
@@ -409,11 +408,11 @@ export const SOSModal: React.FC = () => {
           {/* STEP 2: VICTORY LOGGING (Preset Pills or Custom Input)                     */}
           {/* ========================================================================= */}
           {currentStep === 'victory' && (
-            <motion.div
+            <m.div
               key="sos-victory-step"
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="relative z-10 w-full max-w-md my-auto flex flex-col items-center text-center space-y-6 p-6 rounded-3xl bg-zinc-900/80 border border-white/10 backdrop-blur-2xl shadow-2xl"
             >
               <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.2)]">
@@ -482,18 +481,18 @@ export const SOSModal: React.FC = () => {
                   Save to Dodged Vault
                 </button>
               </form>
-            </motion.div>
+            </m.div>
           )}
 
           {/* ========================================================================= */}
           {/* STEP 3: CELEBRATION MODAL                                                 */}
           {/* ========================================================================= */}
           {currentStep === 'celebration' && (
-            <motion.div
+            <m.div
               key="sos-celebration-step"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.4, type: 'spring' }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
               className="relative z-10 w-full max-w-sm my-auto flex flex-col items-center text-center space-y-4 p-8 rounded-3xl bg-zinc-900/95 border border-emerald-500/40 backdrop-blur-2xl shadow-[0_0_50px_rgba(16,185,129,0.3)]"
             >
               <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center animate-bounce shadow-[0_0_25px_rgba(16,185,129,0.4)]">
@@ -512,9 +511,9 @@ export const SOSModal: React.FC = () => {
                   That&apos;s ~{(savedCalories / 7700).toFixed(2)} kg of body fat prevented. Your discipline builds momentum.
                 </p>
               </div>
-            </motion.div>
+            </m.div>
           )}
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

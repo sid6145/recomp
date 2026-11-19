@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import {
   Globe,
   Camera,
@@ -287,10 +287,11 @@ export const GlobalSearchFallback: React.FC<GlobalSearchFallbackProps> = ({
       {/* Barcode Scanner Modal Viewport */}
       <AnimatePresence>
         {isScanning && (
-          <motion.div
+          <m.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-zinc-950/90 backdrop-blur-xl"
           >
             <div className="relative w-full max-w-sm rounded-3xl border border-zinc-800 bg-zinc-900 p-5 space-y-4 shadow-2xl">
@@ -328,7 +329,7 @@ export const GlobalSearchFallback: React.FC<GlobalSearchFallbackProps> = ({
                 Cancel Scanner
               </button>
             </div>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
 
