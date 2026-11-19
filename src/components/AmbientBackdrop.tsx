@@ -22,7 +22,8 @@ interface Mote {
  * - 3.0x (Overdrive): Full luminous Aurora + lightweight GPU-accelerated <canvas> micro-motes.
  * - data-unstable="true": Shifts accents from calm emerald to tense amber-emerald pulse.
  * - Reactive Surge: Accelerates motes upward & boosts opacity for 600ms on triggerEnergyPulse().
- * - Battery Guard: Automatically pauses requestAnimationFrame loop when document.hidden === true.
+ * - Battery Guard & Frame Stability: Automatically pauses requestAnimationFrame loop when document.hidden === true
+ *   or while user is actively scrolling or typing in Food Search.
  * - Non-blocking: Strict pointer-events-none across all layers.
  */
 export const AmbientBackdrop: React.FC = () => {
@@ -65,22 +66,37 @@ export const AmbientBackdrop: React.FC = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
     let animFrameId: number;
     let isVisible = !document.hidden;
+    let isScrolling = false;
+    let isTyping = false;
+    let scrollTimer: ReturnType<typeof setTimeout> | null = null;
+    let typingTimer: ReturnType<typeof setTimeout> | null = null;
+
+    let logicalWidth = window.innerWidth;
+    let logicalHeight = window.innerHeight;
 
     const resize = () => {
       if (!canvas) return;
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const isMobile = window.innerWidth < 768;
+      // Cap DPR: 1 on mobile, max 1.5 on desktop
+      const dpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.5);
+      logicalWidth = window.innerWidth;
+      logicalHeight = window.innerHeight;
+
+      canvas.width = Math.floor(logicalWidth * dpr);
+      canvas.height = Math.floor(logicalHeight * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
     resize();
     window.addEventListener('resize', resize);
 
-    // Initialize 28 micro-motes
-    const count = 28;
+    // Mobile: 12 motes; Desktop: 28 motes
+    const isMobile = window.innerWidth < 768;
+    const count = isMobile ? 12 : 28;
     const motes: Mote[] = [];
     const colors: Array<'emerald' | 'teal' | 'amber'> = isUnstable
       ? ['emerald', 'amber', 'amber']
@@ -88,8 +104,8 @@ export const AmbientBackdrop: React.FC = () => {
 
     for (let i = 0; i < count; i++) {
       motes.push({
-        x: Math.random() * (canvas.width || 800),
-        y: Math.random() * (canvas.height || 600),
+        x: Math.random() * (logicalWidth || 800),
+        y: Math.random() * (logicalHeight || 600),
         size: 1.0 + Math.random() * 1.5,
         speedY: 0.35 + Math.random() * 0.45,
         baseAlpha: 0.08 + Math.random() * 0.18,
@@ -101,7 +117,8 @@ export const AmbientBackdrop: React.FC = () => {
 
     // If reduced motion is requested, render static motes once without animation loop
     if (prefersReducedMotion) {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+      ctx.shadowBlur = 0;
       for (const m of motes) {
         ctx.beginPath();
         ctx.arc(m.x, m.y, m.size, 0, Math.PI * 2);
@@ -127,16 +144,47 @@ export const AmbientBackdrop: React.FC = () => {
     };
     document.addEventListener('visibilitychange', handleVisibility);
 
+    // Frame-saver: Pause animation loop while scrolling
+    const onScroll = () => {
+      isScrolling = true;
+      if (scrollTimer) clearTimeout(scrollTimer);
+      scrollTimer = setTimeout(() => {
+        isScrolling = false;
+        lastTime = performance.now();
+      }, 150);
+    };
+
+    // Frame-saver: Pause animation loop while typing in Food Search or inputs
+    const onInput = (e: Event) => {
+      const target = e.target as HTMLElement | null;
+      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) {
+        isTyping = true;
+        if (typingTimer) clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+          isTyping = false;
+          lastTime = performance.now();
+        }, 300);
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    document.addEventListener('input', onInput, { passive: true });
+
     let lastTime = performance.now();
 
     const render = (now: number) => {
       animFrameId = requestAnimationFrame(render);
-      if (!isVisible) return;
+      // Skip updates when document is hidden or user is scrolling/typing
+      if (!isVisible || document.hidden || isScrolling || isTyping) {
+        lastTime = now;
+        return;
+      }
 
       const dt = Math.min(now - lastTime, 100);
       lastTime = now;
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, logicalWidth, logicalHeight);
+      ctx.shadowBlur = 0;
 
       const isSurging = now < surgeUntilRef.current;
       const speedMultiplier = isSurging ? 2.8 : 1.0;
@@ -150,8 +198,8 @@ export const AmbientBackdrop: React.FC = () => {
 
         // Wrap around at top
         if (m.y < -10) {
-          m.y = canvas.height + 5;
-          m.x = Math.random() * canvas.width;
+          m.y = logicalHeight + 5;
+          m.x = Math.random() * logicalWidth;
         }
 
         // Alpha fade oscillation
@@ -164,6 +212,7 @@ export const AmbientBackdrop: React.FC = () => {
 
         const renderAlpha = Math.min(0.85, m.currentAlpha + alphaBoost);
 
+        // Crisp solid/alpha circles only (zero radial shadow/blur draws inside loop)
         ctx.beginPath();
         ctx.arc(m.x, m.y, m.size * (isSurging ? 1.3 : 1.0), 0, Math.PI * 2);
 
@@ -184,7 +233,11 @@ export const AmbientBackdrop: React.FC = () => {
     return () => {
       cancelAnimationFrame(animFrameId);
       window.removeEventListener('resize', resize);
+      window.removeEventListener('scroll', onScroll);
+      document.removeEventListener('input', onInput);
       document.removeEventListener('visibilitychange', handleVisibility);
+      if (scrollTimer) clearTimeout(scrollTimer);
+      if (typingTimer) clearTimeout(typingTimer);
     };
   }, [isOverdrive, isUnstable, prefersReducedMotion]);
 
@@ -214,14 +267,14 @@ export const AmbientBackdrop: React.FC = () => {
       {momentumTier === 2.0 && (
         <div className="absolute inset-0 transition-opacity duration-700 ease-out">
           <div
-            className="absolute -top-32 -left-20 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.11] transform-gpu will-change-transform animate-spin-slow"
+            className="absolute -top-32 -left-20 w-[600px] h-[600px] rounded-full blur-[140px] opacity-[0.11] transform-gpu will-change-transform md:animate-spin-slow"
             style={{
               background: 'radial-gradient(circle, #10b981 0%, transparent 70%)',
               animationDuration: '20s',
             }}
           />
           <div
-            className="absolute -top-24 -right-20 w-[550px] h-[550px] rounded-full blur-[140px] opacity-[0.10] transform-gpu will-change-transform animate-spin-slow"
+            className="absolute -top-24 -right-20 w-[550px] h-[550px] rounded-full blur-[140px] opacity-[0.10] transform-gpu will-change-transform md:animate-spin-slow"
             style={{
               background: 'radial-gradient(circle, #06b6d4 0%, transparent 70%)',
               animationDuration: '24s',
@@ -244,16 +297,16 @@ export const AmbientBackdrop: React.FC = () => {
             }}
           />
 
-          {/* Drifting Ambient Blobs */}
+          {/* Drifting Ambient Blobs (GPU transform animated on desktop, static on mobile) */}
           <div
-            className={`absolute -top-24 left-1/4 w-[500px] h-[500px] rounded-full blur-[130px] opacity-[0.12] transform-gpu animate-spin-slow ${
+            className={`absolute -top-24 left-1/4 w-[500px] h-[500px] rounded-full blur-[130px] opacity-[0.12] transform-gpu will-change-transform md:animate-spin-slow ${
               isUnstable ? 'bg-amber-500/20' : 'bg-emerald-500/20'
             }`}
             style={{ animationDuration: '18s' }}
           />
 
           <div
-            className="absolute -top-20 right-1/4 w-[450px] h-[450px] rounded-full blur-[130px] opacity-[0.10] transform-gpu animate-spin-slow"
+            className="absolute -top-20 right-1/4 w-[450px] h-[450px] rounded-full blur-[130px] opacity-[0.10] transform-gpu will-change-transform md:animate-spin-slow"
             style={{
               background: isUnstable
                 ? 'radial-gradient(circle, #f59e0b 0%, transparent 70%)'

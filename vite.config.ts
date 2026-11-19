@@ -124,6 +124,15 @@ export default defineConfig({
   ],
   build: {
     target: 'esnext',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'dexie', 'dexie-react-hooks', '@reduxjs/toolkit', 'react-redux'],
+          motion: ['framer-motion'],
+          icons: ['lucide-react'],
+        },
+      },
+    },
   },
   worker: {
     format: 'es',

@@ -150,7 +150,7 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ onRecipeSaved }) =
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={AgenticTransition}
-        className="relative overflow-hidden rounded-3xl border border-white/5 bg-neutral-900/90 backdrop-blur-2xl shadow-2xl p-6 sm:p-8 space-y-6 touch-pan-y"
+        className="relative overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/95 md:bg-neutral-900/90 md:backdrop-blur-xl shadow-2xl p-6 sm:p-8 space-y-6 touch-pan-y"
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-5">
           <div className="space-y-1">
@@ -334,7 +334,6 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ onRecipeSaved }) =
                 return (
                   <motion.div
                     key={`${item.food.id}-${index}`}
-                    layout="position"
                     initial={{ opacity: 0, y: 4 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={AgenticTransition}

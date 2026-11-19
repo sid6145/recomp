@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Flame, Activity, ShieldAlert, Sparkles, Scale, User, Ruler, Calendar, Zap, Volume2, VolumeX, AlertTriangle, Download } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { updateProfile, type ProfileState } from '../store/userSlice';
+import { updateProfile, setHydratedProfile, markHydrated, type ProfileState } from '../store/userSlice';
 import { syncProfileToDb, loadProfileFromDb } from '../db/profileSync';
 import { type Gender } from '../utils/thermodynamics';
 import { useHaptics } from '../hooks/useHaptics';
@@ -40,20 +40,23 @@ export const GoalSetter: React.FC = () => {
   const { momentumTier, tierName, cycleTier, setOverrideTier, isOverdrive, isUnstable, toggleUnstableOverride } = useMomentum();
   const [soundActive, setSoundActive] = useState<boolean>(() => isSoundEnabled());
 
-  // On initial mount, hydrate profile from IndexedDB if saved
+  // On initial mount, hydrate profile from IndexedDB if not yet loaded
   useEffect(() => {
     loadProfileFromDb().then((saved) => {
       if (saved) {
-        dispatch(updateProfile(saved));
+        dispatch(setHydratedProfile(saved));
       } else {
-        syncProfileToDb(profile);
+        dispatch(markHydrated());
+        syncProfileToDb({ ...profile, isHydrated: true });
       }
     });
   }, [dispatch]);
 
-  // Autosave to IndexedDB on every Redux state update
+  // Autosave to IndexedDB on every Redux state update (only when hydrated)
   useEffect(() => {
-    syncProfileToDb(profile);
+    if (profile.isHydrated) {
+      syncProfileToDb(profile);
+    }
   }, [profile]);
 
   /**
@@ -104,6 +107,7 @@ export const GoalSetter: React.FC = () => {
             <div className="flex items-baseline gap-2">
               <motion.span
                 key={profile.dailyCaloricTarget}
+                data-testid="goal-target-calories"
                 initial={{ scale: 1.15, opacity: 0.8 }}
                 animate={{ scale: 1, opacity: 1 }}
                 transition={AgenticTransition}
@@ -277,6 +281,7 @@ export const GoalSetter: React.FC = () => {
                 <button
                   key={opt.label}
                   type="button"
+                  data-testid={`goal-option-${opt.value}`}
                   onClick={() => handleInputChange('weeklyLossKg', opt.value)}
                   className={`relative p-3.5 rounded-2xl border text-left transition-all duration-200 flex flex-col justify-between h-24 cursor-pointer ${
                     isSelected

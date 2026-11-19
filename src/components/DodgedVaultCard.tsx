@@ -8,7 +8,7 @@ import { useMomentum } from '../context/MomentumContext';
 import { useAppSelector } from '../store/store';
 import { AnimatedNumber } from './AnimatedNumber';
 
-export const DodgedVaultCard: React.FC = () => {
+export const DodgedVaultCard: React.FC = React.memo(() => {
   const { isOverdrive } = useMomentum();
   const isSOSActive = useAppSelector((state) => state.sos.isSOSActive);
   const [totalDodged, setTotalDodged] = useState<number>(0);
@@ -49,7 +49,7 @@ export const DodgedVaultCard: React.FC = () => {
 
   return (
     <div
-      className={`w-full h-full flex flex-col justify-between p-5 rounded-2xl bg-[var(--surface-card)] backdrop-blur-xl border border-[var(--surface-border)] shadow-[var(--surface-highlight),var(--accent-glow)] transition-all duration-500 hover:border-white/10 ${
+      className={`w-full h-full flex flex-col justify-between p-5 rounded-2xl bg-zinc-900/95 md:bg-[var(--surface-card)] md:backdrop-blur-xl border border-[var(--surface-border)] shadow-[var(--surface-highlight),var(--accent-glow)] transition-all duration-500 hover:border-white/10 ${
         isOverdrive ? 'ring-1 ring-emerald-400/30' : ''
       }`}
     >
@@ -192,4 +192,4 @@ export const DodgedVaultCard: React.FC = () => {
       </div>
     </div>
   );
-};
+});

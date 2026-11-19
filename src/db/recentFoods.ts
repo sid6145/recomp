@@ -10,8 +10,12 @@ import { db, type FoodItem } from './db';
  */
 export async function getRecentlyLoggedFoods(limit: number = 10): Promise<FoodItem[]> {
   try {
-    // 1. Fetch recent logs ordered by timestamp descending
-    const logs = await db.logs.orderBy('timestamp').reverse().toArray();
+    // 1. Fetch recent logs ordered by timestamp descending, limited to avoid scanning entire history
+    const logs = await db.logs
+      .orderBy('timestamp')
+      .reverse()
+      .limit(Math.max(50, limit * 5))
+      .toArray();
 
     // 2. Extract unique foodIds preserving order of recency
     const uniqueFoodIds: string[] = [];

@@ -80,6 +80,8 @@ export interface UserProfileRecord {
   activityMultiplier: number;
   weeklyLossKg: number;
   dailyCaloricTarget: number;
+  proteinTarget?: number;
+  tdee?: number;
   updatedAt?: number;
 }
 

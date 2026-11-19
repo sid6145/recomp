@@ -11,7 +11,7 @@ import { useAppSelector } from '../store/store';
 import { useMomentum } from '../context/MomentumContext';
 import { AnimatedNumber } from './AnimatedNumber';
 
-export const WeekendVaultCard: React.FC = () => {
+export const WeekendVaultCard: React.FC = React.memo(() => {
   const targetCalories = useAppSelector((state) => state.user.dailyCaloricTarget);
   const logEntries = useAppSelector((state) => state.logs.entries);
   const { isOverdrive } = useMomentum();
@@ -44,7 +44,7 @@ export const WeekendVaultCard: React.FC = () => {
 
   return (
     <div
-      className={`w-full h-full flex flex-col justify-between p-5 rounded-2xl bg-[var(--surface-card)] backdrop-blur-xl border border-[var(--surface-border)] shadow-[var(--surface-highlight),var(--accent-glow)] transition-all duration-500 hover:border-white/10 ${
+      className={`w-full h-full flex flex-col justify-between p-5 rounded-2xl bg-zinc-900/95 md:bg-[var(--surface-card)] md:backdrop-blur-xl border border-[var(--surface-border)] shadow-[var(--surface-highlight),var(--accent-glow)] transition-all duration-500 hover:border-white/10 ${
         isOverdrive ? 'ring-1 ring-emerald-400/30' : ''
       }`}
     >
@@ -164,4 +164,4 @@ export const WeekendVaultCard: React.FC = () => {
       </div>
     </div>
   );
-};
+});

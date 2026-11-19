@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { PlusCircle, Flame, Trash2, Scale } from 'lucide-react';
 import { DailyMetabolicSummary } from './DailyMetabolicSummary';
@@ -16,12 +16,86 @@ export interface DiaryViewProps {
   onDeleteEntry: (id: number) => void;
 }
 
+interface DiaryEntryRowProps {
+  entry: LoggedEntry;
+  isOverdrive: boolean;
+  onDelete: (id: number) => void;
+}
+
+const DiaryEntryRow: React.FC<DiaryEntryRowProps> = React.memo(({
+  entry,
+  isOverdrive,
+  onDelete,
+}) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, x: -16 }}
+      transition={{ duration: 0.15 }}
+      className={`group p-4 rounded-2xl border transition-colors duration-200 touch-pan-y flex items-center justify-between gap-4 ${
+        isOverdrive
+          ? 'bg-[var(--surface-card)] border-[var(--surface-border)] shadow-[var(--surface-highlight)]'
+          : 'bg-neutral-900/70 hover:bg-neutral-900 border-white/5 hover:border-white/10'
+      }`}
+    >
+      {/* Left: Food Identity and Portion */}
+      <div className="min-w-0 flex-1 space-y-1">
+        <div className="flex items-center gap-2">
+          <h4 className="text-sm font-bold text-neutral-100 group-hover:text-[#00FF41] transition-colors truncate font-sans">
+            {entry.foodName}
+          </h4>
+          <span className="text-[10px] font-mono text-neutral-500 tabular-nums">
+            {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+          </span>
+        </div>
+        <p className="text-xs text-neutral-400 font-sans flex items-center gap-1.5">
+          <Scale className="w-3 h-3 text-neutral-500" />
+          <span>
+            <span className="font-mono tabular-nums">{entry.quantity}</span> {entry.selectedUnit}
+          </span>
+        </p>
+
+        {/* Macro pills */}
+        {entry.calculatedMacros && (
+          <div className="flex gap-2 text-[10px] font-mono tabular-nums pt-0.5">
+            <span className="text-rose-400 font-medium">
+              P: {entry.calculatedMacros.protein}g
+            </span>
+            <span className="text-cyan-400 font-medium">
+              C: {entry.calculatedMacros.carbs}g
+            </span>
+            <span className="text-amber-400 font-medium">
+              F: {entry.calculatedMacros.fats}g
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Right: Calories & Delete Button */}
+      <div className="flex items-center gap-3 shrink-0">
+        <span className="text-base font-bold font-mono text-[#00FF41] tabular-nums shadow-[0_0_12px_rgba(0,255,65,0.15)]">
+          <AnimatedCounter value={entry.totalCalories} /> kcal
+        </span>
+        <button
+          type="button"
+          onClick={() => onDelete(entry.id)}
+          className="min-h-[44px] min-w-[44px] p-2 text-neutral-500 hover:text-rose-400 hover:bg-neutral-800/80 rounded-xl transition-colors cursor-pointer flex items-center justify-center active:scale-95"
+          title="Delete log entry"
+        >
+          <Trash2 className="w-4 h-4" />
+        </button>
+      </div>
+    </motion.div>
+  );
+});
+
 /**
  * Mobile-First Daily Diary View.
  * Top Half: Z-Axis Flip Card (DailyMetabolicSummary <-> 52-Week Longitudinal Matrix).
  * Bottom Half: High-density Logged Foods List.
  */
-export const DiaryView: React.FC<DiaryViewProps> = ({
+export const DiaryView: React.FC<DiaryViewProps> = React.memo(({
   entries,
   targetCalories,
   onNavigateToSearch,
@@ -49,10 +123,10 @@ export const DiaryView: React.FC<DiaryViewProps> = ({
     0
   );
 
-  const handleDelete = (id: number) => {
+  const handleDelete = useCallback((id: number) => {
     haptics.tick();
     onDeleteEntry(id);
-  };
+  }, [haptics, onDeleteEntry]);
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 space-y-6 pb-[calc(100px+env(safe-area-inset-bottom,0px))]">
@@ -142,68 +216,12 @@ export const DiaryView: React.FC<DiaryViewProps> = ({
           <div className="space-y-2">
             <AnimatePresence initial={false}>
               {entries.map((entry) => (
-                <motion.div
+                <DiaryEntryRow
                   key={entry.id}
-                  layout="position"
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, x: -16 }}
-                  transition={{ duration: 0.2 }}
-                  className={`group p-4 rounded-2xl border transition-all duration-500 touch-pan-y flex items-center justify-between gap-4 ${
-                    isOverdrive
-                      ? 'bg-[var(--surface-card)] border-[var(--surface-border)] shadow-[var(--surface-highlight)]'
-                      : 'bg-neutral-900/70 hover:bg-neutral-900 border-white/5 hover:border-white/10'
-                  }`}
-                >
-                  {/* Left: Food Identity and Portion */}
-                  <div className="min-w-0 flex-1 space-y-1">
-                    <div className="flex items-center gap-2">
-                      <h4 className="text-sm font-bold text-neutral-100 group-hover:text-[#00FF41] transition-colors truncate font-sans">
-                        {entry.foodName}
-                      </h4>
-                      <span className="text-[10px] font-mono text-neutral-500 tabular-nums">
-                        {new Date(entry.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                      </span>
-                    </div>
-                    <p className="text-xs text-neutral-400 font-sans flex items-center gap-1.5">
-                      <Scale className="w-3 h-3 text-neutral-500" />
-                      <span>
-                        <span className="font-mono tabular-nums">{entry.quantity}</span> {entry.selectedUnit}
-                      </span>
-                    </p>
-
-                    {/* Macro pills */}
-                    {entry.calculatedMacros && (
-                      <div className="flex gap-2 text-[10px] font-mono tabular-nums pt-0.5">
-                        <span className="text-rose-400 font-medium">
-                          P: {entry.calculatedMacros.protein}g
-                        </span>
-                        <span className="text-cyan-400 font-medium">
-                          C: {entry.calculatedMacros.carbs}g
-                        </span>
-                        <span className="text-amber-400 font-medium">
-                          F: {entry.calculatedMacros.fats}g
-                        </span>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Right: Calories & Delete Button */}
-                  <div className="flex items-center gap-3 shrink-0">
-                    <span className="text-base font-bold font-mono text-[#00FF41] tabular-nums shadow-[0_0_12px_rgba(0,255,65,0.15)]">
-                      <AnimatedCounter value={entry.totalCalories} /> kcal
-                    </span>
-                    <motion.button
-                      type="button"
-                      onClick={() => handleDelete(entry.id)}
-                      whileTap={{ scale: 0.9 }}
-                      className="min-h-[44px] min-w-[44px] p-2 text-neutral-500 hover:text-rose-400 hover:bg-neutral-800/80 rounded-xl transition-colors cursor-pointer flex items-center justify-center"
-                      title="Delete log entry"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </motion.button>
-                  </div>
-                </motion.div>
+                  entry={entry}
+                  isOverdrive={isOverdrive}
+                  onDelete={handleDelete}
+                />
               ))}
             </AnimatePresence>
           </div>
@@ -211,4 +229,4 @@ export const DiaryView: React.FC<DiaryViewProps> = ({
       </div>
     </div>
   );
-};
+});

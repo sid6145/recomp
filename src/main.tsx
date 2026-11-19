@@ -18,6 +18,8 @@ import { initializeDatabase } from './db/dbSeeder';
 import { useHaptics } from './hooks/useHaptics';
 import { MomentumProvider } from './context/MomentumContext';
 import { MomentumHudPill } from './components/MomentumHudPill';
+import { loadProfileFromDb, syncProfileToDb } from './db/profileSync';
+import { setHydratedProfile, markHydrated } from './store/userSlice';
 import './index.css';
 
 interface DailyDiaryProps {
@@ -28,6 +30,7 @@ const DailyDiary: React.FC<DailyDiaryProps> = ({ onNavigateToSearch }) => {
   const dispatch = useAppDispatch();
   const entries = useAppSelector((state) => state.logs.entries);
   const targetCalories = useAppSelector((state) => state.user.dailyCaloricTarget);
+  const isHydrated = useAppSelector((state) => state.user.isHydrated);
 
   // Sync entries from IndexedDB on mount
   useEffect(() => {
@@ -55,6 +58,20 @@ const DailyDiary: React.FC<DailyDiaryProps> = ({ onNavigateToSearch }) => {
     dispatch(removeLogEntry(id));
   };
 
+  if (!isHydrated) {
+    return (
+      <div
+        data-testid="diary-loading"
+        className="w-full max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 flex items-center justify-center min-h-[360px]"
+      >
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-8 h-8 rounded-full border-2 border-[#00FF41]/30 border-t-[#00FF41] animate-spin" />
+          <span className="text-xs font-mono text-neutral-400">Loading metabolic profile...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <DiaryView
       entries={entries}
@@ -72,6 +89,18 @@ const App: React.FC = () => {
 
   const isSOSActive = useAppSelector((state) => state.sos.isSOSActive);
   const haptics = useHaptics();
+
+  // Hydrate user profile from Dexie on startup as single source of truth
+  useEffect(() => {
+    loadProfileFromDb().then((saved) => {
+      if (saved) {
+        dispatch(setHydratedProfile(saved));
+      } else {
+        dispatch(markHydrated());
+        syncProfileToDb({ ...store.getState().user, isHydrated: true });
+      }
+    });
+  }, [dispatch]);
 
   // Initialize food items immediately at root mount
   useEffect(() => {

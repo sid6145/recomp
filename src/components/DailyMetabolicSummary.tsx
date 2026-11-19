@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Activity, Sparkles, ArrowRight, PiggyBank, ShieldCheck } from 'lucide-react';
 import { AnimatedCounter } from './AnimatedCounter';
@@ -33,7 +33,7 @@ export interface DailyMetabolicSummaryProps {
  * - Surfaces: bg-neutral-900 with border border-white/5 (The Substrate) & bg-neutral-950 (The Void).
  * - Monospace JetBrains Mono with tabular-nums strictly applied to all metrics.
  */
-export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = ({
+export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React.memo(({
   remainingCalories,
   totalConsumed,
   totalProtein,
@@ -70,15 +70,15 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = ({
   const isSurplus = rawSurplus && !isWeekendOverageCovered;
   const currentStatus = statusProp ?? (isSurplus ? 'surplus' : 'deficit');
 
-  const handleFlipToTelemetry = () => {
+  const handleFlipToTelemetry = useCallback(() => {
     haptics.tick();
     setIsFlipped(true);
-  };
+  }, [haptics]);
 
-  const handleFlipToSummary = () => {
+  const handleFlipToSummary = useCallback(() => {
     haptics.tick();
     setIsFlipped(false);
-  };
+  }, [haptics]);
 
   return (
     <section aria-label="Daily Metabolic Telemetry" className="w-full [perspective:1200px] select-none touch-pan-y">
@@ -96,7 +96,7 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = ({
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
           }}
-          className={`relative w-full rounded-3xl border border-[var(--surface-border)] bg-[var(--surface-card)] backdrop-blur-2xl p-6 sm:p-8 overflow-hidden space-y-6 touch-pan-y transition-all duration-500 shadow-[var(--surface-highlight),var(--accent-glow)] ${
+          className={`relative w-full rounded-3xl border border-[var(--surface-border)] bg-zinc-900/95 md:bg-[var(--surface-card)] md:backdrop-blur-xl p-6 sm:p-8 overflow-hidden space-y-6 touch-pan-y transition-all duration-500 shadow-[var(--surface-highlight),var(--accent-glow)] ${
             isOverdrive ? 'ring-1 ring-emerald-400/40 overdrive-conic-border' : ''
           } ${isFlipped ? 'pointer-events-none' : 'pointer-events-auto'}`}
         >
@@ -158,7 +158,7 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = ({
               </h2>
               <p className="text-xs text-neutral-400 font-sans">
                 Target:{' '}
-                <span className="font-mono text-neutral-200 font-semibold tabular-nums">
+                <span data-testid="target-calories-value" className="font-mono text-neutral-200 font-semibold tabular-nums">
                   {targetCalories} kcal
                 </span>
                 {bankState.isWeekend && bankState.bankedCalories > 0 && (
@@ -318,7 +318,7 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = ({
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
-          className={`absolute inset-0 w-full rounded-3xl border border-[var(--surface-border)] bg-[var(--surface-card)] backdrop-blur-2xl p-5 sm:p-6 shadow-[var(--surface-highlight),var(--accent-glow)] flex flex-col justify-between overflow-hidden touch-pan-y transition-all duration-500 ${
+          className={`absolute inset-0 w-full rounded-3xl border border-[var(--surface-border)] bg-zinc-900/95 md:bg-[var(--surface-card)] md:backdrop-blur-xl p-5 sm:p-6 shadow-[var(--surface-highlight),var(--accent-glow)] flex flex-col justify-between overflow-hidden touch-pan-y transition-all duration-500 ${
             isOverdrive ? 'ring-1 ring-emerald-400/40' : ''
           } ${isFlipped ? 'pointer-events-auto' : 'pointer-events-none'}`}
         >
@@ -330,4 +330,4 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = ({
       </motion.div>
     </section>
   );
-};
+});

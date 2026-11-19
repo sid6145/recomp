@@ -22,7 +22,7 @@ export interface FoodSearchResultCellProps {
  * - Bottom: Horizontal macro pill strip: e.g. [ P: 24g ] [ C: 12g ] [ F: 5g ] in text-neutral-500.
  * - Motion: Fluid Agentic spring physics for instant tactical feedback.
  */
-export const FoodSearchResultCell: React.FC<FoodSearchResultCellProps> = ({
+export const FoodSearchResultCell: React.FC<FoodSearchResultCellProps> = React.memo(({
   food,
   onSelect,
   className = '',
@@ -47,7 +47,6 @@ export const FoodSearchResultCell: React.FC<FoodSearchResultCellProps> = ({
 
   return (
     <motion.div
-      layout="position"
       whileHover={{ y: -2, scale: 1.01 }}
       whileTap={{ scale: 0.98 }}
       transition={AgenticTransition}
@@ -86,7 +85,7 @@ export const FoodSearchResultCell: React.FC<FoodSearchResultCellProps> = ({
 
         {/* Tier 2: Top-Right - Total Calories (Large, Glowing #00FF41, Monospace) */}
         <div className="flex flex-col items-end shrink-0 pl-2">
-          <div className="flex items-baseline gap-1 text-[#00FF41] shadow-[0_0_15px_rgba(0,255,65,0.2)] drop-shadow-[0_0_15px_rgba(0,255,65,0.2)]">
+          <div className="flex items-baseline gap-1 text-[#00FF41] shadow-[0_0_15px_rgba(0,255,65,0.2)]">
             <span className="text-2xl sm:text-3xl font-black font-mono tracking-tighter tabular-nums">
               {calories}
             </span>
@@ -141,4 +140,4 @@ export const FoodSearchResultCell: React.FC<FoodSearchResultCellProps> = ({
       </div>
     </motion.div>
   );
-};
+});

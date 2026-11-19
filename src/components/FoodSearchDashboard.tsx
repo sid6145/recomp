@@ -315,7 +315,7 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
             inputRef.current?.blur();
           }
         }}
-        className="relative overflow-hidden rounded-3xl border border-white/5 bg-neutral-900/90 backdrop-blur-2xl shadow-2xl p-6 sm:p-8 space-y-6 touch-pan-y"
+        className="relative overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/95 md:bg-neutral-900/90 md:backdrop-blur-xl shadow-2xl p-6 sm:p-8 space-y-6 touch-pan-y"
       >
         {/* Ambient Glows */}
         <div className="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-[#00FF41]/10 rounded-full blur-3xl transform-gpu will-change-transform" />

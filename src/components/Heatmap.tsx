@@ -19,7 +19,7 @@ interface HeatmapDay {
   status: 'no_data' | 'deep_deficit' | 'target_hit' | 'slight_surplus' | 'surplus';
 }
 
-export const Heatmap: React.FC<HeatmapProps> = ({ onBack }) => {
+export const Heatmap: React.FC<HeatmapProps> = React.memo(({ onBack }) => {
   const targetCalories = useAppSelector((state) => state.user.dailyCaloricTarget);
   const logEntries = useAppSelector((state) => state.logs.entries);
   const { isOverdrive } = useMomentum();
@@ -242,4 +242,4 @@ export const Heatmap: React.FC<HeatmapProps> = ({ onBack }) => {
       </div>
     </div>
   );
-};
+});

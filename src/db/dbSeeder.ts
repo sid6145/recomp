@@ -77,15 +77,12 @@ export async function initializeDatabase(worker?: Worker): Promise<FoodItem[]> {
       console.log(`[dbSeeder] Database already contains ${count} items. Seeding skipped.`);
     }
 
-    // Query for all items missing an embedding vector
-    const unvectorized = await db.foods
-      .filter((f) => !f.embedding_vector || f.embedding_vector.length === 0)
-      .toArray();
-
-    console.log(`[dbSeeder] Unvectorized items count in IndexedDB: ${unvectorized.length}`);
-
-    // Dispatch to Web Worker if worker reference is provided
+    // Dispatch to Web Worker ONLY if worker reference is provided and unvectorized items exist
     if (worker) {
+      const unvectorized = await db.foods
+        .filter((f) => !f.embedding_vector || f.embedding_vector.length === 0)
+        .toArray();
+
       if (unvectorized.length > 0) {
         console.log(`[dbSeeder] Sending ${unvectorized.length} unvectorized items to Web Worker.`);
         worker.postMessage({
@@ -97,15 +94,11 @@ export async function initializeDatabase(worker?: Worker): Promise<FoodItem[]> {
       }
     }
 
-    const all = await db.foods.toArray();
-    return all;
+    // Fast return without loading entire 1,200 dataset into JS memory on startup
+    return [];
   } catch (error) {
     console.error('[dbSeeder] Seeding failure boundary in initializeDatabase:', error);
-    try {
-      return await db.foods.toArray();
-    } catch {
-      return [];
-    }
+    return [];
   }
 }
 

@@ -44,7 +44,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
   return (
     <aside
       aria-label="Floating Navigation Dock"
-      className={`flex md:hidden fixed bottom-0 w-full z-50 bg-zinc-950/90 backdrop-blur-xl border-t border-[var(--chrome-border)] pb-safe transition-all duration-500 ${
+      className={`flex md:hidden fixed bottom-0 w-full z-50 bg-zinc-950/90 backdrop-blur-md border-t border-[var(--chrome-border)] pb-safe transition-all duration-500 ${
         isOverdrive ? 'shadow-[0_-1px_20px_rgba(16,185,129,0.18)]' : ''
       }`}
     >

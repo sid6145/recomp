@@ -84,6 +84,24 @@ function getSharedWorker(): Worker | null {
  * Custom React hook bridging the main thread with the background AI Semantic Search Web Worker.
  * Consumes the Singleton Worker Manager, ensuring Transformers.js ONNX runtime stays warm in memory.
  */
+let localFoodsCache: FoodItem[] | null = null;
+let lastCacheTime = 0;
+
+async function getCachedFoods(): Promise<FoodItem[]> {
+  const now = Date.now();
+  if (localFoodsCache && now - lastCacheTime < 30000) {
+    return localFoodsCache;
+  }
+  const [foods, custom] = await Promise.all([db.foods.toArray(), db.customFoods.toArray()]);
+  localFoodsCache = [...custom, ...foods];
+  lastCacheTime = now;
+  return localFoodsCache;
+}
+
+export function invalidateFoodsCache(): void {
+  localFoodsCache = null;
+}
+
 export function useSemanticSearch(): UseSemanticSearchReturn {
   const [results, setResults] = useState<SemanticSearchResult[]>([]);
   const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -156,10 +174,9 @@ export function useSemanticSearch(): UseSemanticSearchReturn {
     setIsSearching(true);
     setStatus('searching');
 
-    // Instant zero-latency local text search (<5ms)
-    Promise.all([db.foods.toArray(), db.customFoods.toArray()])
-      .then(([foods, custom]) => {
-        const all = [...custom, ...foods];
+    // Instant zero-latency local text search (<5ms from RAM cache)
+    getCachedFoods()
+      .then((all) => {
         const immediateMatches = executeTextSearch(trimmed, all).slice(0, 15);
         setResults(immediateMatches);
       })

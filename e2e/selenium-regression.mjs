@@ -652,6 +652,117 @@ async function runSeleniumSuite() {
     } catch (err) {
       recordTest('8. Mobile PWA Install Popup', false, err.message);
     }
+
+    // ---------------------------------------------------------------
+    // 9. Calorie Goal Persistence & Reload Verification (Phase 1 Fix)
+    // ---------------------------------------------------------------
+    try {
+      // 1. Mobile Viewport (390x844) Check
+      await driver.manage().window().setRect({ width: 390, height: 844 });
+      await sleep(400);
+
+      // Navigate to Goal Setter via BottomNav or Header
+      const goalNavBtn = await driver.wait(
+        until.elementLocated(By.xpath('//button[contains(., "Goal") or contains(., "goal")]')),
+        5000
+      );
+      await driver.executeScript('arguments[0].click();', goalNavBtn);
+      await sleep(600);
+
+      // Select Extreme (-1.00 kg/wk) weight-loss goal
+      const extremeOptionBtn = await driver.wait(
+        until.elementLocated(
+          By.css('button[data-testid="goal-option-1"], button[data-testid="goal-option-1.0"]')
+        ),
+        5000
+      ).catch(async () => {
+        return await driver.findElement(
+          By.xpath('//button[contains(., "Extreme") or contains(., "-1.00 kg/wk")]')
+        );
+      });
+      await driver.executeScript('arguments[0].scrollIntoView(true);', extremeOptionBtn);
+      await driver.executeScript('arguments[0].click();', extremeOptionBtn);
+      await sleep(500);
+
+      // Record the calculated daily calorie target from the hero readout
+      const targetHeroEl = await driver.wait(
+        until.elementLocated(By.css('[data-testid="goal-target-calories"]')),
+        5000
+      );
+      const calculatedTargetRaw = await targetHeroEl.getText();
+      const calculatedTarget = parseInt(calculatedTargetRaw.replace(/\D/g, ''), 10);
+      if (!calculatedTarget || isNaN(calculatedTarget)) {
+        throw new Error(`Failed to parse calculated daily calorie target from hero readout: "${calculatedTargetRaw}"`);
+      }
+
+      // Navigate to Diary page
+      const diaryNavBtn = await driver.findElement(
+        By.xpath('//button[contains(., "Diary") or contains(., "diary")]')
+      );
+      await driver.executeScript('arguments[0].click();', diaryNavBtn);
+      await sleep(600);
+
+      // Trigger full browser reload
+      await driver.navigate().refresh();
+      await sleep(1000);
+
+      // Wait for hydration & target calories element
+      const reloadedTargetEl = await driver.wait(
+        until.elementLocated(By.css('[data-testid="target-calories-value"]')),
+        6000
+      );
+      const reloadedTargetRaw = await reloadedTargetEl.getText();
+      const reloadedTarget = parseInt(reloadedTargetRaw.replace(/\D/g, ''), 10);
+
+      if (reloadedTarget !== calculatedTarget) {
+        throw new Error(
+          `Goal reload mismatch in Mobile viewport: Expected ${calculatedTarget} kcal, received ${reloadedTarget} kcal`
+        );
+      }
+
+      // 2. Desktop Viewport (1280x800) Verification
+      await driver.manage().window().setRect({ width: 1280, height: 800 });
+      await sleep(500);
+
+      // Assert target is still exactly calculatedTarget in desktop viewport
+      const desktopTargetEl = await driver.wait(
+        until.elementLocated(By.css('[data-testid="target-calories-value"]')),
+        5000
+      );
+      const desktopTargetRaw = await desktopTargetEl.getText();
+      const desktopTarget = parseInt(desktopTargetRaw.replace(/\D/g, ''), 10);
+
+      if (desktopTarget !== calculatedTarget) {
+        throw new Error(
+          `Goal reload mismatch in Desktop viewport: Expected ${calculatedTarget} kcal, received ${desktopTarget} kcal`
+        );
+      }
+
+      // Trigger another full reload in Desktop mode to confirm cold-boot hydration
+      await driver.navigate().refresh();
+      await sleep(1000);
+
+      const desktopRefreshedEl = await driver.wait(
+        until.elementLocated(By.css('[data-testid="target-calories-value"]')),
+        6000
+      );
+      const desktopRefreshedRaw = await desktopRefreshedEl.getText();
+      const desktopRefreshed = parseInt(desktopRefreshedRaw.replace(/\D/g, ''), 10);
+
+      if (desktopRefreshed !== calculatedTarget) {
+        throw new Error(
+          `Goal reload mismatch after desktop refresh: Expected ${calculatedTarget} kcal, received ${desktopRefreshed} kcal`
+        );
+      }
+
+      recordTest(
+        '9. Calorie Goal Persistence & Reload Verification',
+        true,
+        `Calculated target (${calculatedTarget} kcal for -1 kg/wk) persisted with zero drift across mobile & desktop browser reloads`
+      );
+    } catch (err) {
+      recordTest('9. Calorie Goal Persistence & Reload Verification', false, err.message);
+    }
   } finally {
     if (driver) {
       await driver.quit();
