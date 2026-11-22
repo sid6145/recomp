@@ -10,12 +10,14 @@ import {
   Globe,
   Camera,
   X,
+  PlusCircle,
 } from 'lucide-react';
 import { initializeDatabase } from '../db/dbSeeder';
 import { getRecentlyLoggedFoods } from '../db/recentFoods';
 import { useSemanticSearch } from '../hooks/useSemanticSearch';
 import { FoodLogBottomSheet } from './FoodLogBottomSheet';
 import { BarcodeScanner } from './BarcodeScanner';
+import { AddCustomFoodModal } from './AddCustomFoodModal';
 import { FoodSearchResultCell } from './FoodSearchResultCell';
 import { RecentFoodsBar } from './RecentFoodsBar';
 import { GlobalSearchResults } from './GlobalSearchResults';
@@ -45,6 +47,7 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
   const [isGlobalSearching, setIsGlobalSearching] = useState<boolean>(false);
   const [globalSearchError, setGlobalSearchError] = useState<string | null>(null);
   const [isScannerOpen, setIsScannerOpen] = useState<boolean>(false);
+  const [isCustomFoodModalOpen, setIsCustomFoodModalOpen] = useState<boolean>(false);
   const [savedCustomIds, setSavedCustomIds] = useState<Set<string>>(new Set());
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -89,6 +92,44 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
   const handleCloseScanner = () => {
     setIsScannerOpen(false);
     onBottomSheetToggle?.(false);
+  };
+
+  const handleOpenCustomFoodModal = () => {
+    haptics.tick();
+    setIsCustomFoodModalOpen(true);
+    onBottomSheetToggle?.(true);
+  };
+
+  const handleCloseCustomFoodModal = () => {
+    setIsCustomFoodModalOpen(false);
+    onBottomSheetToggle?.(false);
+  };
+
+  const handleCustomFoodSaved = async (food: FoodItem, autoLog: boolean) => {
+    try {
+      // 1. Persist to Dexie customFoods table
+      await db.customFoods.put(food);
+
+      // 2. Vectorize for client-side semantic search
+      embedCustomFood(food);
+
+      // 3. Mark as saved
+      setSavedCustomIds((prev) => new Set(prev).add(String(food.id)));
+
+      // 4. Refresh recent foods
+      await refreshRecentFoods();
+
+      // 5. Close custom food modal
+      handleCloseCustomFoodModal();
+
+      // 6. If user clicked "Save & Log", immediately open portion bottom sheet
+      if (autoLog) {
+        handleSelectFoodForLog(food);
+      }
+    } catch (err) {
+      console.error('[FoodSearchDashboard] Error saving custom food:', err);
+      setGlobalSearchError('Failed to save custom food to database.');
+    }
   };
 
   const {
@@ -387,7 +428,7 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
 
           {/* Action Row: Direct "Search Online" & "Scan Barcode" Buttons (min 44px touch targets) */}
           <div className="flex flex-wrap items-center justify-between gap-2.5 pt-0.5">
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={handleSearchOnline}
@@ -409,6 +450,16 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
               >
                 <Camera className="w-3.5 h-3.5 text-[#00FF41]" />
                 <span>Scan Barcode</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleOpenCustomFoodModal}
+                className="min-h-[44px] inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-white/5 hover:border-white/10 shadow-md active:scale-95 cursor-pointer"
+                title="Add custom food with macros to database"
+              >
+                <PlusCircle className="w-3.5 h-3.5 text-[#00FF41]" />
+                <span>Add Custom Food</span>
               </button>
             </div>
 
@@ -510,9 +561,17 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
                     No local matches found for &quot;{query}&quot;.
                   </p>
                   <p className="text-xs text-neutral-500 max-w-sm mx-auto font-sans">
-                    Tap &quot;Search Online&quot; above to find items on the web.
+                    Tap &quot;Search Online&quot; above, or add it manually as a custom food.
                   </p>
                 </div>
+                <button
+                  type="button"
+                  onClick={handleOpenCustomFoodModal}
+                  className="mt-2 min-h-[40px] inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-mono font-bold bg-[#00FF41]/10 hover:bg-[#00FF41]/20 text-[#00FF41] border border-[#00FF41]/30 transition-all cursor-pointer active:scale-95"
+                >
+                  <PlusCircle className="w-3.5 h-3.5" />
+                  <span>Add &ldquo;{query}&rdquo; as Custom Food</span>
+                </button>
               </div>
             )}
           </AnimatePresence>
@@ -535,6 +594,14 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
         isOpen={isScannerOpen}
         onClose={handleCloseScanner}
         onScanSuccess={handleBarcodeDetected}
+      />
+
+      {/* Manual Custom Food Ingestion Modal */}
+      <AddCustomFoodModal
+        isOpen={isCustomFoodModalOpen}
+        initialQuery={query}
+        onClose={handleCloseCustomFoodModal}
+        onSaved={handleCustomFoodSaved}
       />
     </div>
   );

@@ -3,11 +3,12 @@ import { createPortal } from 'react-dom';
 import { m, AnimatePresence } from 'framer-motion';
 import { ShieldAlert, Sparkles, CheckCircle2, X, Trophy } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../store/store';
-import { closeSOS } from '../store/sosSlice';
+import { closeSOS, openCravingRebalance } from '../store/sosSlice';
 import { addDodgedLog } from '../db/dodgedLogs';
 import { useHaptics } from '../hooks/useHaptics';
 import { useMomentum } from '../context/MomentumContext';
 import { playLogTick } from '../utils/soundEngine';
+import { UtensilsCrossed } from 'lucide-react';
 
 const MOTIVATIONAL_QUOTES = [
   'A craving peaks in 10 minutes. Regret lasts all week.',
@@ -269,10 +270,10 @@ export const SOSModal: React.FC = () => {
       if (prog < 100) {
         bypassAnimRef.current = requestAnimationFrame(step);
       } else {
-        // Dismiss
+        // Open Craving Rebalance Engine
         cancelBypass();
         haptics.warning();
-        dispatch(closeSOS());
+        dispatch(openCravingRebalance());
       }
     };
 
@@ -373,6 +374,19 @@ export const SOSModal: React.FC = () => {
                 >
                   <Trophy className="w-4 h-4" />
                   <span>I Beat the Urge</span>
+                </button>
+
+                {/* Direct Craving Rebalance Option */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    haptics.tick();
+                    dispatch(openCravingRebalance());
+                  }}
+                  className="w-full min-h-[44px] py-2.5 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-950/20"
+                >
+                  <UtensilsCrossed className="w-4 h-4" />
+                  <span>Fulfill Craving &amp; Rebalance Dinner</span>
                 </button>
 
                 {/* 5-Second Friction Bypass Hold Button */}

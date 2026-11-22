@@ -1,12 +1,14 @@
 import React, { useCallback } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { PlusCircle, Flame, Trash2, Scale } from 'lucide-react';
+import { PlusCircle, Flame, Trash2, Scale, Sparkles } from 'lucide-react';
 import { DailyMetabolicSummary } from './DailyMetabolicSummary';
 import { AnimatedCounter } from './AnimatedCounter';
 import { WeekendVaultCard } from './WeekendVaultCard';
 import { DodgedVaultCard } from './DodgedVaultCard';
 import { useHaptics } from '../hooks/useHaptics';
 import { useMomentum } from '../context/MomentumContext';
+import { useAppDispatch } from '../store/store';
+import { openCravingRebalance } from '../store/sosSlice';
 import type { LoggedEntry } from '../store/logsSlice';
 
 export interface DiaryViewProps {
@@ -102,6 +104,7 @@ export const DiaryView: React.FC<DiaryViewProps> = React.memo(({
   onDeleteEntry,
 }) => {
   const haptics = useHaptics();
+  const dispatch = useAppDispatch();
   const { isOverdrive } = useMomentum();
 
   const totalConsumed = entries.reduce(
@@ -165,21 +168,36 @@ export const DiaryView: React.FC<DiaryViewProps> = React.memo(({
             </span>
           </div>
 
-          <button
-            type="button"
-            onClick={() => {
-              haptics.tick();
-              onNavigateToSearch();
-            }}
-            className={`min-h-[44px] min-w-[44px] inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-mono font-semibold rounded-xl transition-all active:scale-[0.97] transition-transform duration-100 ease-out cursor-pointer ${
-              isOverdrive
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 font-bold shadow-[0_0_15px_rgba(16,185,129,0.35)]'
-                : 'text-emerald-400 hover:text-emerald-300'
-            }`}
-          >
-            <PlusCircle className="w-3.5 h-3.5" />
-            <span>Add Entry</span>
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => {
+                haptics.tick();
+                dispatch(openCravingRebalance());
+              }}
+              className="min-h-[44px] inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-mono font-semibold rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/30 transition-all active:scale-[0.97] cursor-pointer shadow-sm"
+              title="Eat a craving and deterministically rebalance your dinner"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+              <span>Rebalance Craving</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                haptics.tick();
+                onNavigateToSearch();
+              }}
+              className={`min-h-[44px] min-w-[44px] inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-mono font-semibold rounded-xl transition-all active:scale-[0.97] transition-transform duration-100 ease-out cursor-pointer ${
+                isOverdrive
+                  ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 font-bold shadow-[0_0_15px_rgba(16,185,129,0.35)]'
+                  : 'text-emerald-400 hover:text-emerald-300'
+              }`}
+            >
+              <PlusCircle className="w-3.5 h-3.5" />
+              <span>Add Entry</span>
+            </button>
+          </div>
         </div>
 
         {/* Empty State */}

@@ -6,10 +6,11 @@ import { GoalSetter } from './components/GoalSetter';
 import { FoodSearchDashboard } from './components/FoodSearchDashboard';
 import { RecipeBuilder } from './components/RecipeBuilder';
 import { SOSModal } from './components/SOSModal';
+import { CravingRebalanceModal } from './components/CravingRebalanceModal';
 import { DiaryView } from './components/DiaryView';
 import { Layout } from './components/Layout';
 import { type NavigationTab } from './components/CommandBar';
-import { openSOS } from './store/sosSlice';
+import { openSOS, closeCravingRebalance } from './store/sosSlice';
 import { ShieldAlert } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from './store/store';
 import { getFoodLogsForDate, deleteFoodLog } from './db/logManager';
@@ -89,6 +90,7 @@ const App: React.FC = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
 
   const isSOSActive = useAppSelector((state) => state.sos.isSOSActive);
+  const isCravingRebalanceOpen = useAppSelector((state) => state.sos.isCravingRebalanceOpen);
   const haptics = useHaptics();
 
   // Hydrate user profile from Dexie on startup as single source of truth
@@ -170,6 +172,12 @@ const App: React.FC = () => {
 
       {/* SOS Craving Full-Screen Intervention Modal */}
       <SOSModal />
+
+      {/* Deterministic Craving & Meal Rebalancing Modal */}
+      <CravingRebalanceModal
+        isOpen={isCravingRebalanceOpen}
+        onClose={() => dispatch(closeCravingRebalance())}
+      />
     </Layout>
   );
 };
