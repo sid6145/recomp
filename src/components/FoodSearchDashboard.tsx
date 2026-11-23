@@ -1,11 +1,8 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import {
-  Sparkles,
   Loader2,
   AlertCircle,
-  Database,
-  Compass,
   Globe,
   PlusCircle,
 } from 'lucide-react';
@@ -302,39 +299,24 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
     switch (status) {
       case 'loading_model':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#00FF41]/10 text-[#00FF41] border border-[#00FF41]/20">
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
             <Loader2 className="w-3 h-3 animate-spin" />
-            Loading...
+            Loading model...
           </span>
         );
       case 'searching':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-sky-500/10 text-sky-400 border border-sky-500/20">
-            <Loader2 className="w-3 h-3 animate-spin" />
-            Searching...
-          </span>
-        );
+        return null;
       case 'ready':
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[#00FF41]/10 text-[#00FF41] border border-[#00FF41]/20">
-            <Sparkles className="w-3 h-3 text-[#00FF41]" />
-            Search Ready
-          </span>
-        );
+        return null;
       case 'error':
         return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-rose-500/10 text-rose-400 border border-rose-500/20">
-            <AlertCircle className="w-3 h-3 text-rose-400" />
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-[var(--md-error-container)] text-[var(--md-on-error-container)]">
+            <AlertCircle className="w-3 h-3" />
             Offline
           </span>
         );
       default:
-        return (
-          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-medium bg-neutral-900 text-neutral-400 border border-white/5">
-            <Database className="w-3 h-3" />
-            Ready
-          </span>
-        );
+        return null;
     }
   };
 
@@ -365,7 +347,7 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
               Search local foods, online database, or scan a barcode.
             </p>
           </div>
-          <div>{getStatusBadge()}</div>
+          {getStatusBadge()}
         </div>
 
         {/* Persistent M3 Pill Search Bar (56px height, rounded-full, --md-surface-container-high) */}
@@ -505,11 +487,19 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
           className="space-y-3 pt-2"
         >
           <div className="flex items-center justify-between px-1">
-            <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2 font-sans">
-              <Compass className="w-3.5 h-3.5 text-[#00FF41]" />
-              {isQueryEmpty ? 'Recent Foods' : 'Search Results'}
+            <span className="text-xs font-bold uppercase tracking-wider text-[var(--md-on-surface-variant)] flex items-center gap-2 font-display">
+              {isQueryEmpty ? (
+                <div className="w-6 h-6 rounded-full bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)] flex items-center justify-center shrink-0">
+                  <MaterialIcon name="history" size={16} />
+                </div>
+              ) : (
+                <div className="w-6 h-6 rounded-full bg-[var(--md-surface-container-high)] text-[var(--md-primary)] flex items-center justify-center shrink-0">
+                  <MaterialIcon name="search" size={16} />
+                </div>
+              )}
+              <span>{isQueryEmpty ? 'Recent Foods' : 'Search Results'}</span>
             </span>
-            <span className="text-xs text-neutral-500 font-mono tabular-nums">
+            <span className="text-xs text-[var(--md-on-surface-variant)] font-mono tabular-nums">
               {isQueryEmpty
                 ? `${displayedRecentFoods.length} recent`
                 : `${displayedLocalResults.length} match${displayedLocalResults.length === 1 ? '' : 'es'}`}

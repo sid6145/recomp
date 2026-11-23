@@ -207,8 +207,8 @@ Rather than shifting borders or shrinking box models, hover and active states us
 ## 5. Core Component Catalog
 
 ### 1. Top App Bar & Docked Search Bar
-- **Mobile Top App Bar:** Height `64px` (`h-16`), transparent/`--md-surface`. Left: Recomp logo (`28px` rounded) + Title (`Plus Jakarta Sans Bold 22px`). Right: `MomentumHudPill`, circular `40px` theme palette button, and stadium SOS pill (`--md-error-container`).
-- **Desktop Top App Bar (`HeaderNav.tsx`):** Height `64px`, fixed at top, backdrop blur with `--md-surface/90`. Houses center pill navigation dock.
+- **Mobile Top App Bar:** Height `64px` (`h-16`), transparent/`--md-surface`. Left: `<BrandLogo variant="horizontal" interactive={true} size={28} />`. Right: `MomentumHudPill`, circular `40px` theme palette button, and stadium SOS pill (`--md-error-container`).
+- **Desktop Top App Bar (`HeaderNav.tsx`):** Height `64px`, fixed at top, backdrop blur with `--md-surface/90`. Left: `<BrandLogo variant="horizontal" interactive={true} size={32} />`. Houses center pill navigation dock.
 - **Docked Pill Search Bar (`FoodSearchDashboard.tsx`):**
   - Height: `56px` (`h-14`).
   - Shape: `rounded-full`.
@@ -261,8 +261,38 @@ Implemented for **Food Info / Portion Logging**, **SOS Urge Surfing**, and **Bar
   - Height: `56px` (`h-14`), padding `px-5`.
   - Radius: `rounded-2xl` ($16\text{ px}$).
   - Surface: `bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]`.
-  - Position: Fixed bottom-right (`bottom-[96px]` on mobile to sit above BottomNav; `bottom-8` on desktop).
+  - Position: Fixed bottom-right (`bottom-[calc(96px+env(safe-area-inset-bottom,0px))]` on mobile; `md:bottom-[calc(16px+env(safe-area-inset-bottom,0px))]` on desktop, `right-4`).
   - Automatically unmounts when the mobile virtual keyboard or bottom sheets open.
+
+### 7. Official Material You Brand Logo (`BrandLogo.tsx`)
+- Pure inline SVG component with geometric Material Design 3 figure flexing inside a 3-segment rounded calorie/macro progress ring.
+- **M3 Token Color Bindings (Zero Hardcoded Hex):**
+  - Carbs / Base Track Arc: `stroke="var(--md-secondary-container)"`
+  - Primary Calorie Arc: `stroke="var(--md-primary)"`
+  - Protein / Tertiary Arc: `stroke="var(--md-tertiary)"`
+  - Head & Torso: `fill="var(--md-primary)"` with subtle `var(--md-secondary)` specular shading.
+  - Upper Arm & Bicep: `fill="var(--md-primary)"`
+  - Forearm & Fist: `fill="var(--md-secondary)"` and `fill="var(--md-primary)"` with knuckle accent in `var(--md-secondary-container)`.
+- **Articulated Rigging & Zero-Gap Elbow Geometry:**
+  - ViewBox: `0 0 100 100`
+  - Exact elbow pivot coordinates `(38, 44)` with overlapping circular joint ($r = 5.5$) so rotation never introduces an elbow gap.
+  - Shoulder pivot at `(45, 38)`.
+  - GPU-composited `<g>` groups:
+    - `.recomp-ring-arc-1/2/3`: sweeps with `stroke-dashoffset` from 100 to 0 ($750\text{ ms}$, M3 Emphasized Decelerate $\text{cubic-bezier}(0.05, 0.7, 0.1, 1)$).
+    - `.recomp-bicep`: scales $\text{scale}(1, 1) \rightarrow \text{scale}(1.07, 1.20) \rightarrow \text{scale}(1.03, 1.12)$ during muscle swell.
+    - `.recomp-forearm`: rotates from relaxed $28^\circ$ up to locked flex $-7^\circ \rightarrow 0^\circ$ with spring overshoot $\text{cubic-bezier}(0.34, 1.56, 0.64, 1)$.
+    - `.recomp-torso`: subtle $1\text{ px} \rightarrow -1.5\text{ px} \rightarrow 0\text{ px}$ synchronized chest lift.
+- **Interactive Micro-Flex:** Tapping or hovering when `interactive={true}` triggers a snappy $450\text{ ms}$ replay with `active:scale-95` tactile feedback.
+- **Variants:** `'icon-only'` (raw SVG), `'horizontal'` (SVG + Plus Jakarta Sans 700 wordmark), and `'app-icon'` (includes $rx=28$ squircle backdrop in `--md-surface-container`).
+
+### 8. Non-Blocking PWA Launch Splash (`PwaLaunchSplash.tsx`)
+- Mounts as a `fixed inset-0 z-50` overlay in `var(--md-surface)` directly over the live app shell.
+- **Zero-Block Hydration:** Dexie IndexedDB profile/food databases, Redux hydration, and Web Workers load uninterrupted in the background.
+- **$1100\text{ ms}$ Session Timeline:**
+  - $0\text{ ms} - 750\text{ ms}$: Centered `<BrandLogo variant="app-icon" animate={true} size={96} />` sweeps rings and curls bicep.
+  - $750\text{ ms} - 1100\text{ ms}$: Smooth GPU fade-out ($\text{opacity: } 1 \rightarrow 0$, $\text{scale: } 1 \rightarrow 1.04$) and unmounts from DOM.
+  - Persists `sessionStorage.setItem('recomp_boot_animated', '1')` so internal navigations and re-renders never re-trigger the splash.
+  - Bypassed immediately when `prefers-reduced-motion` is active.
 
 ---
 

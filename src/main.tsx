@@ -13,6 +13,7 @@ import { type NavigationTab } from './components/CommandBar';
 import { openSOS, closeCravingRebalance } from './store/sosSlice';
 import { openPaletteSheet } from './store/themeSlice';
 import { MaterialIcon } from './components/MaterialIcon';
+import { BrandLogo } from './components/BrandLogo';
 import { ThemeCustomizerSheet } from './components/ThemeCustomizerSheet';
 import { applyMaterialYouTheme } from './theme/materialThemeEngine';
 import { useAppDispatch, useAppSelector } from './store/store';
@@ -156,15 +157,8 @@ const App: React.FC = () => {
       {/* Mobile M3 Top App Bar (64px height, --md-surface, hidden on md and above) */}
       <div className="w-full flex md:hidden items-center justify-between h-16 px-1 mb-2">
         {/* Left: Recomp Brand Title */}
-        <div className="flex items-center gap-2.5">
-          <img
-            src="/pwa-192x192.png"
-            alt="Recomp Logo"
-            className="w-7 h-7 rounded-lg object-cover shadow-sm shrink-0"
-          />
-          <span className="font-display text-[22px] font-bold tracking-tight text-[var(--md-on-surface)]">
-            Recomp
-          </span>
+        <div className="flex items-center min-w-0">
+          <BrandLogo variant="horizontal" interactive={true} size={28} />
         </div>
 
         {/* Right Cluster: Momentum Pill + Palette Button + SOS Craving Button */}
@@ -227,7 +221,7 @@ const App: React.FC = () => {
               haptics.tick();
               setActiveTab('search');
             }}
-            className="fixed bottom-[96px] md:bottom-8 right-6 z-40 h-14 px-5 rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-lg hover:shadow-xl flex items-center gap-2.5 font-display font-semibold text-sm cursor-pointer transition-transform active:scale-95 m3-state-layer"
+            className="fixed bottom-[calc(96px+env(safe-area-inset-bottom,0px))] md:bottom-[calc(16px+env(safe-area-inset-bottom,0px))] right-4 z-40 h-14 px-5 rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-[0_4px_8px_3px_rgba(0,0,0,0.15),0_1px_3px_rgba(0,0,0,0.3)] hover:shadow-xl flex items-center gap-2.5 font-display font-semibold text-sm cursor-pointer transition-transform active:scale-95 m3-state-layer"
             aria-label="Log Food"
           >
             <MaterialIcon name="add" size={24} />

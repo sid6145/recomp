@@ -29,7 +29,7 @@ export default defineConfig({
       devOptions: {
         enabled: false, // Keep Service Worker off in development so HMR is fast and never caches old JS
       },
-      includeAssets: ['favicon.ico', 'favicon-32x32.png', 'apple-touch-icon.png', 'pwa-192x192.png', 'pwa-512x512.png', 'pwa-maskable-512x512.png', '**/*.wasm'],
+      includeAssets: ['favicon.ico', 'favicon-32x32.png', 'apple-touch-icon.png', 'icon.svg', 'icon-192.png', 'icon-512.png', 'pwa-192x192.png', 'pwa-512x512.png', 'pwa-maskable-512x512.png', '**/*.wasm'],
       manifest: {
         name: 'recomp — Nutrition & Body Composition Tracker',
         short_name: 'recomp',

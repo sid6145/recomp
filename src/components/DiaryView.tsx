@@ -213,18 +213,6 @@ export const DiaryView: React.FC<DiaryViewProps> = React.memo(({
               <MaterialIcon name="auto_fix_high" size={16} />
               <span>Rebalance Craving</span>
             </button>
-
-            <button
-              type="button"
-              onClick={() => {
-                haptics.tick();
-                onNavigateToSearch();
-              }}
-              className="min-h-[40px] inline-flex items-center justify-center gap-1.5 px-4 py-1.5 text-xs font-display font-semibold rounded-full bg-[var(--md-primary)] text-[var(--md-on-primary)] transition-all active:scale-95 cursor-pointer shadow-sm m3-state-layer"
-            >
-              <MaterialIcon name="add" size={18} />
-              <span>Add Entry</span>
-            </button>
           </div>
         </div>
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import { History, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import type { FoodItem } from '../db/db';
 import { FoodSearchResultCell } from './FoodSearchResultCell';
+import { MaterialIcon } from './MaterialIcon';
 
 export interface RecentFoodsBarProps {
   recentFoods: FoodItem[];
@@ -16,8 +17,8 @@ export const RecentFoodsBar: React.FC<RecentFoodsBarProps> = React.memo(({
 }) => {
   if (isLoading) {
     return (
-      <div className="py-12 text-center text-neutral-500 text-xs flex items-center justify-center gap-2 font-mono">
-        <Loader2 className="w-4 h-4 animate-spin text-[#00FF41]" />
+      <div className="py-12 text-center text-[var(--md-on-surface-variant)] text-xs flex items-center justify-center gap-2 font-mono">
+        <Loader2 className="w-4 h-4 animate-spin text-[var(--md-primary)]" />
         <span>Loading recent foods...</span>
       </div>
     );
@@ -25,12 +26,14 @@ export const RecentFoodsBar: React.FC<RecentFoodsBarProps> = React.memo(({
 
   if (recentFoods.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-12 text-center space-y-2 border border-dashed border-white/5 rounded-2xl bg-neutral-950/40">
-        <History className="w-8 h-8 text-neutral-600" />
-        <p className="text-sm font-medium text-neutral-400 font-sans">
+      <div className="flex flex-col items-center justify-center py-12 text-center space-y-2 rounded-[24px] bg-[var(--md-surface-container-low)] text-[var(--md-on-surface)] transition-colors">
+        <div className="w-10 h-10 rounded-full bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)] flex items-center justify-center">
+          <MaterialIcon name="history" size={22} />
+        </div>
+        <p className="text-sm font-semibold text-[var(--md-on-surface)] font-display">
           Search for a food to start logging.
         </p>
-        <p className="text-xs text-neutral-500 font-sans">
+        <p className="text-xs text-[var(--md-on-surface-variant)] font-sans max-w-xs mx-auto">
           Your frequently logged dishes will appear here for quick access.
         </p>
       </div>

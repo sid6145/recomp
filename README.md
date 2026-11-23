@@ -1,16 +1,17 @@
 # recomp — Client-Side Offline-First Semantic Nutrition & Body Composition PWA
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/sid6145/recomp/main/public/pwa-512x512.png" alt="recomp logo" width="120" height="120" style="border-radius: 28px; box-shadow: 0 10px 30px rgba(0,255,65,0.2);" />
+  <img src="https://raw.githubusercontent.com/sid6145/recomp/main/public/icon.svg" alt="recomp logo" width="120" height="120" style="border-radius: 28px; box-shadow: 0 10px 30px rgba(30,107,82,0.3);" />
 </p>
 
 <p align="center">
-  <strong>A high-performance, privacy-first nutrition telemetry progressive web app powered by in-browser neural vector embeddings.</strong>
+  <strong>A high-performance, privacy-first nutrition telemetry progressive web app powered by in-browser neural vector embeddings and Google Material Design 3 (Material You).</strong>
 </p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/React-19.0-61dafb?style=for-the-badge&logo=react&logoColor=black" alt="React 19" />
   <img src="https://img.shields.io/badge/TypeScript-5.7-3178c6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript 5.7" />
+  <img src="https://img.shields.io/badge/Material_You-M3_HCT-1E6B52?style=for-the-badge&logo=google&logoColor=white" alt="Material Design 3" />
   <img src="https://img.shields.io/badge/AI_Model-all--MiniLM--L6--v2-00FF41?style=for-the-badge&logo=huggingface&logoColor=black" alt="Transformers.js" />
   <img src="https://img.shields.io/badge/Storage-Dexie_IndexedDB-blueviolet?style=for-the-badge&logo=databricks&logoColor=white" alt="Dexie.js" />
   <img src="https://img.shields.io/badge/Style-Tailwind_CSS_v4-38bdf8?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS v4" />
@@ -27,10 +28,12 @@ Most commercial calorie and macro tracking applications suffer from identical de
 
 ### Why recomp?
 
+- **🎨 Material You Dynamic Theming**: Complete Google Material Design 3 (M3) design system powered by `@material/material-color-utilities` (HCT tonal palettes), live "Wallpaper & Style" theme customizer, zero-FOUC boot, and PWA status bar sync.
+- **💪 Articulated Brand Logo & Launch Splash**: Official flexing bicep figure inside a 3-segment calorie/macro progress ring with zero-gap elbow rigging, 60fps GPU-composited curl animation, interactive micro-flex in the Top App Bar, and non-blocking cold launch splash.
 - **🧠 Zero-Cloud Semantic Intelligence**: Search natural food descriptions, recipes, or regional dishes locally using in-browser vector cosine similarity.
 - **🔒 100% Client-Side Privacy**: All biometric targets, food logs, custom recipes, and habit streaks live locally in your browser's IndexedDB.
 - **⚡ Instant Sub-Millisecond Search**: Hybrid search engine combining instant lexical trie matching (<2ms) and vectorized dense retrieval (<50ms).
-- **📱 Native Mobile Ergonomics**: Built with strict PWA standards, iOS safe area support (`env(safe-area-inset-*)`), 44×44px minimum tap targets, and Web Vibration API haptics.
+- **📱 Native Mobile Ergonomics**: Built with strict PWA standards, iOS safe area support (`env(safe-area-inset-*)`), 44×44px minimum tap targets, M3 80px bottom nav bar, and Web Vibration API haptics.
 - **🛡️ Craving Regulation (SOS Mode)**: Evidence-based cognitive intervention timer designed to break emotional eating cycles through mindful urge-surfing.
 - **🥗 Custom Recipe Macro Engine**: Dynamic composite dish builder with automatic portion scaling and macro yield aggregation.
 
@@ -126,11 +129,14 @@ When users log custom meals or scan new items, unindexed entries are vectorized 
 | :--- | :--- | :--- |
 | **Framework** | **React 19** | Concurrent rendering, fine-grained state hooks, and optimistic DOM updates. |
 | **Language** | **TypeScript 5.7** | Strict type safety, exhaustive union discrimination, and end-to-end schemas. |
-| **State Management** | **Redux Toolkit** | Centralized predictable state slices for diary entries, user goals, and SOS mode. |
+| **Design System** | **Material Design 3 (Material You)** | Tonal elevation, squircle-to-stadium pill contrast, tabular numbers, and state layers. |
+| **Dynamic Theming** | **@material/material-color-utilities** | HCT algorithm computing dynamic WCAG palettes from any user seed color. |
+| **State Management** | **Redux Toolkit** | Centralized predictable state slices for diary entries, user goals, theme, and SOS mode. |
 | **Local Persistence** | **Dexie.js (IndexedDB)** | High-throughput, indexed client-side database with reactive live query hooks. |
 | **In-Browser ML** | **Transformers.js** | Client-side neural embeddings compiled to WebAssembly via ONNX Runtime Web. |
-| **Styling & Design** | **Tailwind CSS v4** | Hardware-accelerated CSS variables, dynamic safe-area insets, and dark aesthetic. |
-| **Motion & Micro-interactions** | **Framer Motion** | Physics-based spring animations, portal exit transitions, and tab indicators. |
+| **Styling & Tokens** | **Tailwind CSS v4** | Hardware-accelerated CSS variables, dynamic safe-area insets, and dark aesthetic. |
+| **Typography & Icons** | **Plus Jakarta Sans / Inter / Material Symbols** | Optical size 24, weight 500, dynamic FILL state, and tabular numeric tracking. |
+| **Motion & Micro-interactions** | **Framer Motion** | 60fps GPU-composited spring animations, portal exit transitions, and tab indicators. |
 | **PWA & Offline Worker** | **Vite PWA / Workbox** | Pre-caching asset bundles, web manifest generation, and service worker lifecycle. |
 | **Barcode Scanning** | **Html5-QRCode** | In-browser camera barcode scanning mapped to local Open Food Facts schema. |
 | **Unit & Integration Tests** | **Vitest** | Fast, in-memory test runner for vector math, dataset parsers, and React markup. |
@@ -140,10 +146,12 @@ When users log custom meals or scan new items, unindexed entries are vectorized 
 
 ## 📱 Mobile-First UX Architecture
 
-`recomp` is engineered specifically for mobile viewports (tested against iPhone 14 Pro `393×852` standards):
+`recomp` is engineered specifically for mobile viewports (tested against iPhone 14 Pro `393×852` and narrow `360×800` Android standards):
 
-- **Floating Navigation Dock**: Bottom-docked 4-tab bar (Diary, Search, Recipes, Goals) styled with `bg-neutral-900/90`, `backdrop-blur-md`, and `border-white/5`.
-- **Z-Index Portal Hierarchy**: Bottom sheets (`FoodLogBottomSheet`) and modal overlays portal directly to `document.body` at `z-[80]`, with Framer Motion automatically hiding the bottom dock when sheets are active.
+- **Material 3 Navigation Bar**: Bottom-docked 80px container with 64×32px active pill indicator in `--md-secondary-container` and Material Symbols Rounded.
+- **Extended Floating Action Button (`+ Log Food`)**: 56px squircle FAB (`rounded-2xl`, `--md-primary-container`), cleanly anchored to viewport bottom-right (`bottom-[calc(96px+env(safe-area-inset-bottom,0px))]`), automatically hiding during virtual keyboard focus or search mode.
+- **Z-Index Portal Hierarchy**: Modal bottom sheets (`FoodLogBottomSheet`, `ThemeCustomizerSheet`, `SOSModal`) portal directly to `document.body` at `z-[90]`, with Framer Motion automatically hiding the bottom dock when sheets are active.
+- **Single Scroll Container Standard**: Strict single `overflow-y-auto` container inside bottom sheets preventing double scrollbars on iOS and Android touch devices.
 - **Scroll Bleed Prevention**: Utilizes modern `overflow-x: clip` combined with `touch-action: pan-y` on parent containers to ensure zero horizontal wobble while preserving silky-smooth vertical momentum scrolling.
 - **Ergonomic Safe Areas**: Responsive bottom padding `pb-[calc(100px+env(safe-area-inset-bottom,0px))]` prevents the final diary item from being obscured by native home indicators.
 - **Haptic Feedback**: Integrated with `navigator.vibrate` to provide physical click confirmations on tab navigation, quick logging, and craving timers.
@@ -155,8 +163,9 @@ When users log custom meals or scan new items, unindexed entries are vectorized 
 ```mermaid
 flowchart TD
   subgraph Client [Browser Client: PWA]
-    UI[React 19 UI Components]
-    RTK[Redux Store: logs, user, sos]
+    UI[React 19 M3 UI Components]
+    RTK[Redux Store: logs, user, sos, theme]
+    M3[Theme Engine: materialThemeEngine]
     SW[Web Worker: semanticSearchWorker]
     DB[(Dexie.js IndexedDB)]
     PWA_SW[Service Worker: Workbox]
@@ -168,6 +177,8 @@ flowchart TD
   end
 
   UI -->|Dispatch Actions| RTK
+  RTK -->|Theme Updates| M3
+  M3 -->|CSS Custom Properties| UI
   UI -->|Query / Mutate| DB
   UI -->|Post Search Query| SW
   SW -->|Inference via ONNX| SW
@@ -185,29 +196,39 @@ flowchart TD
 
 ```
 recomp/
+├── DESIGN.md                           # Official Material You (M3) Living Design System Spec
 ├── data/
 │   └── indian_food_nutrition.csv       # Pre-curated regional nutrition dataset
 ├── public/
-│   ├── pwa-192x192.png                 # PWA application icons
-│   ├── pwa-512x512.png                 # Maskable high-res app icon
+│   ├── icon.svg                        # Official M3 Brand Logo vector
+│   ├── apple-touch-icon.png            # iOS Home Screen touch icon
+│   ├── icon-192.png / icon-512.png     # Standard PWA launcher icons
+│   ├── pwa-192x192.png / pwa-512x512.png # Maskable PWA app icons
 │   └── favicon.ico
 ├── src/
 │   ├── components/
-│   │   ├── AnimatedCounter.tsx         # Monospace rolling number transitions
-│   │   ├── BarcodeScanner.tsx          # Html5-QRCode camera barcode reader
-│   │   ├── CommandBar.tsx              # Floating 4-tab mobile navigation dock
-│   │   ├── DailyMetabolicSummary.tsx   # Calorie budget & macro target progress
-│   │   ├── DiaryView.tsx               # Daily logged meal stream & item deletion
+│   │   ├── BrandLogo.tsx               # Official M3 flexing bicep logo with articulated rigging
+│   │   ├── PwaLaunchSplash.tsx         # Non-blocking 1100ms cold launch animation overlay
+│   │   ├── ThemeCustomizerSheet.tsx    # Android Wallpaper & Style theme palette sheet
+│   │   ├── MaterialIcon.tsx            # Material Symbols Rounded icon wrapper
+│   │   ├── BottomNav.tsx               # 80px M3 Navigation Bar with active indicator pills
+│   │   ├── HeaderNav.tsx               # Desktop 64px Top App Bar with integrated BrandLogo
+│   │   ├── MomentumHudPill.tsx         # Momentum streak & multiplier popover badge
+│   │   ├── AnimatedCounter.tsx         # Tabular-nums rolling number transitions
+│   │   ├── BarcodeScanner.tsx          # Html5-QRCode camera barcode reader with M3 viewfinder
+│   │   ├── DailyMetabolicSummary.tsx   # Hero M3 Circular Progress Indicator & linear macro bars
+│   │   ├── DiaryView.tsx               # Daily logged meal stream & M3 meal cards
 │   │   ├── FoodLogBottomSheet.tsx      # Portaled precision portion & logging modal
-│   │   ├── FoodSearchDashboard.tsx     # Search view with autofocus & state badges
+│   │   ├── FoodSearchDashboard.tsx     # 56px docked pill search bar & semantic results
 │   │   ├── FoodSearchResultCell.tsx    # 3-Tier bento card with macro strips
-│   │   ├── GoalSetter.tsx              # Mifflin-St Jeor TDEE & macro calculator
+│   │   ├── GoalSetter.tsx              # Mifflin-St Jeor TDEE & macro calculator with trend SVG
 │   │   ├── Heatmap.tsx                 # 52-Week daily caloric deficit habit grid
 │   │   ├── RecipeBuilder.tsx           # Multi-ingredient composite dish creator
-│   │   └── SOSModal.tsx                # Craving pause grounding & countdown timer
+│   │   └── SOSModal.tsx                # 10-minute calm urge-surfing breathing ring
 │   ├── db/
 │   │   ├── db.ts                       # Dexie IndexedDB schema & table indices
 │   │   ├── dbSeeder.ts                 # Database seeder with vector preservation
+│   │   ├── dodgedLogs.ts               # Dodged calories vault database operations
 │   │   └── logManager.ts               # Transactional food log CRUD operations
 │   ├── hooks/
 │   │   ├── useHaptics.ts               # Web Vibration API tactile feedback hook
@@ -215,8 +236,11 @@ recomp/
 │   ├── store/
 │   │   ├── logsSlice.ts                # Redux daily log entries
 │   │   ├── sosSlice.ts                 # Redux craving pause state machine
+│   │   ├── themeSlice.ts               # Redux Material You theme settings & palette state
 │   │   ├── store.ts                    # Typed Redux dispatch & selector exports
-│   │   └── userSlice.ts                # Redux biometric user goals & calorie cap
+│   │   └── userSlice.ts                # Redux biometric user goals & calorie target
+│   ├── theme/
+│   │   └── materialThemeEngine.ts      # @material/material-color-utilities HCT engine
 │   ├── utils/
 │   │   ├── cosineSimilarity.ts         # High-precision vector dot product
 │   │   ├── fetchWithRetry.ts           # Resilient network fetch with jittered backoff
@@ -224,13 +248,15 @@ recomp/
 │   │   └── searchLogic.ts              # Hybrid lexical + semantic ranking algorithm
 │   ├── workers/
 │   │   └── semanticSearchWorker.ts     # Transformers.js ONNX inference worker
-│   ├── index.css                       # Tailwind CSS directives & scroll physics
-│   └── main.tsx                        # Root React mount & responsive navigation
+│   ├── index.css                       # Tailwind CSS directives, M3 tokens & state layers
+│   └── main.tsx                        # Zero-FOUC synchronous boot & root React mount
 ├── tests/
+│   ├── materialThemeEngine.test.ts     # M3 HCT color scheme & DOM style injection tests
 │   ├── componentsMarkup.test.ts        # Design tokens & accessible markup assertions
 │   ├── cosineSimilarity.test.ts        # Math boundary & vector normalization tests
 │   ├── dataset.test.ts                 # Nutritional database integrity tests
 │   ├── fetchWithRetry.test.ts          # Resilient network retry simulation tests
+│   ├── gamification.test.ts            # Dodged vault & weekend bank unit tests
 │   ├── indianFoodsSeed.test.ts         # Regional food dataset validation
 │   ├── motionAndHaptics.test.ts        # Haptics & animation safety tests
 │   ├── openFoodFacts.test.ts           # Product schema conversion tests
@@ -251,28 +277,32 @@ recomp/
 
 `recomp` maintains a rigorous automated testing regimen across both unit and end-to-end domains:
 
-### 1. Vitest Unit & Integration Tests (42/42 Passed)
-Tests vector math, search rank algorithms, network retry backoffs, and component design tokens:
+### 1. Vitest Unit & Integration Tests (78/78 Passed across 14 Suites)
+Tests HCT color palettes, vector math, search rank algorithms, network retry backoffs, and component design tokens:
 ```bash
-npm run test:unit
+npm run test
 # or
 npx vitest run
 ```
 
 ```
- ✓ tests/searchLogic.test.ts (5 tests)
- ✓ tests/openFoodFacts.test.ts (3 tests)
  ✓ tests/fetchWithRetry.test.ts (4 tests)
  ✓ tests/dataset.test.ts (3 tests)
- ✓ tests/recipeMath.test.ts (3 tests)
  ✓ tests/motionAndHaptics.test.ts (5 tests)
- ✓ tests/indianFoodsSeed.test.ts (8 tests)
+ ✓ tests/cravingOptimizer.test.ts (9 tests)
  ✓ tests/recentFoods.test.ts (2 tests)
  ✓ tests/globalDataset.test.ts (5 tests)
+ ✓ tests/materialThemeEngine.test.ts (6 tests)
+ ✓ tests/indianFoodsSeed.test.ts (12 tests)
+ ✓ tests/gamification.test.ts (10 tests)
+ ✓ tests/openFoodFacts.test.ts (3 tests)
+ ✓ tests/recipeMath.test.ts (3 tests)
+ ✓ tests/searchLogic.test.ts (5 tests)
  ✓ tests/componentsMarkup.test.ts (4 tests)
+ ✓ tests/customFoodIngestion.test.ts (7 tests)
 
- Test Files  10 passed (10)
-      Tests  42 passed (42)
+ Test Files  14 passed (14)
+      Tests  78 passed (78)
 ```
 
 ### 2. Playwright Mobile Viewport E2E Tests (8/8 Passed)

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <!-- M3 Squircle Backdrop (Botanical Sage Surface Container #1C211E) -->
+  <rect width="100" height="100" rx="28" fill="#1C211E" />
+
+  <!-- Outer Calorie/Macro Segmented Progress Rings -->
+  <g fill="none" stroke-width="5.5" stroke-linecap="round">
+    <!-- Primary Calorie Arc: #1E6B52 -->
+    <circle
+      cx="50"
+      cy="50"
+      r="41"
+      pathLength="100"
+      stroke="#1E6B52"
+      stroke-dasharray="45 100"
+      stroke-dashoffset="0"
+      transform="rotate(-90 50 50)"
+    />
+
+    <!-- Carbs / Secondary Container Arc: #CEE9DA -->
+    <circle
+      cx="50"
+      cy="50"
+      r="41"
+      pathLength="100"
+      stroke="#CEE9DA"
+      stroke-dasharray="28 100"
+      stroke-dashoffset="0"
+      transform="rotate(82 50 50)"
+    />
+
+    <!-- Protein / Tertiary Arc: #3E6374 -->
+    <circle
+      cx="50"
+      cy="50"
+      r="41"
+      pathLength="100"
+      stroke="#3E6374"
+      stroke-dasharray="18 100"
+      stroke-dashoffset="0"
+      transform="rotate(195 50 50)"
+    />
+  </g>
+
+  <!-- Stylized Flexing Figure -->
+  <g id="figure">
+    <!-- Torso Pill -->
+    <rect x="44" y="37" width="17" height="27" rx="8.5" fill="#1E6B52" />
+    <!-- Tonal Shading -->
+    <path d="M 52 38 Q 60 44 60 55 L 60 62 Q 57 64 53 64 Z" fill="#4C6358" opacity="0.32" />
+
+    <!-- Supporting Hand on Hip -->
+    <path d="M 60 41 Q 68 47 67 54 Q 66 59 61 57" fill="none" stroke="#1E6B52" stroke-width="5" stroke-linecap="round" />
+
+    <!-- Head -->
+    <circle cx="52.5" cy="24" r="8.5" fill="#1E6B52" />
+    <path d="M 52.5 16 A 8.5 8.5 0 0 1 60 27 Q 56 26 52.5 24 Z" fill="#4C6358" opacity="0.35" />
+
+    <!-- Upper Arm & Bicep Peak -->
+    <path d="M 45 37 L 38 44" stroke="#1E6B52" stroke-width="9" stroke-linecap="round" />
+    <path d="M 46 34 Q 40 37 38 43" fill="none" stroke="#1E6B52" stroke-width="4" stroke-linecap="round" />
+
+    <!-- Overlapping Elbow Ball Joint (Exact (38, 44), r=5.5) -->
+    <circle cx="38" cy="44" r="5.5" fill="#1E6B52" />
+
+    <!-- Forearm -->
+    <path d="M 38 44 L 38 29" stroke="#4C6358" stroke-width="8.5" stroke-linecap="round" />
+    <path d="M 36.5 42 L 36.5 30" stroke="#1E6B52" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Clenched Fist -->
+    <rect x="32.5" y="22" width="11" height="10.5" rx="5" fill="#1E6B52" />
+    <circle cx="40.5" cy="25" r="2.5" fill="#CEE9DA" />
+  </g>
+</svg>

@@ -6,7 +6,7 @@ import { GlobalBackground } from './GlobalBackground';
 import { AmbientBackdrop } from './AmbientBackdrop';
 import { OverdriveEngagementCelebration } from './OverdriveEngagementCelebration';
 import { UnstableOverdriveBanner } from './UnstableOverdriveBanner';
-import { SplashScreen } from './SplashScreen';
+import { PwaLaunchSplash } from './PwaLaunchSplash';
 import { PWAInstallPrompt } from './PWAInstallPrompt';
 import { useMomentum, getMomentumDatasetValue } from '../context/MomentumContext';
 import type { NavigationTab } from './CommandBar';
@@ -48,8 +48,8 @@ export const Layout: React.FC<LayoutProps> = ({
       data-unstable={isUnstable ? 'true' : 'false'}
       className="relative min-h-[100dvh] bg-[var(--app-bg)] text-neutral-100 flex flex-col transition-[background-color] duration-500"
     >
-      {/* Session-Guarded Startup Logo & Boot Animation */}
-      <SplashScreen onComplete={() => setSplashDone(true)} />
+      {/* Non-Blocking Material You PWA Launch Splash */}
+      <PwaLaunchSplash onComplete={() => setSplashDone(true)} />
 
       {/* Global Dark-Luxury Base Background (Grid + Ambient Noise) */}
       <GlobalBackground />

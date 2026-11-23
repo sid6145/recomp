@@ -1,5 +1,6 @@
 import React from 'react';
 import { MaterialIcon } from './MaterialIcon';
+import { BrandLogo } from './BrandLogo';
 import { useHaptics } from '../hooks/useHaptics';
 import { MomentumHudPill } from './MomentumHudPill';
 import { useMomentum } from '../context/MomentumContext';
@@ -38,29 +39,20 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
     <header className="hidden md:flex fixed top-0 left-0 right-0 h-16 z-50 bg-[var(--md-surface)]/90 backdrop-blur-md text-[var(--md-on-surface)] border-b border-[var(--md-outline-variant)]/20 px-6 items-center justify-between transition-colors duration-300">
       {/* Left: Brand Identity */}
       <div className="flex items-center gap-3">
-        <img
-          src="/pwa-192x192.png"
-          alt="Recomp Logo"
-          className="w-8 h-8 rounded-xl object-cover shadow-sm shrink-0"
-        />
-        <div className="flex items-baseline gap-2">
-          <span className="font-display text-[22px] font-bold tracking-tight text-[var(--md-on-surface)]">
-            Recomp
+        <BrandLogo variant="horizontal" interactive={true} size={32} />
+        {isOverdrive ? (
+          <span
+            data-testid="overdrive-telemetry-strip"
+            className="text-[11px] font-mono font-bold text-[var(--md-primary)] bg-[var(--md-primary-container)] px-2.5 py-0.5 rounded-full flex items-center gap-1.5 tabular-nums"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-[var(--md-primary)] animate-ping" />
+            <span>OVERDRIVE · DAY {consecutiveHitDays}</span>
           </span>
-          {isOverdrive ? (
-            <span
-              data-testid="overdrive-telemetry-strip"
-              className="text-[11px] font-mono font-bold text-[var(--md-primary)] bg-[var(--md-primary-container)] px-2.5 py-0.5 rounded-full flex items-center gap-1.5 tabular-nums"
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--md-primary)] animate-ping" />
-              <span>OVERDRIVE · DAY {consecutiveHitDays}</span>
-            </span>
-          ) : (
-            <span className="text-xs text-[var(--md-on-surface-variant)] font-normal">
-              // Tracker
-            </span>
-          )}
-        </div>
+        ) : (
+          <span className="text-xs text-[var(--md-on-surface-variant)] font-normal">
+            // Tracker
+          </span>
+        )}
       </div>
 
       {/* Middle: M3 Pill Navigation Bar */}
