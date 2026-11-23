@@ -1,8 +1,7 @@
 import React from 'react';
 import { m } from 'framer-motion';
-import { BookOpen, Search, UtensilsCrossed, Target } from 'lucide-react';
+import { MaterialIcon } from './MaterialIcon';
 import { useHaptics } from '../hooks/useHaptics';
-import { useMomentum } from '../context/MomentumContext';
 import type { NavigationTab } from './CommandBar';
 
 export interface BottomNavProps {
@@ -11,105 +10,120 @@ export interface BottomNavProps {
   onOpenSOS?: () => void;
 }
 
+interface NavItem {
+  id: NavigationTab;
+  label: string;
+  ariaLabel: string;
+  title: string;
+  icon: string;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  {
+    id: 'diary',
+    label: 'Diary',
+    ariaLabel: 'Diary',
+    title: 'Daily Diary',
+    icon: 'menu_book',
+  },
+  {
+    id: 'search',
+    label: 'Search',
+    ariaLabel: 'AI Search',
+    title: 'AI Food Search',
+    icon: 'search',
+  },
+  {
+    id: 'recipe',
+    label: 'Recipe',
+    ariaLabel: 'Recipes',
+    title: 'Recipe Builder',
+    icon: 'restaurant_menu',
+  },
+  {
+    id: 'goal',
+    label: 'Goal',
+    ariaLabel: 'Goal',
+    title: 'Goal & Target',
+    icon: 'track_changes',
+  },
+];
+
 /**
- * Phase 2: Mobile Bottom Navigation (BottomNav.tsx)
+ * Material Design 3 Navigation Bar (BottomNav.tsx)
  *
- * Responsive specification:
- * - flex md:hidden (only visible on mobile, completely hidden on >= 768px desktop)
- * - Fixed bottom-0, z-50, backdrop blur with top border bound to var(--chrome-border) and pb-safe
+ * M3 Spec:
+ * - 80px container height + env(safe-area-inset-bottom)
+ * - Tonal elevation: --md-surface-container
+ * - Active pill indicator: 64px × 32px rounded-full with --md-secondary-container
+ * - Icons: Material Symbols Rounded (filled when active)
+ * - Typography: Inter 12px font-medium
  */
 export const BottomNav: React.FC<BottomNavProps> = ({
   activeTab,
   onTabChange,
 }) => {
   const haptics = useHaptics();
-  const { isOverdrive } = useMomentum();
 
   const handleTabSelect = (tab: NavigationTab) => {
     haptics.tick();
     onTabChange(tab);
   };
 
-  const getActiveTabClass = (tab: NavigationTab) => {
-    if (activeTab !== tab) {
-      return 'text-zinc-400 hover:text-zinc-200 border border-transparent';
-    }
-    if (isOverdrive) {
-      return 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 shadow-[0_0_12px_rgba(16,185,129,0.25)] font-bold';
-    }
-    return 'bg-[#00FF41]/10 text-[#00FF41] border border-[#00FF41]/30 shadow-[0_0_12px_rgba(0,255,65,0.15)] font-bold';
-  };
-
   return (
     <aside
       aria-label="Floating Navigation Dock"
-      className={`flex md:hidden fixed bottom-0 w-full z-50 bg-zinc-950/90 backdrop-blur-md border-t border-[var(--chrome-border)] pb-safe transition-all duration-500 ${
-        isOverdrive ? 'shadow-[0_-1px_20px_rgba(16,185,129,0.18)]' : ''
-      }`}
+      className="flex md:hidden fixed bottom-0 left-0 right-0 z-50 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] transition-colors duration-300 shadow-[0_-2px_12px_rgba(0,0,0,0.18)]"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
       <m.nav
         aria-label="Mobile Bottom Navigation"
         initial={{ y: 24, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         exit={{ y: 32, opacity: 0 }}
-        transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full px-4 py-2 flex items-center justify-around gap-1"
+        transition={{ duration: 0.22, ease: [0.2, 0, 0, 1] }}
+        className="w-full h-[80px] px-2 flex items-center justify-around"
       >
-        {/* Daily Diary Tab */}
-        <button
-          type="button"
-          aria-label="Diary"
-          title="Daily Diary"
-          onClick={() => handleTabSelect('diary')}
-          className={`flex-1 min-h-[44px] min-w-[44px] flex flex-col items-center justify-center gap-1 py-1 px-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${getActiveTabClass(
-            'diary'
-          )}`}
-        >
-          <BookOpen className="w-4 h-4 shrink-0" />
-          <span className="text-[10px] truncate">Diary</span>
-        </button>
+        {NAV_ITEMS.map((item) => {
+          const isActive = activeTab === item.id;
+          return (
+            <button
+              key={item.id}
+              type="button"
+              aria-label={item.ariaLabel}
+              title={item.title}
+              onClick={() => handleTabSelect(item.id)}
+              className="flex-1 min-h-[56px] flex flex-col items-center justify-center gap-1 cursor-pointer select-none m3-state-layer rounded-2xl group"
+            >
+              {/* Active Indicator Pill (64px × 32px rounded-full) */}
+              <div
+                className={`relative w-16 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${
+                  isActive
+                    ? 'bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]'
+                    : 'bg-transparent text-[var(--md-on-surface-variant)] group-hover:text-[var(--md-on-surface)]'
+                }`}
+              >
+                <MaterialIcon
+                  name={item.icon}
+                  filled={isActive}
+                  size={24}
+                  className="transition-transform duration-150 group-active:scale-90"
+                />
+              </div>
 
-        {/* AI Food Search Tab */}
-        <button
-          type="button"
-          aria-label="AI Search"
-          title="AI Food Search"
-          onClick={() => handleTabSelect('search')}
-          className={`flex-1 min-h-[44px] min-w-[44px] flex flex-col items-center justify-center gap-1 py-1 px-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${getActiveTabClass(
-            'search'
-          )}`}
-        >
-          <Search className="w-4 h-4 shrink-0" />
-          <span className="text-[10px] truncate">Search</span>
-        </button>
-
-        {/* Recipe Builder Tab */}
-        <button
-          type="button"
-          aria-label="Recipes"
-          title="Recipe Builder"
-          onClick={() => handleTabSelect('recipe')}
-          className={`flex-1 min-h-[44px] min-w-[44px] flex flex-col items-center justify-center gap-1 py-1 px-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${getActiveTabClass(
-            'recipe'
-          )}`}
-        >
-          <UtensilsCrossed className="w-4 h-4 shrink-0" />
-          <span className="text-[10px] truncate">Recipes</span>
-        </button>
-
-        {/* Goals Tab */}
-        <button
-          type="button"
-          aria-label="Goal"
-          title="Goal & Target"
-          onClick={() => handleTabSelect('goal')}
-          className={`flex-1 min-h-[44px] min-w-[44px] flex flex-col items-center justify-center gap-1 py-1 px-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${getActiveTabClass(
-            'goal'
-          )}`}
-        >
-          <Target className="w-4 h-4 shrink-0" />
-          <span className="text-[10px] truncate">Goals</span>
-        </button>
+              {/* Label */}
+              <span
+                className={`text-[12px] tracking-tight transition-colors duration-150 ${
+                  isActive
+                    ? 'font-bold text-[var(--md-on-surface)]'
+                    : 'font-medium text-[var(--md-on-surface-variant)] group-hover:text-[var(--md-on-surface)]'
+                }`}
+              >
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
       </m.nav>
     </aside>
   );

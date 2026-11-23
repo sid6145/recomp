@@ -149,7 +149,7 @@ export const RecipeBuilder: React.FC<RecipeBuilderProps> = ({ onRecipeSaved }) =
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.12 }}
-        className="relative overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/95 md:bg-neutral-900/90 md:backdrop-blur-xl shadow-2xl p-6 sm:p-8 space-y-6 touch-pan-y"
+        className="relative overflow-hidden rounded-[28px] bg-[var(--md-surface-container)] text-[var(--md-on-surface)] shadow-lg p-6 sm:p-8 space-y-6 touch-pan-y"
       >
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-5">
           <div className="space-y-1">

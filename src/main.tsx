@@ -11,18 +11,24 @@ import { DiaryView } from './components/DiaryView';
 import { Layout } from './components/Layout';
 import { type NavigationTab } from './components/CommandBar';
 import { openSOS, closeCravingRebalance } from './store/sosSlice';
-import { ShieldAlert } from 'lucide-react';
+import { openPaletteSheet } from './store/themeSlice';
+import { MaterialIcon } from './components/MaterialIcon';
+import { ThemeCustomizerSheet } from './components/ThemeCustomizerSheet';
+import { applyMaterialYouTheme } from './theme/materialThemeEngine';
 import { useAppDispatch, useAppSelector } from './store/store';
 import { getFoodLogsForDate, deleteFoodLog } from './db/logManager';
 import { setLogEntries, removeLogEntry } from './store/logsSlice';
 import { initializeDatabase } from './db/dbSeeder';
 import { useHaptics } from './hooks/useHaptics';
-import { MomentumProvider } from './context/MomentumContext';
+import { MomentumProvider, useMomentum } from './context/MomentumContext';
 import { MomentumHudPill } from './components/MomentumHudPill';
 import { loadProfileFromDb, syncProfileToDb } from './db/profileSync';
 import { setHydratedProfile, markHydrated } from './store/userSlice';
-import { LazyMotion, domAnimation } from 'framer-motion';
+import { LazyMotion, domAnimation, AnimatePresence, m } from 'framer-motion';
 import './index.css';
+
+// Zero-FOUC Synchronous Boot: compute & inject M3 theme custom properties before React root mounts
+applyMaterialYouTheme();
 
 interface DailyDiaryProps {
   onNavigateToSearch: () => void;
@@ -88,10 +94,30 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const [activeTab, setActiveTab] = useState<NavigationTab>('diary');
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState<boolean>(false);
 
   const isSOSActive = useAppSelector((state) => state.sos.isSOSActive);
   const isCravingRebalanceOpen = useAppSelector((state) => state.sos.isCravingRebalanceOpen);
+  const themeState = useAppSelector((state) => state.theme);
+  const { isOverdrive } = useMomentum();
   const haptics = useHaptics();
+
+  // Sync theme changes with Overdrive state and settings
+  useEffect(() => {
+    applyMaterialYouTheme(themeState, isOverdrive);
+  }, [themeState, isOverdrive]);
+
+  // Mobile virtual keyboard viewport height watcher
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.visualViewport) return;
+    const handleResize = () => {
+      if (!window.visualViewport) return;
+      const isKeyboard = window.visualViewport.height < window.innerHeight * 0.75;
+      setIsKeyboardOpen(isKeyboard);
+    };
+    window.visualViewport.addEventListener('resize', handleResize);
+    return () => window.visualViewport?.removeEventListener('resize', handleResize);
+  }, []);
 
   // Hydrate user profile from Dexie on startup as single source of truth
   useEffect(() => {
@@ -118,6 +144,7 @@ const App: React.FC = () => {
   };
 
   const shouldHideBottomNav = isBottomSheetOpen || isSOSActive;
+  const shouldShowFAB = !isKeyboardOpen && !isBottomSheetOpen && !isSOSActive && activeTab !== 'search';
 
   return (
     <Layout
@@ -126,32 +153,49 @@ const App: React.FC = () => {
       onOpenSOS={() => dispatch(openSOS())}
       hideBottomNav={shouldHideBottomNav}
     >
-      {/* Mobile Top Brand Bar & SOS Craving Trigger (hidden on md and above) */}
-      <div className="w-full flex md:hidden items-center justify-between py-3 mb-2">
-        <div className="flex items-center gap-2">
+      {/* Mobile M3 Top App Bar (64px height, --md-surface, hidden on md and above) */}
+      <div className="w-full flex md:hidden items-center justify-between h-16 px-1 mb-2">
+        {/* Left: Recomp Brand Title */}
+        <div className="flex items-center gap-2.5">
           <img
             src="/pwa-192x192.png"
             alt="Recomp Logo"
-            className="w-6 h-6 rounded-md object-cover shadow-[0_0_8px_rgba(16,185,129,0.3)] shrink-0 border border-emerald-500/20"
+            className="w-7 h-7 rounded-lg object-cover shadow-sm shrink-0"
           />
-          <div className="w-2 h-2 rounded-full bg-[#00FF41] shadow-[0_0_10px_#00FF41]" />
-          <span className="font-mono text-xs font-bold tracking-widest uppercase text-neutral-200">
-            recomp
+          <span className="font-display text-[22px] font-bold tracking-tight text-[var(--md-on-surface)]">
+            Recomp
           </span>
         </div>
 
+        {/* Right Cluster: Momentum Pill + Palette Button + SOS Craving Button */}
         <div className="flex items-center gap-2">
           <MomentumHudPill compact />
+
+          {/* Theme Palette Button (40px circular tonal icon button) */}
+          <button
+            type="button"
+            onClick={() => {
+              haptics.tick();
+              dispatch(openPaletteSheet());
+            }}
+            className="w-10 h-10 rounded-full bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] flex items-center justify-center transition-colors active:scale-95 m3-state-layer cursor-pointer"
+            title="Theme Palette"
+            aria-label="Theme Customizer"
+          >
+            <MaterialIcon name="palette" size={20} />
+          </button>
+
+          {/* SOS Craving Trigger */}
           <button
             type="button"
             onClick={() => {
               haptics.heartbeat(0.8);
               dispatch(openSOS());
             }}
-            className="min-h-[44px] min-w-[44px] inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-all cursor-pointer shadow-lg shadow-rose-950/40 active:scale-95"
+            className="min-h-[40px] px-3.5 py-1.5 rounded-full text-xs font-bold bg-[var(--md-error-container)] text-[var(--md-on-error-container)] flex items-center gap-1.5 transition-transform active:scale-95 m3-state-layer cursor-pointer shadow-sm"
           >
-            <ShieldAlert className="w-4 h-4 text-rose-500 animate-pulse" />
-            <span>SOS Craving</span>
+            <MaterialIcon name="warning" filled size={16} className="text-[var(--md-error)]" />
+            <span>SOS</span>
           </button>
         </div>
       </div>
@@ -170,6 +214,28 @@ const App: React.FC = () => {
         {activeTab === 'goal' && <GoalSetter />}
       </div>
 
+      {/* M3 Extended FAB (Bottom-right, 56px height, rounded-2xl, --md-primary-container / --md-on-primary-container) */}
+      <AnimatePresence>
+        {shouldShowFAB && (
+          <m.button
+            initial={{ opacity: 0, scale: 0.8, y: 16 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 16 }}
+            transition={{ duration: 0.2, ease: [0.2, 0, 0, 1] }}
+            type="button"
+            onClick={() => {
+              haptics.tick();
+              setActiveTab('search');
+            }}
+            className="fixed bottom-[96px] md:bottom-8 right-6 z-40 h-14 px-5 rounded-2xl bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] shadow-lg hover:shadow-xl flex items-center gap-2.5 font-display font-semibold text-sm cursor-pointer transition-transform active:scale-95 m3-state-layer"
+            aria-label="Log Food"
+          >
+            <MaterialIcon name="add" size={24} />
+            <span>Log Food</span>
+          </m.button>
+        )}
+      </AnimatePresence>
+
       {/* SOS Craving Full-Screen Intervention Modal */}
       <SOSModal />
 
@@ -178,6 +244,9 @@ const App: React.FC = () => {
         isOpen={isCravingRebalanceOpen}
         onClose={() => dispatch(closeCravingRebalance())}
       />
+
+      {/* Android Wallpaper & Style Theme Customizer Sheet */}
+      <ThemeCustomizerSheet />
     </Layout>
   );
 };

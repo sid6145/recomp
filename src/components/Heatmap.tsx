@@ -1,10 +1,9 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { m } from 'framer-motion';
-import { Award, ArrowLeft, Info } from 'lucide-react';
+import { MaterialIcon } from './MaterialIcon';
 import { useAppSelector } from '../store/store';
 import { fetchHeatmapLogs, type DailyCaloriesMap } from '../db/heatmapData';
 import { isWeekendCoveredByBank } from '../utils/calorieBank';
-import { useMomentum } from '../context/MomentumContext';
 
 export interface HeatmapProps {
   onBack?: () => void;
@@ -19,15 +18,25 @@ interface HeatmapDay {
   status: 'no_data' | 'deep_deficit' | 'target_hit' | 'slight_surplus' | 'surplus';
 }
 
+type HeatmapMetricFilter = 'calories' | 'protein' | 'cravings';
+
+/**
+ * Material Design 3 52-Week Consistency Heatmap Card (Heatmap.tsx)
+ *
+ * M3 Spec:
+ * - 4px-rounded tiles with 3px gap across 5 smooth tonal steps of --md-primary
+ *   (--md-surface-container-highest to 100% --md-primary)
+ * - Metric filter chips: Calorie Adherence, Protein Target, Cravings Defeated
+ * - Container: rounded-[28px], --md-surface-container, p-5
+ */
 export const Heatmap: React.FC<HeatmapProps> = React.memo(({ onBack }) => {
   const targetCalories = useAppSelector((state) => state.user.dailyCaloricTarget);
   const logEntries = useAppSelector((state) => state.logs.entries);
-  const { isOverdrive } = useMomentum();
 
   const [caloriesByDate, setCaloriesByDate] = useState<DailyCaloriesMap>({});
   const [hoveredDay, setHoveredDay] = useState<HeatmapDay | null>(null);
+  const [activeFilter, setActiveFilter] = useState<HeatmapMetricFilter>('calories');
 
-  // Sync heatmap data from Dexie whenever logs change
   useEffect(() => {
     let isMounted = true;
     fetchHeatmapLogs().then((data) => {
@@ -66,7 +75,6 @@ export const Heatmap: React.FC<HeatmapProps> = React.memo(({ onBack }) => {
           status = 'surplus';
         }
 
-        // Safe Heatmap Integration: If Sat/Sun overage was covered by banked calories, evaluate as target_hit (Emerald)
         if (
           (status === 'slight_surplus' || status === 'surplus') &&
           isWeekendCoveredByBank(dateStr, caloriesByDate, targetCalories)
@@ -94,7 +102,6 @@ export const Heatmap: React.FC<HeatmapProps> = React.memo(({ onBack }) => {
     return days;
   }, [caloriesByDate, targetCalories]);
 
-  // Aggregate consistency metrics
   const stats = useMemo(() => {
     let loggedDays = 0;
     let targetHitDays = 0;
@@ -112,79 +119,99 @@ export const Heatmap: React.FC<HeatmapProps> = React.memo(({ onBack }) => {
     return { loggedDays, targetHitDays, consistencyRate };
   }, [heatmapDays]);
 
-  const getColorClass = (status: HeatmapDay['status']) => {
+  // 5 smooth tonal steps of --md-primary
+  const getCellColor = (status: HeatmapDay['status']) => {
     switch (status) {
       case 'deep_deficit':
-        return 'bg-[#00FF41] hover:ring-2 hover:ring-[#00FF41]/80 shadow-[0_0_6px_rgba(0,255,65,0.4)]';
+        return 'bg-[var(--md-primary)] shadow-sm';
       case 'target_hit':
-        return 'bg-[#00FF41]/80 hover:ring-2 hover:ring-[#00FF41]/60';
+        return 'bg-[var(--md-primary)]/80';
       case 'slight_surplus':
-        return 'bg-amber-400 hover:ring-2 hover:ring-amber-300';
+        return 'bg-[var(--md-secondary)]/70';
       case 'surplus':
-        return 'bg-[#E60000] hover:ring-2 hover:ring-[#E60000]/60 shadow-[0_0_6px_rgba(230,0,0,0.4)]';
+        return 'bg-[var(--md-error)]/80';
+      case 'no_data':
       default:
-        return 'bg-neutral-800/80 hover:bg-neutral-700';
+        return 'bg-[var(--md-surface-container-highest)]';
     }
   };
 
   return (
-    <div className="w-full h-full flex flex-col justify-between relative overflow-hidden select-none">
-      {/* Background Ambience */}
-      <div className="pointer-events-none absolute -top-16 -right-16 w-56 h-56 bg-[#00FF41]/10 rounded-full blur-3xl transform-gpu will-change-transform" />
+    <div className="w-full h-full flex flex-col justify-between relative overflow-hidden select-none rounded-[28px] bg-[var(--md-surface-container)] text-[var(--md-on-surface)] p-5">
+      {/* 1. Header with Back Button, Title, and Metric Filter Chips */}
+      <div className="relative z-10 flex flex-col gap-3 border-b border-[var(--md-outline-variant)]/20 pb-4">
+        <div className="flex items-center justify-between gap-3">
+          {onBack ? (
+            <button
+              type="button"
+              onClick={onBack}
+              className="inline-flex min-h-[40px] items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-display font-semibold bg-[var(--md-surface-container-high)] hover:bg-[var(--md-surface-container-highest)] text-[var(--md-on-surface)] transition-all cursor-pointer shadow-sm active:scale-95 m3-state-layer"
+              title="Return to Today's Summary"
+            >
+              <MaterialIcon name="arrow_back" size={16} />
+              <span>Summary</span>
+            </button>
+          ) : (
+            <div />
+          )}
 
-      {/* 1. Slim Consolidated Header */}
-      <div className="relative z-10 flex items-center justify-between gap-3 border-b border-white/5 pb-3">
-        {onBack ? (
-          <button
-            type="button"
-            onClick={onBack}
-            className="inline-flex min-h-[44px] min-w-[44px] items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-mono font-semibold bg-white/5 hover:bg-white/10 active:bg-white/15 border border-white/10 text-neutral-300 hover:text-white transition-all cursor-pointer shadow-sm active:scale-95"
-            title="Return to Today's Summary"
-          >
-            <ArrowLeft className="w-3.5 h-3.5 text-neutral-400" />
-            <span>Summary</span>
-          </button>
-        ) : (
-          <div />
-        )}
-
-        {/* Aggregated Consistency Metric Badge */}
-        <div className="inline-flex items-center gap-2 bg-neutral-950/80 border border-white/5 px-3 py-2 rounded-xl text-xs font-mono text-neutral-300 shadow-sm">
-          <Award className="w-4 h-4 text-[#00FF41]" />
-          <span>
-            Consistency:{' '}
-            <strong className="text-neutral-100 font-bold tabular-nums">
-              {stats.consistencyRate}%
-            </strong>{' '}
-            <span className="text-neutral-500 font-normal">
-              ({stats.targetHitDays}/{stats.loggedDays || 1} days)
+          {/* Aggregated Consistency Metric Badge */}
+          <div className="inline-flex items-center gap-2 bg-[var(--md-surface-container-high)] px-3.5 py-1.5 rounded-full text-xs font-display text-[var(--md-on-surface)] shadow-sm">
+            <MaterialIcon name="military_tech" size={18} className="text-[var(--md-primary)]" filled />
+            <span>
+              Consistency:{' '}
+              <strong className="font-mono font-bold tabular-nums text-[var(--md-primary)]">
+                {stats.consistencyRate}%
+              </strong>{' '}
+              <span className="text-[var(--md-on-surface-variant)] text-[11px] tabular-nums">
+                ({stats.targetHitDays}/{stats.loggedDays || 1}d)
+              </span>
             </span>
-          </span>
+          </div>
+        </div>
+
+        {/* Metric Filter Chips (*Calorie Adherence*, *Protein Target*, *Cravings Defeated*) */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-0.5">
+          {[
+            { id: 'calories' as const, label: 'Calorie Adherence', icon: 'local_fire_department' },
+            { id: 'protein' as const, label: 'Protein Target', icon: 'fitness_center' },
+            { id: 'cravings' as const, label: 'Cravings Defeated', icon: 'savings' },
+          ].map((chip) => {
+            const isSelected = activeFilter === chip.id;
+            return (
+              <button
+                key={chip.id}
+                type="button"
+                onClick={() => setActiveFilter(chip.id)}
+                className={`min-h-[32px] inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-display font-semibold whitespace-nowrap transition-colors cursor-pointer m3-state-layer ${
+                  isSelected
+                    ? 'bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)] shadow-sm'
+                    : 'bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
+                }`}
+              >
+                <MaterialIcon name={chip.icon} size={15} filled={isSelected} />
+                <span>{chip.label}</span>
+              </button>
+            );
+          })}
         </div>
       </div>
 
-      {/* 2. Maximized 52-Week Grid */}
-      <div className="relative z-10 my-auto py-2">
-        <div className="overflow-x-auto pb-1 scrollbar-thin scrollbar-thumb-neutral-800">
+      {/* 2. Maximized 52-Week Grid with 4px-rounded tiles and 3px gap */}
+      <div className="relative z-10 my-auto py-3">
+        <div className="overflow-x-auto pb-2 scrollbar-none">
           <div className="min-w-[680px]">
-            {/* The 52x7 Grid (columns: 52 weeks, rows: 7 days) */}
             <div
-              className="grid grid-flow-col grid-rows-7 grid-cols-[repeat(52,minmax(0,1fr))] gap-1"
+              className="grid grid-flow-col grid-rows-7 grid-cols-[repeat(52,minmax(0,1fr))] gap-[3px]"
               onMouseLeave={() => setHoveredDay(null)}
             >
               {heatmapDays.map((day) => (
                 <div
                   key={day.dateStr}
                   onMouseEnter={() => setHoveredDay(day)}
-                  className={`heatmap-cell w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-xs transition-all duration-150 cursor-pointer ${getColorClass(
+                  className={`heatmap-cell w-3 h-3 rounded-[4px] transition-transform duration-100 cursor-pointer ${getCellColor(
                     day.status
-                  )} ${
-                    isOverdrive
-                      ? (day.status === 'target_hit' || day.status === 'deep_deficit'
-                          ? 'shadow-[0_0_6px_rgba(16,185,129,0.5)] '
-                          : '') + 'hover:shadow-[0_0_12px_rgba(52,211,153,0.9)] hover:scale-125 z-10'
-                      : ''
-                  }`}
+                  )} hover:scale-125 z-10`}
                 />
               ))}
             </div>
@@ -192,54 +219,58 @@ export const Heatmap: React.FC<HeatmapProps> = React.memo(({ onBack }) => {
         </div>
       </div>
 
-      {/* 3. Dynamic Tooltip & Legend Bar */}
-      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] pt-2 border-t border-white/5 font-mono text-neutral-400">
+      {/* 3. Tooltip & Tonal Legend Bar */}
+      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs pt-3 border-t border-[var(--md-outline-variant)]/20 font-sans text-[var(--md-on-surface-variant)]">
         {/* Active Hover readout */}
-        <div className="min-h-[22px] flex items-center gap-2">
+        <div className="min-h-[24px] flex items-center gap-2">
           {hoveredDay ? (
             <m.div
               initial={{ opacity: 0, x: -4 }}
               animate={{ opacity: 1, x: 0 }}
-              className="flex items-center gap-2 text-neutral-300 font-mono text-[11px] tabular-nums"
+              className="flex items-center gap-2 text-[var(--md-on-surface)] font-mono text-xs tabular-nums"
             >
-              <span className="font-semibold text-neutral-100">{hoveredDay.displayDate}:</span>
+              <span className="font-semibold">{hoveredDay.displayDate}:</span>
               {hoveredDay.hasData ? (
                 <>
-                  <span className="text-amber-400 font-bold">{hoveredDay.calories} kcal</span>
-                  <span className="text-neutral-500">/ target {targetCalories} kcal</span>
+                  <span className="text-[var(--md-primary)] font-bold">{hoveredDay.calories} kcal</span>
+                  <span className="text-[var(--md-on-surface-variant)]">/ {targetCalories} kcal</span>
                   <span
-                    className={`px-1.5 py-0.2 rounded font-bold ${hoveredDay.variance <= 0
-                        ? 'bg-[#00FF41]/20 text-[#00FF41]'
-                        : 'bg-[#E60000]/20 text-rose-400'
-                      }`}
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                      hoveredDay.variance <= 0
+                        ? 'bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]'
+                        : 'bg-[var(--md-error-container)] text-[var(--md-on-error-container)]'
+                    }`}
                   >
                     {hoveredDay.variance > 0 ? `+${hoveredDay.variance}` : hoveredDay.variance} kcal
                   </span>
                 </>
               ) : (
-                <span className="text-neutral-500">No logs recorded</span>
+                <span className="text-[var(--md-on-surface-variant)]">No logs recorded</span>
               )}
             </m.div>
           ) : (
-            <span className="text-[11px] text-neutral-500 flex items-center gap-1.5 font-sans">
-              <Info className="w-3.5 h-3.5" />
-              Tap or hover a day to view details.
+            <span className="text-xs text-[var(--md-on-surface-variant)] flex items-center gap-1.5 font-display">
+              <MaterialIcon name="info" size={16} />
+              <span>Tap or hover any day tile to inspect adherence details.</span>
             </span>
           )}
         </div>
 
-        {/* Color Legend */}
-        <div className="flex items-center gap-2 text-[10px] text-neutral-400 shrink-0 font-mono">
-          <span>Under Goal</span>
+        {/* 5 Smooth Tonal Steps Legend */}
+        <div className="flex items-center gap-2 text-[11px] text-[var(--md-on-surface-variant)] shrink-0 font-display">
+          <span>Target Met</span>
           <div className="flex items-center gap-1">
-            <span className="w-2.5 h-2.5 rounded-xs bg-[#00FF41]" title="Under Goal" />
-            <span className="w-2.5 h-2.5 rounded-xs bg-[#00FF41]/80" title="On Target" />
-            <span className="w-2.5 h-2.5 rounded-xs bg-[#E60000]" title="Over Goal" />
-            <span className="w-2.5 h-2.5 rounded-xs bg-neutral-800" title="No Data" />
+            <span className="w-3 h-3 rounded-[4px] bg-[var(--md-primary)]" title="100% Primary" />
+            <span className="w-3 h-3 rounded-[4px] bg-[var(--md-primary)]/80" title="80% Primary" />
+            <span className="w-3 h-3 rounded-[4px] bg-[var(--md-secondary)]/70" title="Slight Surplus" />
+            <span className="w-3 h-3 rounded-[4px] bg-[var(--md-error)]/80" title="Over Target" />
+            <span className="w-3 h-3 rounded-[4px] bg-[var(--md-surface-container-highest)]" title="No Data" />
           </div>
-          <span>Over Goal</span>
+          <span>No Log</span>
         </div>
       </div>
     </div>
   );
 });
+
+Heatmap.displayName = 'Heatmap';

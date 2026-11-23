@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { m } from 'framer-motion';
-import { Activity, Sparkles, ArrowRight, PiggyBank, ShieldCheck } from 'lucide-react';
 import { AnimatedCounter } from './AnimatedCounter';
-import { AnimatedNumber } from './AnimatedNumber';
 import { Heatmap } from './Heatmap';
+import { MaterialIcon } from './MaterialIcon';
 import { useHaptics } from '../hooks/useHaptics';
 import { CinematicTransition } from '../utils/motionPresets';
-import { useMomentum } from '../context/MomentumContext';
 import { calculateCurrentWeekBank, type CalorieBankState } from '../utils/calorieBank';
 import { fetchHeatmapLogs, type DailyCaloriesMap } from '../db/heatmapData';
+import { useAppSelector } from '../store/store';
 
 export interface DailyMetabolicSummaryProps {
   remainingCalories: number;
@@ -21,17 +20,14 @@ export interface DailyMetabolicSummaryProps {
 }
 
 /**
- * The Telemetry Card (DailyMetabolicSummary.tsx)
+ * Material Design 3 Hero Calorie & Macro Summary Card (DailyMetabolicSummary.tsx)
  *
- * Design Specification:
- * - 3D Y-Axis Flip effect using Framer Motion's `CinematicTransition` ({ duration: 1.5, ease: [0.16, 1, 0.3, 1] }).
- * - Front: Displays daily remaining calories (using AnimatedCounter) with a breathing neon/crimson radial gradient.
- *   - Deficit: Neon Matrix Green (#00FF41) with shadow-[0_0_15px_rgba(0,255,65,0.2)].
- *   - Surplus: Deep Crimson (#E60000).
- * - "View Telemetry" button initiates the 3D flip to the Back.
- * - Back: Displays the 52-Week Longitudinal Matrix (Heatmap) telemetry view.
- * - Surfaces: bg-neutral-900 with border border-white/5 (The Substrate) & bg-neutral-950 (The Void).
- * - Monospace JetBrains Mono with tabular-nums strictly applied to all metrics.
+ * M3 Spec:
+ * - Container: rounded-[28px], --md-surface-container, p-5 sm:p-6
+ * - M3 Circular Progress Indicator (140px diameter, 14px stroke, stroke-linecap: round)
+ *   showing Calories Remaining in tabular numerals at center, with --md-surface-container-highest track and --md-primary arc.
+ * - Three M3 Linear Progress Indicators (8px height, rounded-full) for Protein, Carbs, and Fats showing current / target g.
+ * - Retains 3D perspective Y-axis flip to 52-Week Longitudinal Matrix (Heatmap).
  */
 export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React.memo(({
   remainingCalories,
@@ -45,7 +41,12 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [caloriesByDate, setCaloriesByDate] = useState<DailyCaloriesMap>({});
   const haptics = useHaptics();
-  const { momentumTier, isOverdrive } = useMomentum();
+  const userProfile = useAppSelector((state) => state.user);
+
+  // Targets for macros
+  const targetProtein = userProfile.proteinTarget || Math.round((targetCalories * 0.3) / 4);
+  const targetCarbs = Math.round((targetCalories * 0.45) / 4);
+  const targetFats = Math.round((targetCalories * 0.25) / 9);
 
   // Load heatmap data for calorie bank calculation
   useEffect(() => {
@@ -63,7 +64,6 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
   }, [caloriesByDate, targetCalories]);
 
   const rawSurplus = statusProp ? statusProp === 'surplus' : remainingCalories < 0;
-  // If weekend, check if overage is covered by available bank
   const isWeekendOverageCovered =
     bankState.isWeekend && rawSurplus && totalConsumed <= targetCalories + bankState.bankedCalories;
 
@@ -80,6 +80,12 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
     setIsFlipped(false);
   }, [haptics]);
 
+  // Circular progress math (140px diameter, 14px stroke -> radius = 70 - 7 = 63, circumference = 2 * pi * 63 = ~395.84)
+  const radius = 63;
+  const circumference = 2 * Math.PI * radius;
+  const progressRatio = Math.min(1, Math.max(0, totalConsumed / (targetCalories || 1)));
+  const strokeDashoffset = circumference - progressRatio * circumference;
+
   return (
     <section aria-label="Daily Metabolic Telemetry" className="w-full [perspective:1200px] select-none touch-pan-y">
       <m.div
@@ -89,219 +95,199 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
         className="relative w-full"
       >
         {/* ============================================================ */}
-        {/* FRONT FACE: Daily Remaining Balance & Live Metabolic Stats   */}
+        {/* FRONT FACE: Hero Calorie & Macro Summary Card               */}
         {/* ============================================================ */}
         <div
           style={{
             backfaceVisibility: 'hidden',
             WebkitBackfaceVisibility: 'hidden',
           }}
-          className={`relative w-full rounded-3xl border border-[var(--surface-border)] bg-zinc-900/95 md:bg-[var(--surface-card)] md:backdrop-blur-xl p-6 sm:p-8 overflow-hidden space-y-6 touch-pan-y transition-all duration-500 shadow-[var(--surface-highlight),var(--accent-glow)] ${
-            isOverdrive ? 'ring-1 ring-emerald-400/40 overdrive-conic-border' : ''
-          } ${isFlipped ? 'pointer-events-none' : 'pointer-events-auto'}`}
+          className={`relative w-full rounded-[28px] bg-[var(--md-surface-container)] text-[var(--md-on-surface)] p-5 sm:p-6 overflow-hidden space-y-6 shadow-md transition-colors duration-300 ${
+            isFlipped ? 'pointer-events-none' : 'pointer-events-auto'
+          }`}
         >
-          {/* Overdrive Animated Conic Ambient Aura */}
-          {isOverdrive && (
-            <div className="pointer-events-none absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-emerald-500/25 via-cyan-400/25 to-emerald-500/25 opacity-80 blur-sm animate-pulse" />
-          )}
-
-          {/* Breathing Neon Matrix Green (#00FF41) or Deep Crimson (#E60000) Radial Gradient */}
-          <m.div
-            animate={{
-              scale: [1, 1.15, 1],
-              opacity: currentStatus === 'surplus' ? [0.2, 0.35, 0.2] : [0.15, 0.3, 0.15],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className={`pointer-events-none absolute -top-28 -right-28 w-80 h-80 rounded-full blur-[100px] transform-gpu will-change-transform ${
-              currentStatus === 'surplus'
-                ? 'bg-[#E60000] shadow-[0_0_120px_rgba(230,0,0,0.35)]'
-                : 'bg-[#00FF41] shadow-[0_0_120px_rgba(0,255,65,0.25)]'
-            }`}
-          />
-
           {/* Header Row: Calorie Balance & Flip Trigger */}
-          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-5">
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--md-outline-variant)]/20 pb-4">
             <div>
-              <div className="flex flex-wrap items-center gap-1.5 mb-1">
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-white/5 text-neutral-300 border border-white/10">
-                  <Sparkles
-                    className={`w-3 h-3 ${
-                      currentStatus === 'surplus' ? 'text-[#E60000]' : 'text-[#00FF41]'
-                    }`}
+              <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-display font-medium bg-[var(--md-surface-container-high)] text-[var(--md-on-surface-variant)]">
+                  <MaterialIcon
+                    name="nutrition"
+                    size={16}
+                    className={currentStatus === 'surplus' ? 'text-[var(--md-error)]' : 'text-[var(--md-primary)]'}
                   />
-                  Calorie Balance
+                  <span>Calorie Balance</span>
                 </div>
 
-                {/* Weekend Flex-Deficit: "Spend from Bank" indicator on Sat/Sun */}
                 {bankState.isWeekend && bankState.bankedCalories > 0 && (
-                  <div className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-cyan-500/10 text-cyan-300 border border-cyan-500/30 shadow-[0_0_10px_rgba(6,182,212,0.15)]">
-                    <PiggyBank className="w-3 h-3 text-cyan-400" />
+                  <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-display font-semibold bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)]">
+                    <MaterialIcon name="savings" size={16} />
                     <span>Spend from Bank: +{bankState.bankedCalories} kcal</span>
                   </div>
                 )}
 
-                {/* Protected by Bank pill if covered */}
                 {isWeekendOverageCovered && (
-                  <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">
-                    <ShieldCheck className="w-3 h-3 text-emerald-400" />
+                  <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-display font-semibold bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)]">
+                    <MaterialIcon name="shield" size={16} filled />
                     <span>Bank Protected</span>
                   </div>
                 )}
               </div>
 
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-neutral-100 font-sans">
+              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[var(--md-on-surface)] font-display">
                 Daily Calorie Diary
               </h2>
-              <p className="text-xs text-neutral-400 font-sans">
+              <p className="text-xs text-[var(--md-on-surface-variant)] font-sans mt-0.5">
                 Target:{' '}
-                <span data-testid="target-calories-value" className="font-mono text-neutral-200 font-semibold tabular-nums">
+                <span data-testid="target-calories-value" className="font-mono text-[var(--md-on-surface)] font-bold tabular-nums">
                   {targetCalories} kcal
                 </span>
                 {bankState.isWeekend && bankState.bankedCalories > 0 && (
-                  <span className="font-mono text-cyan-300 ml-1.5">
+                  <span className="font-mono text-[var(--md-secondary)] ml-1.5 tabular-nums">
                     (+{bankState.bankedCalories} bank buffer)
                   </span>
                 )}
               </p>
             </div>
 
-            <div className="flex items-center gap-4">
-              {/* Remaining / Surplus Readout using AnimatedCounter */}
-              <div className="flex flex-col items-start sm:items-end">
-                <span className="text-[10px] uppercase font-mono tracking-wider text-neutral-400 font-semibold">
-                  {isWeekendOverageCovered
-                    ? 'Covered by Bank:'
-                    : isSurplus
-                    ? 'Surplus:'
-                    : 'Remaining:'}
-                </span>
-                <div className="flex items-baseline gap-1.5">
-                  <AnimatedCounter
-                    value={Math.abs(remainingCalories)}
-                    className={`text-3xl sm:text-4xl font-black font-mono tracking-tight tabular-nums ${
-                      isSurplus
-                        ? 'text-[#E60000] drop-shadow-[0_0_15px_rgba(230,0,0,0.4)]'
-                        : isWeekendOverageCovered
-                        ? 'text-cyan-300 drop-shadow-[0_0_15px_rgba(6,182,212,0.3)]'
-                        : 'text-[#00FF41] drop-shadow-[0_0_15px_rgba(0,255,65,0.2)] shadow-[0_0_15px_rgba(0,255,65,0.2)]'
-                    } ${
-                      isOverdrive
-                        ? 'drop-shadow-[0_0_12px_rgba(52,211,153,0.5)]'
-                        : momentumTier >= 1.5
-                        ? 'drop-shadow-[0_0_10px_rgba(16,185,129,0.4)]'
-                        : ''
-                    }`}
+            {/* View Telemetry Button (Tonal Button, min 44x44px touch target) */}
+            <button
+              type="button"
+              onClick={handleFlipToTelemetry}
+              className="inline-flex min-h-[44px] items-center gap-2 px-4 py-2 rounded-full text-xs font-display font-semibold bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] hover:bg-[var(--md-surface-container-highest)] transition-colors active:scale-95 m3-state-layer cursor-pointer shadow-sm self-start sm:self-auto"
+              title="Flip to 52-Week Longitudinal Matrix"
+            >
+              <MaterialIcon name="query_stats" size={18} className="text-[var(--md-primary)]" />
+              <span>View Telemetry</span>
+              <MaterialIcon name="arrow_forward" size={16} />
+            </button>
+          </div>
+
+          {/* Bento Center: Circular Progress Ring + Macros Linear Progress */}
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 py-2">
+            {/* 1. M3 Circular Progress Indicator (140px diameter, 14px stroke, stroke-linecap: round) */}
+            <div className="flex flex-col items-center justify-center shrink-0">
+              <div className="relative w-[140px] h-[140px] flex items-center justify-center">
+                <svg className="w-[140px] h-[140px] transform -rotate-90" viewBox="0 0 140 140">
+                  {/* Track: --md-surface-container-highest */}
+                  <circle
+                    cx="70"
+                    cy="70"
+                    r={radius}
+                    fill="transparent"
+                    stroke="var(--md-surface-container-highest)"
+                    strokeWidth="14"
                   />
-                  <span
-                    className={`text-xs font-mono font-bold uppercase tracking-wider ${
+                  {/* Arc: --md-primary / --md-error */}
+                  <circle
+                    cx="70"
+                    cy="70"
+                    r={radius}
+                    fill="transparent"
+                    stroke={
                       isSurplus
-                        ? 'text-[#E60000]/80'
+                        ? 'var(--md-error)'
                         : isWeekendOverageCovered
-                        ? 'text-cyan-300/80'
-                        : 'text-[#00FF41]/80'
-                    }`}
-                  >
+                        ? 'var(--md-secondary)'
+                        : 'var(--md-primary)'
+                    }
+                    strokeWidth="14"
+                    strokeDasharray={circumference}
+                    strokeDashoffset={strokeDashoffset}
+                    strokeLinecap="round"
+                    className="transition-[stroke-dashoffset] duration-700 ease-out"
+                  />
+                </svg>
+
+                {/* Tabular Numerals at Center */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center text-center p-2">
+                  <span className="text-[10px] uppercase font-display font-semibold text-[var(--md-on-surface-variant)] tracking-tight">
+                    {isWeekendOverageCovered
+                      ? 'Covered'
+                      : isSurplus
+                      ? 'Surplus'
+                      : 'Remaining'}
+                  </span>
+                  <div className="flex items-baseline justify-center gap-0.5 text-[#00FF41] text-[var(--md-primary)]">
+                    <span className="text-2xl sm:text-3xl font-black font-mono tracking-tight tabular-nums">
+                      <AnimatedCounter value={Math.abs(remainingCalories)} />
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-mono uppercase font-bold text-[var(--md-on-surface-variant)] tabular-nums">
                     kcal
                   </span>
                 </div>
               </div>
 
-              {/* View Telemetry Button (triggers 3D Y-axis flip with 44px touch target) */}
-              <button
-                type="button"
-                onClick={handleFlipToTelemetry}
-                className={`inline-flex min-h-[44px] min-w-[44px] items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-mono font-semibold bg-white/5 hover:bg-white/10 border border-white/10 text-neutral-200 hover:text-white transition-all active:scale-[0.97] transition-transform duration-100 ease-out cursor-pointer shadow-md ${
-                  isOverdrive
-                    ? 'hover:border-emerald-400/40 hover:shadow-[0_0_15px_rgba(16,185,129,0.25)]'
-                    : ''
-                }`}
-                title="Flip to 52-Week Longitudinal Matrix"
-              >
-                <Activity className="w-4 h-4 text-[#00FF41]" />
-                <span className="hidden sm:inline">View Telemetry</span>
-                <ArrowRight className="w-3.5 h-3.5 text-neutral-400" />
-              </button>
-            </div>
-          </div>
-
-          {/* Calorie Progress Meter */}
-          <div className="relative z-10 space-y-2">
-            <div className="flex justify-between text-xs font-mono text-neutral-400 tabular-nums">
-              <span>
-                Consumed:{' '}
-                <strong className="text-amber-400 font-mono tabular-nums">
-                  <AnimatedCounter value={totalConsumed} /> kcal
-                </strong>
-              </span>
-              <span>
-                {Math.round((totalConsumed / (targetCalories || 1)) * 100)}% of Daily Goal
-              </span>
-            </div>
-            <div className="w-full h-2.5 rounded-full bg-neutral-950/80 border border-white/5 overflow-hidden p-0.5">
-              <m.div
-                initial={{ scaleX: 0 }}
-                animate={{
-                  scaleX: Math.min(1, totalConsumed / (targetCalories || 1)),
-                }}
-                transition={{ duration: 0.6, ease: 'easeOut' }}
-                className={`h-full origin-left w-full rounded-full transition-colors ${
-                  isSurplus
-                    ? 'bg-[#E60000] shadow-[0_0_15px_rgba(230,0,0,0.4)]'
-                    : isWeekendOverageCovered
-                    ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
-                    : 'bg-[#00FF41] shadow-[0_0_15px_rgba(0,255,65,0.2)]'
-                } ${momentumTier >= 1.5 ? 'drop-shadow-[0_0_10px_rgba(16,185,129,0.4)]' : ''}`}
-              />
-            </div>
-          </div>
-
-          {/* Macro Strips (Protein, Carbs, Fats) strictly Monospace Tabular-Nums */}
-          <div className="relative z-10 grid grid-cols-3 gap-3 pt-2">
-            {/* Protein */}
-            <div className="p-3 rounded-2xl bg-neutral-950/80 border border-white/5 flex flex-col gap-1">
-              <div className="flex items-center justify-between text-[11px] font-mono">
-                <span className="text-neutral-400 font-semibold">[ P: Protein ]</span>
-                <span
-                  className={`text-rose-400 text-xs font-bold font-mono tabular-nums ${
-                    isOverdrive ? 'drop-shadow-[0_0_8px_rgba(244,63,94,0.45)]' : ''
-                  }`}
-                >
-                  <AnimatedNumber value={Math.round(totalProtein)} suffix="g" />
-                </span>
+              <div className="mt-2 text-center text-xs font-mono text-[var(--md-on-surface-variant)] tabular-nums">
+                Consumed: <strong className="text-[var(--md-on-surface)] tabular-nums">{totalConsumed}</strong> / {targetCalories} kcal
               </div>
-              <span className="text-[10px] font-mono text-neutral-500 tabular-nums">
-                {Math.round(totalProtein * 4)} kcal
-              </span>
             </div>
 
-            {/* Carbs */}
-            <div className="p-3 rounded-2xl bg-neutral-950/80 border border-white/5 flex flex-col gap-1">
-              <div className="flex items-center justify-between text-[11px] font-mono">
-                <span className="text-neutral-400 font-semibold">[ C: Carbs ]</span>
-                <span className="text-cyan-400 text-xs font-bold font-mono tabular-nums">
-                  {Math.round(totalCarbs)}g
-                </span>
+            {/* 2. Three M3 Linear Progress Indicators (8px height, rounded-full) for Protein, Carbs, Fats */}
+            <div className="flex-1 w-full space-y-4">
+              {/* Protein Linear Bar */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-baseline text-xs font-display">
+                  <span className="font-semibold text-[var(--md-on-surface)] flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--md-primary)]" />
+                    Protein
+                  </span>
+                  <span className="font-mono text-xs tabular-nums text-[var(--md-on-surface-variant)]">
+                    <strong className="text-[var(--md-on-surface)]">{Math.round(totalProtein)}g</strong> / {targetProtein}g
+                  </span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-[var(--md-surface-container-highest)] overflow-hidden">
+                  <m.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: Math.min(1, totalProtein / (targetProtein || 1)) }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    className="h-full origin-left rounded-full bg-[var(--md-primary)]"
+                  />
+                </div>
               </div>
-              <span className="text-[10px] font-mono text-neutral-500 tabular-nums">
-                {Math.round(totalCarbs * 4)} kcal
-              </span>
-            </div>
 
-            {/* Fats */}
-            <div className="p-3 rounded-2xl bg-neutral-950/80 border border-white/5 flex flex-col gap-1">
-              <div className="flex items-center justify-between text-[11px] font-mono">
-                <span className="text-neutral-400 font-semibold">[ F: Fats ]</span>
-                <span className="text-amber-400 text-xs font-bold font-mono tabular-nums">
-                  {Math.round(totalFats)}g
-                </span>
+              {/* Carbs Linear Bar */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-baseline text-xs font-display">
+                  <span className="font-semibold text-[var(--md-on-surface)] flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--md-secondary)]" />
+                    Carbohydrates
+                  </span>
+                  <span className="font-mono text-xs tabular-nums text-[var(--md-on-surface-variant)]">
+                    <strong className="text-[var(--md-on-surface)]">{Math.round(totalCarbs)}g</strong> / {targetCarbs}g
+                  </span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-[var(--md-surface-container-highest)] overflow-hidden">
+                  <m.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: Math.min(1, totalCarbs / (targetCarbs || 1)) }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    className="h-full origin-left rounded-full bg-[var(--md-secondary)]"
+                  />
+                </div>
               </div>
-              <span className="text-[10px] font-mono text-neutral-500 tabular-nums">
-                {Math.round(totalFats * 9)} kcal
-              </span>
+
+              {/* Fats Linear Bar */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-baseline text-xs font-display">
+                  <span className="font-semibold text-[var(--md-on-surface)] flex items-center gap-1.5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--md-tertiary)]" />
+                    Healthy Fats
+                  </span>
+                  <span className="font-mono text-xs tabular-nums text-[var(--md-on-surface-variant)]">
+                    <strong className="text-[var(--md-on-surface)]">{Math.round(totalFats)}g</strong> / {targetFats}g
+                  </span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-[var(--md-surface-container-highest)] overflow-hidden">
+                  <m.div
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: Math.min(1, totalFats / (targetFats || 1)) }}
+                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    className="h-full origin-left rounded-full bg-[var(--md-tertiary)]"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -316,16 +302,15 @@ export const DailyMetabolicSummary: React.FC<DailyMetabolicSummaryProps> = React
             WebkitBackfaceVisibility: 'hidden',
             transform: 'rotateY(180deg)',
           }}
-          className={`absolute inset-0 w-full rounded-3xl border border-[var(--surface-border)] bg-zinc-900/95 md:bg-[var(--surface-card)] md:backdrop-blur-xl p-5 sm:p-6 shadow-[var(--surface-highlight),var(--accent-glow)] flex flex-col justify-between overflow-hidden touch-pan-y transition-all duration-500 ${
-            isOverdrive ? 'ring-1 ring-emerald-400/40' : ''
-          } ${isFlipped ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          className={`absolute inset-0 w-full rounded-[28px] bg-[var(--md-surface-container)] text-[var(--md-on-surface)] p-5 sm:p-6 shadow-md flex flex-col justify-between overflow-hidden touch-pan-y transition-colors duration-300 ${
+            isFlipped ? 'pointer-events-auto' : 'pointer-events-none'
+          }`}
         >
-          {isOverdrive && (
-            <div className="pointer-events-none absolute -inset-[1px] rounded-3xl bg-gradient-to-r from-emerald-500/25 via-cyan-400/25 to-emerald-500/25 opacity-80 blur-sm animate-pulse" />
-          )}
           <Heatmap onBack={handleFlipToSummary} />
         </div>
       </m.div>
     </section>
   );
 });
+
+DailyMetabolicSummary.displayName = 'DailyMetabolicSummary';

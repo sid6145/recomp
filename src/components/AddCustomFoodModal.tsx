@@ -281,7 +281,7 @@ export const AddCustomFoodModal: React.FC<AddCustomFoodModalProps> = ({
         role="dialog"
         aria-modal="true"
       >
-        <div className="relative w-full max-w-xl my-auto rounded-3xl bg-zinc-900/95 border border-white/10 shadow-2xl p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto">
+        <div className="relative w-full max-w-xl my-auto rounded-[28px] bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] shadow-2xl p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto border border-[var(--md-outline-variant)]/30">
           {/* Close button */}
           <button
             type="button"

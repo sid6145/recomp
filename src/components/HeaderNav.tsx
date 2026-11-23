@@ -1,8 +1,10 @@
 import React from 'react';
-import { BookOpen, Search, UtensilsCrossed, Target, ShieldAlert } from 'lucide-react';
+import { MaterialIcon } from './MaterialIcon';
 import { useHaptics } from '../hooks/useHaptics';
 import { MomentumHudPill } from './MomentumHudPill';
 import { useMomentum } from '../context/MomentumContext';
+import { useAppDispatch } from '../store/store';
+import { openPaletteSheet } from '../store/themeSlice';
 import type { NavigationTab } from './CommandBar';
 
 export interface HeaderNavProps {
@@ -11,19 +13,19 @@ export interface HeaderNavProps {
   onOpenSOS?: () => void;
 }
 
-/**
- * Phase 1: Desktop Header Navigation (HeaderNav.tsx)
- *
- * Responsive specification:
- * - hidden on mobile screens
- * - md:flex on desktop/tablet (>= 768px)
- * - Fixed top-0, z-50, backdrop blur with subtle border bound to var(--chrome-border)
- */
+const DESKTOP_TABS: Array<{ id: NavigationTab; label: string; icon: string }> = [
+  { id: 'diary', label: 'Daily Diary', icon: 'menu_book' },
+  { id: 'search', label: 'AI Food Search', icon: 'search' },
+  { id: 'recipe', label: 'Recipe Builder', icon: 'restaurant_menu' },
+  { id: 'goal', label: 'Goals & Targets', icon: 'track_changes' },
+];
+
 export const HeaderNav: React.FC<HeaderNavProps> = ({
   activeTab,
   onTabChange,
   onOpenSOS,
 }) => {
+  const dispatch = useAppDispatch();
   const haptics = useHaptics();
   const { isOverdrive, consecutiveHitDays } = useMomentum();
 
@@ -33,111 +35,78 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
   };
 
   return (
-    <header
-      className={`hidden md:flex fixed top-0 w-full z-50 bg-zinc-950/80 backdrop-blur-xl border-b border-[var(--chrome-border)] px-6 py-3 items-center justify-between transition-all duration-500 ${
-        isOverdrive ? 'shadow-[0_1px_20px_rgba(16,185,129,0.18)]' : ''
-      }`}
-    >
-      {/* Brand & System OS Indicator / Live Overdrive Telemetry Strip */}
+    <header className="hidden md:flex fixed top-0 left-0 right-0 h-16 z-50 bg-[var(--md-surface)]/90 backdrop-blur-md text-[var(--md-on-surface)] border-b border-[var(--md-outline-variant)]/20 px-6 items-center justify-between transition-colors duration-300">
+      {/* Left: Brand Identity */}
       <div className="flex items-center gap-3">
         <img
           src="/pwa-192x192.png"
           alt="Recomp Logo"
-          className="w-7 h-7 rounded-lg object-cover shadow-[0_0_12px_rgba(16,185,129,0.3)] shrink-0 border border-emerald-500/20"
+          className="w-8 h-8 rounded-xl object-cover shadow-sm shrink-0"
         />
-        <div
-          className={`w-2.5 h-2.5 rounded-full ${
-            isOverdrive
-              ? 'bg-emerald-400 shadow-[0_0_12px_#34d399] animate-pulse'
-              : 'bg-[#00FF41] shadow-[0_0_10px_#00FF41]'
-          }`}
-        />
-        <span className="font-mono text-sm font-bold tracking-widest uppercase text-zinc-100 flex items-center gap-2">
-          <span>recomp</span>
+        <div className="flex items-baseline gap-2">
+          <span className="font-display text-[22px] font-bold tracking-tight text-[var(--md-on-surface)]">
+            Recomp
+          </span>
           {isOverdrive ? (
             <span
               data-testid="overdrive-telemetry-strip"
-              className="text-[10px] font-mono font-bold text-emerald-300 bg-emerald-950/70 border border-emerald-500/40 px-2.5 py-0.5 rounded-md shadow-[0_0_12px_rgba(16,185,129,0.25)] flex items-center gap-1.5 tabular-nums"
+              className="text-[11px] font-mono font-bold text-[var(--md-primary)] bg-[var(--md-primary-container)] px-2.5 py-0.5 rounded-full flex items-center gap-1.5 tabular-nums"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
-              <span>SYS // OVERDRIVE · DAY {consecutiveHitDays} · SHIELD ACTIVE</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--md-primary)] animate-ping" />
+              <span>OVERDRIVE · DAY {consecutiveHitDays}</span>
             </span>
           ) : (
-            <span className="text-xs text-zinc-500 font-normal">// OS</span>
+            <span className="text-xs text-[var(--md-on-surface-variant)] font-normal">
+              // Tracker
+            </span>
           )}
-        </span>
+        </div>
       </div>
 
-      {/* Primary Desktop Navigation Links */}
+      {/* Middle: M3 Pill Navigation Bar */}
       <nav
         aria-label="Desktop Primary Navigation"
-        className="flex items-center gap-1.5 p-1 rounded-2xl bg-zinc-900/80 border border-[var(--chrome-border)] transition-colors duration-500"
+        className="flex items-center gap-1 p-1 rounded-full bg-[var(--md-surface-container)] border border-[var(--md-outline-variant)]/30"
       >
-        <button
-          type="button"
-          onClick={() => handleTabClick('diary')}
-          className={`min-h-[40px] flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${
-            activeTab === 'diary'
-              ? isOverdrive
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 shadow-[0_0_18px_rgba(16,185,129,0.35)] font-bold'
-                : 'bg-[#00FF41] text-zinc-950 shadow-[0_0_15px_rgba(0,255,65,0.25)] font-bold'
-              : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/5'
-          }`}
-        >
-          <BookOpen className="w-4 h-4" />
-          <span>Daily Diary</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => handleTabClick('search')}
-          className={`min-h-[40px] flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${
-            activeTab === 'search'
-              ? isOverdrive
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 shadow-[0_0_18px_rgba(16,185,129,0.35)] font-bold'
-                : 'bg-[#00FF41] text-zinc-950 shadow-[0_0_15px_rgba(0,255,65,0.25)] font-bold'
-              : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/5'
-          }`}
-        >
-          <Search className="w-4 h-4" />
-          <span>AI Food Search</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => handleTabClick('recipe')}
-          className={`min-h-[40px] flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${
-            activeTab === 'recipe'
-              ? isOverdrive
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 shadow-[0_0_18px_rgba(16,185,129,0.35)] font-bold'
-                : 'bg-[#00FF41] text-zinc-950 shadow-[0_0_15px_rgba(0,255,65,0.25)] font-bold'
-              : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/5'
-          }`}
-        >
-          <UtensilsCrossed className="w-4 h-4" />
-          <span>Recipe Builder</span>
-        </button>
-
-        <button
-          type="button"
-          onClick={() => handleTabClick('goal')}
-          className={`min-h-[40px] flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-mono font-medium transition-all cursor-pointer ${
-            activeTab === 'goal'
-              ? isOverdrive
-                ? 'bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 shadow-[0_0_18px_rgba(16,185,129,0.35)] font-bold'
-                : 'bg-[#00FF41] text-zinc-950 shadow-[0_0_15px_rgba(0,255,65,0.25)] font-bold'
-              : 'text-zinc-400 hover:text-zinc-200 hover:bg-white/5'
-          }`}
-        >
-          <Target className="w-4 h-4" />
-          <span>Goal &amp; Target</span>
-        </button>
+        {DESKTOP_TABS.map((tab) => {
+          const isActive = activeTab === tab.id;
+          return (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => handleTabClick(tab.id)}
+              className={`min-h-[36px] flex items-center gap-2 px-4 py-1.5 rounded-full text-xs transition-all cursor-pointer m3-state-layer ${
+                isActive
+                  ? 'bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)] font-bold shadow-sm'
+                  : 'text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)]'
+              }`}
+            >
+              <MaterialIcon name={tab.icon} filled={isActive} size={18} />
+              <span>{tab.label}</span>
+            </button>
+          );
+        })}
       </nav>
 
-      {/* Right Controls: Momentum Multiplier HUD & SOS Craving Pause */}
-      <div className="flex items-center gap-3">
+      {/* Right Cluster: Momentum Pill + Palette Button + SOS Craving Button */}
+      <div className="flex items-center gap-2.5">
         <MomentumHudPill />
 
+        {/* Theme Palette Button (40px circular tonal button) */}
+        <button
+          type="button"
+          onClick={() => {
+            haptics.tick();
+            dispatch(openPaletteSheet());
+          }}
+          className="w-10 h-10 rounded-full bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] flex items-center justify-center transition-colors hover:bg-[var(--md-surface-container-highest)] m3-state-layer cursor-pointer"
+          title="Wallpaper & Style / Theme Customizer"
+          aria-label="Theme Customizer"
+        >
+          <MaterialIcon name="palette" size={20} />
+        </button>
+
+        {/* SOS Craving Trigger */}
         {onOpenSOS && (
           <button
             type="button"
@@ -145,10 +114,11 @@ export const HeaderNav: React.FC<HeaderNavProps> = ({
               haptics.heartbeat(0.8);
               onOpenSOS();
             }}
-            className="min-h-[40px] inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-all cursor-pointer shadow-lg shadow-rose-950/40 hover:scale-[1.02] active:scale-[0.98]"
+            className="min-h-[40px] px-3.5 py-1.5 rounded-full text-xs font-bold bg-[var(--md-error-container)] text-[var(--md-on-error-container)] flex items-center gap-1.5 transition-transform active:scale-95 m3-state-layer cursor-pointer shadow-sm"
+            title="CBT Urge Surfing Intervention"
           >
-            <ShieldAlert className="w-4 h-4 text-rose-500 animate-pulse" />
-            <span>SOS Craving</span>
+            <MaterialIcon name="warning" filled size={18} className="text-[var(--md-error)]" />
+            <span>SOS</span>
           </button>
         )}
       </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, Flame, Scale, ChevronDown, ChevronUp } from 'lucide-react';
+import { MaterialIcon } from './MaterialIcon';
 import { getAllDodgedLogs, getTotalDodgedCalories } from '../db/dodgedLogs';
 import type { DodgedLog } from '../db/db';
 import { useHaptics } from '../hooks/useHaptics';
@@ -32,7 +32,6 @@ export const DodgedVaultCard: React.FC = React.memo(() => {
     };
   }, [syncVault]);
 
-  // Also sync when SOS modal closes
   useEffect(() => {
     if (!isSOSActive) {
       syncVault();
@@ -49,147 +48,119 @@ export const DodgedVaultCard: React.FC = React.memo(() => {
 
   return (
     <div
-      className={`w-full h-full flex flex-col justify-between p-5 rounded-2xl bg-zinc-900/95 md:bg-[var(--surface-card)] md:backdrop-blur-xl border border-[var(--surface-border)] shadow-[var(--surface-highlight),var(--accent-glow)] transition-all duration-500 hover:border-white/10 ${
-        isOverdrive ? 'ring-1 ring-emerald-400/30' : ''
+      className={`w-full h-full flex flex-col justify-between p-5 rounded-[24px] bg-[var(--md-tertiary-container)] text-[var(--md-on-tertiary-container)] shadow-md transition-colors duration-300 ${
+        isOverdrive ? 'ring-2 ring-[var(--md-primary)]' : ''
       }`}
     >
       {/* Top Section: Header, Subtitle, Metric Sub-Cards & History */}
       <div>
-        {/* Header Row: Clean 2-Column Layout */}
+        {/* Header Row */}
         <div className="flex items-center justify-between gap-3">
-          {/* Left: Icon box + Title */}
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-9 h-9 rounded-xl shrink-0 flex items-center justify-center bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
-              <ShieldCheck className="w-4 h-4" />
+            <div className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center bg-[var(--md-surface)]/20 text-[var(--md-on-tertiary-container)]">
+              <MaterialIcon name="savings" size={22} filled />
             </div>
-            <h3 className="text-sm font-semibold tracking-wide uppercase text-zinc-100 whitespace-nowrap font-mono truncate">
+            <h3 className="text-sm font-bold tracking-tight uppercase font-display truncate">
               Dodged Vault
             </h3>
           </div>
 
-          {/* Right: Status Pill & History toggle */}
           <div className="flex items-center gap-1.5 shrink-0">
-            <span className="px-2.5 py-1 rounded-full text-[11px] font-mono whitespace-nowrap shrink-0 border bg-emerald-500/10 border-emerald-500/20 text-emerald-400">
+            <span className="px-3 py-1 rounded-full text-[11px] font-display font-semibold whitespace-nowrap bg-[var(--md-surface)]/20 text-[var(--md-on-tertiary-container)]">
               {recentLogs.length} Urge{recentLogs.length === 1 ? '' : 's'}
             </span>
             {recentLogs.length > 0 && (
               <button
                 type="button"
                 onClick={toggleExpand}
-                className="w-7 h-7 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-white/5 transition-colors cursor-pointer flex items-center justify-center shrink-0"
+                className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-[var(--md-surface)]/20 transition-colors m3-state-layer cursor-pointer"
                 title={isExpanded ? 'Collapse history' : 'Expand history'}
               >
-                {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                <MaterialIcon
+                  name={isExpanded ? 'expand_less' : 'expand_more'}
+                  size={20}
+                />
               </button>
             )}
           </div>
         </div>
 
-        {/* Subtitle directly below */}
-        <p className="text-xs text-zinc-400 truncate mt-1.5 font-sans">
-          Cravings overridden via CBT pause
+        {/* Subtitle */}
+        <p className="text-xs opacity-80 truncate mt-2 font-sans">
+          Total energy saved from defeated impulsive cravings
         </p>
 
-        {/* Metric Sub-Cards (grid-cols-2 gap-3 mt-4 pt-3 border-t border-white/5) */}
-        <div className="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-white/5">
-          {/* Left stat: Avoided Intake */}
-          <div className="flex flex-col justify-between p-3.5 rounded-xl bg-zinc-950/60 border border-white/5">
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-zinc-400 uppercase tracking-wider whitespace-nowrap">
-              <Flame className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-              <span>Avoided Intake</span>
-            </div>
-            <div className="flex items-baseline gap-1.5 mt-3">
-              <AnimatedNumber
-                value={totalDodged}
-                prefix="+"
-                className={`text-2xl font-mono font-bold text-emerald-400 tabular-nums ${
-                  isOverdrive ? 'drop-shadow-[0_0_10px_rgba(52,211,153,0.45)]' : ''
-                }`}
-              />
-              <span className="text-xs font-mono text-zinc-400 whitespace-nowrap">kcal</span>
-            </div>
-          </div>
-
-          {/* Right stat: Fat Equivalent */}
-          <div className="flex flex-col justify-between p-3.5 rounded-xl bg-zinc-950/60 border border-white/5">
-            <div className="flex items-center gap-1.5 text-[11px] font-mono text-zinc-400 uppercase tracking-wider whitespace-nowrap">
-              <Scale className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-              <span>Fat Equivalent</span>
-            </div>
-            <div className="flex items-baseline gap-1.5 mt-3">
-              <span
-                className={`text-2xl font-mono font-bold text-zinc-100 tabular-nums ${
-                  isOverdrive ? 'drop-shadow-[0_0_10px_rgba(52,211,153,0.35)]' : ''
-                }`}
-              >
-                {fatEquivalentKg}
-              </span>
-              <span className="text-xs font-mono text-zinc-400 whitespace-nowrap">kg fat</span>
-            </div>
+        {/* Hero Balance Row */}
+        <div className="flex items-baseline justify-between mt-4 pt-3 border-t border-[var(--md-on-tertiary-container)]/10">
+          <span className="text-xs uppercase font-display font-semibold opacity-75">
+            Calories Dodged
+          </span>
+          <div className="flex items-baseline">
+            <AnimatedNumber
+              value={totalDodged}
+              prefix="+"
+              className="text-2xl font-mono font-bold tabular-nums"
+            />
+            <span className="text-xs font-mono ml-1 opacity-75">kcal</span>
           </div>
         </div>
 
-        {/* Expandable History Drawer */}
-        <AnimatePresence>
-          {isExpanded && recentLogs.length > 0 && (
-            <m.div
-              initial={{ opacity: 0, y: -6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.15 }}
-              className="overflow-hidden"
-            >
-              <div className="mt-3 pt-2.5 border-t border-white/5 space-y-1.5">
-                <span className="text-[10px] font-mono uppercase tracking-wider text-zinc-400 block">
-                  Resisted Urge History:
-                </span>
-                <div className="max-h-32 overflow-y-auto space-y-1.5 pr-1 scrollbar-thin">
-                  {recentLogs.map((log) => (
-                    <div
-                      key={log.id}
-                      className="p-2 rounded-lg bg-zinc-950/40 border border-white/5 flex items-center justify-between text-xs"
-                    >
-                      <div className="flex items-center gap-1.5 truncate">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0" />
-                        <span className="font-sans font-medium text-zinc-200 truncate">
-                          {log.foodName}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 shrink-0 font-mono text-[11px]">
-                        <span className="text-zinc-500">
-                          {new Date(log.timestamp).toLocaleDateString(undefined, {
-                            month: 'short',
-                            day: 'numeric',
-                          })}
-                        </span>
-                        <span className="font-bold text-emerald-400">+{log.calories} kcal</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </m.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      {/* Bottom Section: Slim Footer Progress Bar tracking next 1 kg fat avoided (mt-auto pt-4) */}
-      <div className="mt-auto pt-4 space-y-1.5">
-        <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
-          <span className="truncate">Next 1 kg fat avoided</span>
-          <span className="tabular-nums text-zinc-300 whitespace-nowrap ml-2">
-            {totalDodged % 7700} / 7,700 kcal
+        {/* Fat Equivalent Sub-Card */}
+        <div className="mt-3 p-3 rounded-[16px] bg-[var(--md-surface)]/20 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <MaterialIcon name="scale" size={18} />
+            <span className="text-xs font-display font-semibold">Body Fat Defended</span>
+          </div>
+          <span className="text-xs font-mono font-bold tabular-nums">
+            ~{fatEquivalentKg} kg
           </span>
         </div>
-        <div className="w-full h-1.5 rounded-full bg-zinc-950/80 border border-white/5 overflow-hidden p-0">
+      </div>
+
+      {/* Progress towards next 1 kg burned */}
+      <div className="mt-3 space-y-1">
+        <div className="flex items-center justify-between text-[11px] font-display opacity-85">
+          <span>Next 1kg Milestone</span>
+          <span className="font-mono tabular-nums font-bold">{progressToNextKg}%</span>
+        </div>
+        <div className="w-full h-1.5 rounded-full bg-[var(--md-surface)]/20 overflow-hidden">
           <m.div
             initial={{ scaleX: 0 }}
-            animate={{ scaleX: Math.min(1, Math.max(0, progressToNextKg / 100)) }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="h-full origin-left w-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+            animate={{ scaleX: progressToNextKg / 100 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="h-full origin-left rounded-full bg-[var(--md-primary)]"
           />
         </div>
       </div>
+
+      {/* Expandable History Drawer */}
+      <AnimatePresence>
+        {isExpanded && recentLogs.length > 0 && (
+          <m.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mt-3 pt-3 border-t border-[var(--md-on-tertiary-container)]/10 space-y-1.5 max-h-36 overflow-y-auto"
+          >
+            {recentLogs.slice(0, 5).map((log) => (
+              <div
+                key={log.id}
+                className="flex items-center justify-between text-xs p-2 rounded-[12px] bg-[var(--md-surface)]/15 font-sans"
+              >
+                <div className="flex items-center gap-1.5 truncate">
+                  <MaterialIcon name="check_circle" size={14} filled />
+                  <span className="truncate font-medium">{log.foodName}</span>
+                </div>
+                <span className="font-mono font-bold shrink-0 ml-2 tabular-nums">
+                  +{log.calories} kcal
+                </span>
+              </div>
+            ))}
+          </m.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 });
+
+DodgedVaultCard.displayName = 'DodgedVaultCard';

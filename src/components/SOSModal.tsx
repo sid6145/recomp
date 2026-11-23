@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { ShieldAlert, Sparkles, CheckCircle2, X, Trophy } from 'lucide-react';
+import { MaterialIcon } from './MaterialIcon';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { closeSOS, openCravingRebalance } from '../store/sosSlice';
 import { addDodgedLog } from '../db/dodgedLogs';
 import { useHaptics } from '../hooks/useHaptics';
 import { useMomentum } from '../context/MomentumContext';
 import { playLogTick } from '../utils/soundEngine';
-import { UtensilsCrossed } from 'lucide-react';
 
 const MOTIVATIONAL_QUOTES = [
   'A craving peaks in 10 minutes. Regret lasts all week.',
@@ -25,7 +24,6 @@ const QUICK_DODGE_PRESETS = [
   { label: 'Sugary Drink', calories: 180 },
 ];
 
-// 4s Inhale, 4s Hold, 4s Exhale = 12s cycle
 const INHALE_DURATION = 4;
 const HOLD_DURATION = 4;
 const EXHALE_DURATION = 4;
@@ -36,16 +34,14 @@ interface SOSTimerLeafProps {
 }
 
 /**
- * Isolated Leaf Component for 10-Minute Countdown & Breathing Ring.
- * Encapsulates the 1s and breathing intervals to prevent re-rendering parent tree.
+ * Calm 200px SVG Breathing & Urge Countdown Ring in --md-primary
  */
 const SOSTimerLeaf: React.FC<SOSTimerLeafProps> = React.memo(({ onTimeUp }) => {
   const haptics = useHaptics();
-  const [timeLeft, setTimeLeft] = useState<number>(600); // 10 minutes (600s)
+  const [timeLeft, setTimeLeft] = useState<number>(600);
   const [breathPhase, setBreathPhase] = useState<'Inhale' | 'Hold' | 'Exhale'>('Inhale');
   const [breathSeconds, setBreathSeconds] = useState<number>(4);
 
-  // 10-Minute Countdown Timer
   useEffect(() => {
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
@@ -62,7 +58,6 @@ const SOSTimerLeaf: React.FC<SOSTimerLeafProps> = React.memo(({ onTimeUp }) => {
     return () => clearInterval(interval);
   }, [onTimeUp, haptics]);
 
-  // 12-Second Box Breathing Loop (4s Inhale, 4s Hold, 4s Exhale)
   useEffect(() => {
     let elapsed = 0;
     const interval = setInterval(() => {
@@ -92,12 +87,15 @@ const SOSTimerLeaf: React.FC<SOSTimerLeafProps> = React.memo(({ onTimeUp }) => {
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   }, [timeLeft]);
 
+  const radius = 86;
+  const circumference = 2 * Math.PI * radius;
+
   return (
-    <div className="relative w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center">
-      {/* Dynamic Animated Pulse Ring */}
+    <div className="relative w-[200px] h-[200px] flex items-center justify-center">
+      {/* Calm 200px SVG Breathing & Countdown Ring */}
       <m.div
         animate={{
-          scale: breathPhase === 'Inhale' ? 1.08 : breathPhase === 'Hold' ? 1.08 : 0.94,
+          scale: breathPhase === 'Inhale' ? 1.05 : breathPhase === 'Hold' ? 1.05 : 0.95,
         }}
         transition={{
           duration: breathPhase === 'Hold' ? 0.2 : 4,
@@ -105,75 +103,66 @@ const SOSTimerLeaf: React.FC<SOSTimerLeafProps> = React.memo(({ onTimeUp }) => {
         }}
         className="absolute inset-0 flex items-center justify-center"
       >
-        <svg className="w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 280 280">
+        <svg className="w-[200px] h-[200px] -rotate-90 pointer-events-none" viewBox="0 0 200 200">
           {/* Background Track */}
           <circle
-            cx="140"
-            cy="140"
-            r="115"
+            cx="100"
+            cy="100"
+            r={radius}
             fill="none"
-            stroke="rgba(255, 255, 255, 0.06)"
-            strokeWidth="5"
+            stroke="var(--md-surface-container-highest)"
+            strokeWidth="8"
           />
 
-          {/* Active Progress Circle */}
+          {/* Active Progress Circle in --md-primary */}
           <circle
-            cx="140"
-            cy="140"
-            r="115"
+            cx="100"
+            cy="100"
+            r={radius}
             fill="none"
-            stroke="url(#sos-progress-gradient)"
-            strokeWidth="6"
-            strokeDasharray={2 * Math.PI * 115}
-            strokeDashoffset={(2 * Math.PI * 115) * (1 - progressRatio)}
+            stroke="var(--md-primary)"
+            strokeWidth="8"
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference * (1 - progressRatio)}
             strokeLinecap="round"
             className="transition-all duration-1000 ease-linear"
           />
-
-          <defs>
-            <linearGradient id="sos-progress-gradient" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stopColor="#f43f5e" />
-              <stop offset="100%" stopColor="#10b981" />
-            </linearGradient>
-          </defs>
         </svg>
       </m.div>
 
-      {/* Inner Content: Timer & Breathing cue */}
-      <div className="relative z-10 flex flex-col items-center justify-center text-center p-4">
-        <span className="text-[11px] font-mono uppercase tracking-widest text-zinc-400 mb-1">
-          Time Remaining
+      {/* Inner Countdown */}
+      <div className="relative z-10 flex flex-col items-center justify-center text-center p-2">
+        <span className="text-[10px] font-display font-semibold uppercase tracking-wider text-[var(--md-on-surface-variant)] mb-0.5">
+          Surfing Urge
         </span>
 
-        {/* Crisp 5xl Monospace Countdown */}
-        <div className="font-mono text-5xl sm:text-6xl font-black tracking-tighter text-zinc-100 drop-shadow-[0_0_25px_rgba(255,255,255,0.2)] tabular-nums">
+        <div className="font-mono text-3xl sm:text-4xl font-black tracking-tight text-[var(--md-on-surface)] tabular-nums">
           {formattedTime}
         </div>
 
-        {/* Breathing Phase Tag */}
         <m.div
           key={breathPhase}
-          initial={{ opacity: 0, y: 3 }}
+          initial={{ opacity: 0, y: 2 }}
           animate={{ opacity: 1, y: 0 }}
-          className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/90 border border-white/10 text-xs font-mono font-bold uppercase tracking-wider"
+          className="mt-1.5 inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[var(--md-surface-container)] text-[11px] font-display font-semibold text-[var(--md-on-surface)]"
         >
           <span
             className={`w-2 h-2 rounded-full ${
               breathPhase === 'Inhale'
-                ? 'bg-cyan-400 animate-pulse'
+                ? 'bg-[var(--md-primary)] animate-pulse'
                 : breathPhase === 'Hold'
-                ? 'bg-amber-400'
-                : 'bg-emerald-400'
+                ? 'bg-[var(--md-secondary)]'
+                : 'bg-[var(--md-tertiary)]'
             }`}
           />
-          <span className="text-zinc-200">
-            {breathPhase} ({breathSeconds}s)
-          </span>
+          <span>{breathPhase} ({breathSeconds}s)</span>
         </m.div>
       </div>
     </div>
   );
 });
+
+SOSTimerLeaf.displayName = 'SOSTimerLeaf';
 
 export const SOSModal: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -182,48 +171,32 @@ export const SOSModal: React.FC = () => {
   const { triggerEnergyPulse } = useMomentum();
 
   const [quoteIndex, setQuoteIndex] = useState<number>(0);
-
-  // Flow steps: 'timer' -> 'victory' -> 'celebration'
   const [currentStep, setCurrentStep] = useState<'timer' | 'victory' | 'celebration'>('timer');
   const [customFoodName, setCustomFoodName] = useState<string>('');
   const [customCalories, setCustomCalories] = useState<string>('');
   const [savedCalories, setSavedCalories] = useState<number>(0);
 
-  // Bypass Friction Hold Button State
   const [isPressingBypass, setIsPressingBypass] = useState<boolean>(false);
   const [bypassProgress, setBypassProgress] = useState<number>(0);
   const bypassStartRef = useRef<number | null>(null);
   const bypassAnimRef = useRef<number | null>(null);
 
-  // Environmental shift: lock body scroll
   useEffect(() => {
     if (isSOSActive) {
-      const origOverflow = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       setCurrentStep('timer');
-      setCustomFoodName('');
-      setCustomCalories('');
-      return () => {
-        document.body.style.overflow = origOverflow;
-      };
+      setQuoteIndex(Math.floor(Math.random() * MOTIVATIONAL_QUOTES.length));
+    } else {
+      document.body.style.overflow = '';
     }
   }, [isSOSActive]);
-
-  // Rotate Motivational Quotes every 45 seconds
-  useEffect(() => {
-    if (!isSOSActive || currentStep !== 'timer') return;
-    const interval = setInterval(() => {
-      setQuoteIndex((prev) => (prev + 1) % MOTIVATIONAL_QUOTES.length);
-    }, 45000);
-    return () => clearInterval(interval);
-  }, [isSOSActive, currentStep]);
 
   const handleTimeUp = useCallback(() => {
     setCurrentStep('victory');
   }, []);
 
   const handleEarlyVictory = () => {
-    haptics.success();
+    haptics.tick();
     setCurrentStep('victory');
   };
 
@@ -236,10 +209,9 @@ export const SOSModal: React.FC = () => {
     await addDodgedLog(foodName, calories);
     setCurrentStep('celebration');
 
-    // Auto close after celebrating
     setTimeout(() => {
       dispatch(closeSOS());
-    }, 2200);
+    }, 2000);
   };
 
   const handlePresetSelect = (preset: { label: string; calories: number }) => {
@@ -255,7 +227,6 @@ export const SOSModal: React.FC = () => {
     }
   };
 
-  // 5-second Hold to Bypass Friction Handler
   const startBypass = useCallback(() => {
     bypassStartRef.current = performance.now();
     setIsPressingBypass(true);
@@ -270,7 +241,6 @@ export const SOSModal: React.FC = () => {
       if (prog < 100) {
         bypassAnimRef.current = requestAnimationFrame(step);
       } else {
-        // Open Craving Rebalance Engine
         cancelBypass();
         haptics.warning();
         dispatch(openCravingRebalance());
@@ -290,248 +260,215 @@ export const SOSModal: React.FC = () => {
     setBypassProgress(0);
   }, []);
 
-  const content = (
+  if (!isSOSActive || typeof document === 'undefined') return null;
+
+  return createPortal(
     <AnimatePresence>
-      {isSOSActive && (
+      <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-auto">
+        {/* Backdrop Scrim rgba(0,0,0,0.32) */}
         <m.div
-          key="sos-system-override"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-          className="fixed inset-0 z-[100] flex flex-col items-center justify-between p-6 sm:p-10 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] bg-zinc-950/95 backdrop-blur-2xl text-zinc-100 overflow-y-auto"
+          onClick={() => dispatch(closeSOS())}
+          className="fixed inset-0 bg-black/40 backdrop-blur-[2px]"
+        />
+
+        {/* M3 Modal Bottom Sheet */}
+        <m.div
+          initial={{ y: '100%' }}
+          animate={{ y: 0 }}
+          exit={{ y: '100%' }}
+          transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+          className="relative w-full max-w-lg rounded-t-[28px] sm:rounded-[28px] bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] shadow-2xl flex flex-col max-h-[92vh] overflow-hidden z-10 border-t sm:border border-[var(--md-outline-variant)]/30"
           role="dialog"
           aria-modal="true"
         >
-          {/* Dynamic Ambient Glow */}
-          <div
-            className="pointer-events-none absolute inset-0 transition-all duration-1000 ease-out"
-            style={{
-              background: 'radial-gradient(circle at 50% 40%, rgba(244, 63, 94, 0.16) 0%, transparent 65%)',
-            }}
-          />
+          {/* Centered 32px × 4px Drag Handle Pill */}
+          <div className="w-full flex justify-center pt-3 pb-1 shrink-0 cursor-grab">
+            <div className="w-8 h-1 rounded-full bg-[var(--md-outline-variant)] opacity-60" />
+          </div>
 
-          {/* Telemetry Grid Pattern */}
-          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]" />
-
-          {/* Emergency Close (Top Right) */}
-          <button
-            type="button"
-            onClick={() => dispatch(closeSOS())}
-            className="absolute top-[calc(1.5rem+env(safe-area-inset-top,0px))] right-6 min-h-[44px] min-w-[44px] p-2.5 rounded-full bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white transition-colors cursor-pointer border border-white/5 z-20 flex items-center justify-center"
-            title="Exit SOS Mode"
-          >
-            <X className="w-4 h-4" />
-          </button>
-
-          {/* ========================================================================= */}
-          {/* STEP 1: ACTIVE 10-MINUTE TIMER & BREATHING RING                           */}
-          {/* ========================================================================= */}
-          {currentStep === 'timer' && (
-            <>
-              {/* Header Badge */}
-              <header className="relative z-10 w-full max-w-md flex flex-col items-center text-center pt-2 space-y-2">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono uppercase tracking-wider bg-rose-500/10 text-rose-400 border border-rose-500/20 shadow-[0_0_15px_rgba(244,63,94,0.15)]">
-                  <ShieldAlert className="w-4 h-4 text-rose-400 animate-pulse" />
-                  <span>SYSTEM OVERRIDE // CRAVING INTERVENTION</span>
-                </div>
-                <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-white font-sans">
-                  Pause. Ride the Wave.
-                </h2>
-                <p className="text-xs sm:text-sm text-zinc-400 font-sans max-w-xs">
-                  A physiological craving spike peaks and declines within 10 minutes. Follow the circle to regulate your nervous system.
-                </p>
-              </header>
-
-              {/* Center: Isolated Leaf Timer & Breathing Cue */}
-              <div className="relative z-10 my-auto flex flex-col items-center">
-                <SOSTimerLeaf onTimeUp={handleTimeUp} />
-
-                {/* Grounded Motivational Quotes (Rotating every 45s) */}
-                <div className="w-full max-w-md min-h-[64px] flex items-center justify-center text-center px-4 mt-6">
-                  <AnimatePresence mode="wait">
-                    <m.p
-                      key={quoteIndex}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-                      className="text-xs sm:text-sm font-sans font-medium text-zinc-300 italic leading-relaxed"
-                    >
-                      &ldquo;{MOTIVATIONAL_QUOTES[quoteIndex]}&rdquo;
-                    </m.p>
-                  </AnimatePresence>
-                </div>
+          <div className="flex-1 overflow-y-auto px-6 py-4 space-y-5 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-[var(--md-outline-variant)]/20 pb-3">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-display font-semibold bg-[var(--md-error-container)] text-[var(--md-on-error-container)]">
+                <MaterialIcon name="warning" size={16} filled />
+                <span>CBT Urge Surfing</span>
               </div>
+              <button
+                type="button"
+                onClick={() => dispatch(closeSOS())}
+                className="w-10 h-10 rounded-full flex items-center justify-center text-[var(--md-on-surface-variant)] hover:bg-[var(--md-on-surface)]/10 transition-colors m3-state-layer cursor-pointer"
+                title="Exit SOS Mode"
+              >
+                <MaterialIcon name="close" size={20} />
+              </button>
+            </div>
 
-              {/* Bottom Actions: Early Victory & Bypass Friction */}
-              <footer className="relative z-10 w-full max-w-sm flex flex-col items-center gap-4 pb-2">
-                {/* Early Victory Button ("I Beat the Urge") */}
-                <button
-                  type="button"
-                  onClick={handleEarlyVictory}
-                  className="w-full min-h-[48px] py-3 px-6 rounded-2xl font-mono text-xs font-bold uppercase tracking-wider bg-gradient-to-r from-emerald-500 to-teal-400 text-zinc-950 shadow-[0_0_20px_rgba(16,185,129,0.35)] transition-all active:scale-[0.97] transition-transform duration-100 ease-out flex items-center justify-center gap-2 cursor-pointer"
-                >
-                  <Trophy className="w-4 h-4" />
-                  <span>I Beat the Urge</span>
-                </button>
+            {/* STEP 1: Timer & Breathing */}
+            {currentStep === 'timer' && (
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="space-y-1">
+                  <h3 className="text-xl sm:text-2xl font-bold font-display text-[var(--md-on-surface)]">
+                    Pause. Ride the Wave.
+                  </h3>
+                  <p className="text-xs text-[var(--md-on-surface-variant)] font-sans max-w-xs mx-auto">
+                    A craving peaks and subsides in 10 minutes. Follow the circle to calm your impulse.
+                  </p>
+                </div>
 
-                {/* Direct Craving Rebalance Option */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    haptics.tick();
-                    dispatch(openCravingRebalance());
-                  }}
-                  className="w-full min-h-[44px] py-2.5 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-wider bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 transition-all active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-950/20"
-                >
-                  <UtensilsCrossed className="w-4 h-4" />
-                  <span>Fulfill Craving &amp; Rebalance Dinner</span>
-                </button>
+                {/* Calm 200px SVG Breathing Ring in --md-primary */}
+                <div className="py-2">
+                  <SOSTimerLeaf onTimeUp={handleTimeUp} />
+                </div>
 
-                {/* 5-Second Friction Bypass Hold Button */}
-                <div className="w-full relative flex flex-col items-center">
+                {/* CBT Prompt Card (--md-surface-container, rounded-[20px]) */}
+                <div className="w-full p-4 rounded-[20px] bg-[var(--md-surface-container)] text-xs text-[var(--md-on-surface)] italic font-sans leading-relaxed border border-[var(--md-outline-variant)]/20 shadow-sm">
+                  &ldquo;{MOTIVATIONAL_QUOTES[quoteIndex]}&rdquo;
+                </div>
+
+                {/* Actions: 52px-tall M3 Filled CTA in --md-primary */}
+                <div className="w-full space-y-3 pt-2">
                   <button
                     type="button"
-                    onMouseDown={startBypass}
-                    onMouseUp={cancelBypass}
-                    onMouseLeave={cancelBypass}
-                    onTouchStart={startBypass}
-                    onTouchEnd={cancelBypass}
-                    className="relative w-full min-h-[44px] py-2.5 px-4 rounded-xl text-xs font-mono font-medium text-zinc-400 hover:text-zinc-200 border border-white/5 bg-white/5 hover:bg-white/10 overflow-hidden select-none transition-colors cursor-pointer flex items-center justify-center"
+                    onClick={handleEarlyVictory}
+                    className="w-full h-[52px] rounded-full font-display font-bold text-sm tracking-wide bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-95 m3-state-layer"
                   >
-                    <span className="relative z-10">
-                      {isPressingBypass ? 'Hold to bypass (5s)...' : 'I am giving in (Hold 5s)'}
-                    </span>
-
-                    {/* Filling progress bar */}
-                    <div
-                      className="absolute inset-0 bg-rose-500/20 pointer-events-none transition-all duration-75"
-                      style={{ width: `${bypassProgress}%` }}
-                    />
+                    <MaterialIcon name="military_tech" size={20} filled />
+                    <span>I Beat the Urge</span>
                   </button>
-                  <span className="text-[10px] font-mono text-zinc-500 mt-1">
-                    Intentional 5-second friction to break autopilot impulses
-                  </span>
-                </div>
-              </footer>
-            </>
-          )}
 
-          {/* ========================================================================= */}
-          {/* STEP 2: VICTORY LOGGING (Preset Pills or Custom Input)                     */}
-          {/* ========================================================================= */}
-          {currentStep === 'victory' && (
-            <m.div
-              key="sos-victory-step"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 w-full max-w-md my-auto flex flex-col items-center text-center space-y-6 p-6 rounded-3xl bg-zinc-900/80 border border-white/10 backdrop-blur-2xl shadow-2xl"
-            >
-              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shadow-[0_0_20px_rgba(16,185,129,0.2)]">
-                <Trophy className="w-6 h-6" />
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      haptics.tick();
+                      dispatch(openCravingRebalance());
+                    }}
+                    className="w-full h-[46px] rounded-full font-display font-semibold text-xs bg-[var(--md-surface-container)] text-[var(--md-on-surface)] flex items-center justify-center gap-2 cursor-pointer active:scale-95 m3-state-layer"
+                  >
+                    <MaterialIcon name="auto_fix_high" size={18} />
+                    <span>Fulfill &amp; Rebalance Dinner</span>
+                  </button>
 
-              <div className="space-y-1">
-                <h3 className="text-xl font-bold text-white font-sans">
-                  Urge Resisted!
-                </h3>
-                <p className="text-xs text-zinc-400 font-sans">
-                  Record what you dodged to deposit into your Dodged Vault.
-                </p>
-              </div>
-
-              {/* Quick Preset Dodge Buttons */}
-              <div className="w-full space-y-2">
-                <span className="text-[10px] uppercase font-mono tracking-widest text-zinc-400">
-                  Quick Select Craving
-                </span>
-                <div className="grid grid-cols-2 gap-2">
-                  {QUICK_DODGE_PRESETS.map((preset) => (
+                  {/* 5-second Hold Bypass */}
+                  <div className="w-full relative flex flex-col items-center pt-1">
                     <button
-                      key={preset.label}
                       type="button"
-                      onClick={() => handlePresetSelect(preset)}
-                      className="min-h-[44px] p-3 rounded-xl bg-zinc-950/60 hover:bg-zinc-950 border border-white/5 hover:border-emerald-500/40 text-left transition-all cursor-pointer flex flex-col justify-between"
+                      onMouseDown={startBypass}
+                      onMouseUp={cancelBypass}
+                      onMouseLeave={cancelBypass}
+                      onTouchStart={startBypass}
+                      onTouchEnd={cancelBypass}
+                      className="relative w-full h-11 rounded-full text-xs font-display font-medium text-[var(--md-on-surface-variant)] bg-[var(--md-surface-container)] overflow-hidden select-none transition-colors cursor-pointer flex items-center justify-center border border-[var(--md-outline-variant)]/20"
                     >
-                      <span className="text-xs font-semibold text-zinc-200 truncate">
-                        {preset.label}
+                      <span className="relative z-10">
+                        {isPressingBypass ? 'Hold to bypass (5s)...' : 'I am giving in (Hold 5s)'}
                       </span>
-                      <span className="text-[10px] font-mono text-emerald-400 font-bold tabular-nums">
-                        +{preset.calories} kcal
-                      </span>
+                      <div
+                        className="absolute inset-0 bg-[var(--md-error-container)] opacity-50 pointer-events-none transition-all duration-75"
+                        style={{ width: `${bypassProgress}%` }}
+                      />
                     </button>
-                  ))}
+                    <span className="text-[10px] text-[var(--md-on-surface-variant)] mt-1 font-sans">
+                      5-second friction to break autopilot impulses
+                    </span>
+                  </div>
                 </div>
               </div>
+            )}
 
-              {/* Or Custom Craving Input */}
-              <form onSubmit={handleCustomSubmit} className="w-full space-y-3 pt-2 border-t border-white/5">
-                <span className="text-[10px] uppercase font-mono tracking-widest text-zinc-400 block">
-                  Or enter custom item
-                </span>
-                <div className="grid grid-cols-3 gap-2">
-                  <input
-                    type="text"
-                    value={customFoodName}
-                    onChange={(e) => setCustomFoodName(e.target.value)}
-                    placeholder="e.g. Samosa"
-                    className="col-span-2 bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-xs font-sans text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-emerald-400/50"
-                  />
-                  <input
-                    type="number"
-                    value={customCalories}
-                    onChange={(e) => setCustomCalories(e.target.value)}
-                    placeholder="kcal"
-                    className="col-span-1 bg-zinc-950 border border-white/10 rounded-xl px-3 py-2 text-xs font-mono text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-emerald-400/50 tabular-nums"
-                  />
+            {/* STEP 2: VICTORY LOGGING */}
+            {currentStep === 'victory' && (
+              <div className="flex flex-col items-center text-center space-y-4">
+                <div className="w-12 h-12 rounded-full bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] flex items-center justify-center">
+                  <MaterialIcon name="military_tech" size={28} filled />
                 </div>
-                <button
-                  type="submit"
-                  disabled={!customCalories || parseInt(customCalories, 10) <= 0}
-                  className="w-full min-h-[44px] py-2.5 px-4 rounded-xl font-mono text-xs font-bold uppercase tracking-wider bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/40 disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
-                >
-                  Save to Dodged Vault
-                </button>
-              </form>
-            </m.div>
-          )}
 
-          {/* ========================================================================= */}
-          {/* STEP 3: CELEBRATION MODAL                                                 */}
-          {/* ========================================================================= */}
-          {currentStep === 'celebration' && (
-            <m.div
-              key="sos-celebration-step"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-              className="relative z-10 w-full max-w-sm my-auto flex flex-col items-center text-center space-y-4 p-8 rounded-3xl bg-zinc-900/95 border border-emerald-500/40 backdrop-blur-2xl shadow-[0_0_50px_rgba(16,185,129,0.3)]"
-            >
-              <div className="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 flex items-center justify-center animate-bounce shadow-[0_0_25px_rgba(16,185,129,0.4)]">
-                <CheckCircle2 className="w-8 h-8" />
+                <div className="space-y-1">
+                  <h3 className="text-xl font-bold font-display text-[var(--md-on-surface)]">
+                    Urge Resisted!
+                  </h3>
+                  <p className="text-xs text-[var(--md-on-surface-variant)] font-sans">
+                    Deposit the avoided calories straight into your Dodged Vault.
+                  </p>
+                </div>
+
+                {/* Preset Chips */}
+                <div className="w-full space-y-2">
+                  <span className="text-xs font-bold uppercase font-display text-[var(--md-on-surface-variant)] block text-left">
+                    Select Dodged Item
+                  </span>
+                  <div className="grid grid-cols-2 gap-2">
+                    {QUICK_DODGE_PRESETS.map((preset) => (
+                      <button
+                        key={preset.label}
+                        type="button"
+                        onClick={() => handlePresetSelect(preset)}
+                        className="p-3 rounded-[20px] bg-[var(--md-surface-container)] hover:bg-[var(--md-surface-container-highest)] text-left transition-all cursor-pointer flex flex-col justify-between m3-state-layer"
+                      >
+                        <span className="text-xs font-semibold font-display text-[var(--md-on-surface)] truncate">
+                          {preset.label}
+                        </span>
+                        <span className="text-xs font-mono text-[var(--md-primary)] font-bold tabular-nums mt-1">
+                          +{preset.calories} kcal
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Custom Craving Input */}
+                <form onSubmit={handleCustomSubmit} className="w-full space-y-2.5 pt-3 border-t border-[var(--md-outline-variant)]/20">
+                  <span className="text-xs font-bold uppercase font-display text-[var(--md-on-surface-variant)] block text-left">
+                    Or Enter Custom Calories
+                  </span>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      value={customFoodName}
+                      onChange={(e) => setCustomFoodName(e.target.value)}
+                      placeholder="Food name (e.g. Samosa)"
+                      className="flex-1 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] rounded-full px-4 py-2.5 text-xs font-display focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)]"
+                    />
+                    <input
+                      type="number"
+                      value={customCalories}
+                      onChange={(e) => setCustomCalories(e.target.value)}
+                      placeholder="kcal"
+                      className="w-24 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] rounded-full px-3 py-2.5 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] text-center tabular-nums"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    disabled={!customCalories}
+                    className="w-full h-[52px] rounded-full font-display font-bold text-sm bg-[var(--md-primary)] text-[var(--md-on-primary)] shadow-md flex items-center justify-center gap-2 cursor-pointer active:scale-95 m3-state-layer disabled:opacity-50"
+                  >
+                    <MaterialIcon name="savings" size={20} filled />
+                    <span>Deposit to Dodged Vault</span>
+                  </button>
+                </form>
               </div>
+            )}
 
-              <div className="space-y-1">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase tracking-wider">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Vault Deposited</span>
+            {/* STEP 3: CELEBRATION */}
+            {currentStep === 'celebration' && (
+              <div className="py-8 flex flex-col items-center text-center space-y-3">
+                <div className="w-16 h-16 rounded-full bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] flex items-center justify-center animate-bounce">
+                  <MaterialIcon name="check" size={32} />
                 </div>
-                <h3 className="text-2xl font-black text-white font-sans">
-                  +{savedCalories} kcal Dodged!
+                <h3 className="text-2xl font-bold font-display text-[var(--md-on-surface)]">
+                  +{savedCalories} kcal Banked!
                 </h3>
-                <p className="text-xs text-zinc-400 font-sans">
-                  That&apos;s ~{(savedCalories / 7700).toFixed(2)} kg of body fat prevented. Your discipline builds momentum.
+                <p className="text-xs text-[var(--md-on-surface-variant)] font-sans">
+                  Deposited into your Dodged Calories Vault.
                 </p>
               </div>
-            </m.div>
-          )}
+            )}
+          </div>
         </m.div>
-      )}
-    </AnimatePresence>
+      </div>
+    </AnimatePresence>,
+    document.body
   );
-
-  if (typeof document === 'undefined') return null;
-  return createPortal(content, document.body);
 };

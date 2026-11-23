@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { m, AnimatePresence } from 'framer-motion';
-import { Camera, X, AlertCircle, Barcode, Loader2 } from 'lucide-react';
+import { MaterialIcon } from './MaterialIcon';
 import { Html5Qrcode } from 'html5-qrcode';
 import { useHaptics } from '../hooks/useHaptics';
 
@@ -19,10 +19,12 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
   const [scanError, setScanError] = useState<string | null>(null);
   const [manualCode, setManualCode] = useState<string>('');
   const [isInitializing, setIsInitializing] = useState<boolean>(true);
+  const [isTorchOn, setIsTorchOn] = useState<boolean>(false);
 
   const scannerRef = useRef<Html5Qrcode | null>(null);
   const haptics = useHaptics();
 
+  // Preserve exact Barcode Scanner Camera Lifecycle
   useEffect(() => {
     if (!isOpen) return;
 
@@ -120,110 +122,147 @@ export const BarcodeScanner: React.FC<BarcodeScannerProps> = ({
     onClose();
   };
 
-  const content = (
+  const handleToggleTorch = async () => {
+    haptics.tick();
+    if (scannerRef.current && scannerRef.current.isScanning) {
+      try {
+        const scannerAny = scannerRef.current as unknown as {
+          applyVideoConstraints: (constraints: unknown) => Promise<void>;
+        };
+        await scannerAny.applyVideoConstraints({
+          advanced: [{ torch: !isTorchOn }],
+        });
+        setIsTorchOn((prev) => !prev);
+      } catch (e) {
+        console.warn('[BarcodeScanner] Torch not supported:', e);
+      }
+    }
+  };
+
+  if (!isOpen || typeof document === 'undefined') return null;
+
+  return createPortal(
     <AnimatePresence>
-      {isOpen && (
+      <div className="fixed inset-0 z-[85] flex items-end sm:items-center justify-center p-0 sm:p-4 pointer-events-auto">
+        {/* Backdrop Scrim (rgba(0,0,0,0.32)) */}
         <m.div
-          key="barcode-scanner-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-[85] flex items-center justify-center p-4 bg-neutral-950/85 backdrop-blur-2xl"
+          onClick={handleClose}
+          className="fixed inset-0 bg-black/40 backdrop-blur-[2px]"
+        />
+
+        {/* M3 Modal Bottom Sheet */}
+        <m.div
+          initial={{ y: '100%' }}
+          animate={{ y: 0 }}
+          exit={{ y: '100%' }}
+          transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+          className="relative w-full max-w-md rounded-t-[28px] sm:rounded-[28px] bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden z-10 border-t sm:border border-[var(--md-outline-variant)]/30"
+          role="dialog"
+          aria-modal="true"
         >
-          <m.div
-            initial={{ scale: 0.95, opacity: 0, y: 16 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.95, opacity: 0, y: 16 }}
-            transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-sm rounded-3xl border border-white/5 bg-neutral-900/95 backdrop-blur-2xl p-5 sm:p-6 space-y-4 shadow-2xl text-neutral-100"
-          >
+          {/* Centered 32px × 4px Drag Handle Pill */}
+          <div className="w-full flex justify-center pt-3 pb-1 shrink-0 cursor-grab">
+            <div className="w-8 h-1 rounded-full bg-[var(--md-outline-variant)] opacity-60" />
+          </div>
+
+          <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))]">
             {/* Header */}
-            <div className="flex items-center justify-between pb-1 border-b border-white/5">
+            <div className="flex items-center justify-between pb-2 border-b border-[var(--md-outline-variant)]/20">
               <div className="flex items-center gap-2">
-                <Camera className="w-4 h-4 text-[#00FF41]" />
-                <h3 className="text-sm font-bold uppercase tracking-wider text-neutral-100 font-mono">
+                <div className="w-8 h-8 rounded-full bg-[var(--md-primary-container)] text-[var(--md-on-primary-container)] flex items-center justify-center">
+                  <MaterialIcon name="barcode_scanner" size={18} />
+                </div>
+                <h3 className="text-base font-bold font-display text-[var(--md-on-surface)]">
                   Barcode Scanner
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={handleClose}
-                className="min-h-[44px] min-w-[44px] p-2 rounded-xl text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800 transition-colors flex items-center justify-center cursor-pointer"
+                className="w-10 h-10 rounded-full flex items-center justify-center text-[var(--md-on-surface-variant)] hover:bg-[var(--md-on-surface)]/10 transition-colors m3-state-layer cursor-pointer"
                 title="Close scanner"
               >
-                <X className="w-4 h-4" />
+                <MaterialIcon name="close" size={20} />
               </button>
             </div>
 
-            {/* Camera Viewport */}
-            <div className="relative overflow-hidden rounded-2xl bg-black border border-white/5 aspect-square flex items-center justify-center">
+            {/* Camera Viewport Inside rounded-[24px] Viewfinder with M3 Corner Brackets */}
+            <div className="relative overflow-hidden rounded-[24px] bg-black aspect-square flex items-center justify-center border border-[var(--md-outline-variant)]/40 shadow-inner">
               <div id="barcode-scanner-viewport" className="w-full h-full" />
 
-              {/* Viewfinder crosshairs & animated laser line */}
-              <div className="pointer-events-none absolute inset-8 border-2 border-dashed border-[#00FF41]/60 rounded-2xl flex flex-col items-center justify-center">
-                <div className="w-full h-0.5 bg-gradient-to-r from-transparent via-[#00FF41] to-transparent animate-pulse shadow-[0_0_12px_rgba(0,255,65,0.8)]" />
+              {/* M3 Corner Brackets */}
+              <div className="pointer-events-none absolute inset-6 flex flex-col justify-between">
+                <div className="flex justify-between">
+                  <div className="w-6 h-6 border-t-3 border-l-3 border-[var(--md-primary)] rounded-tl-lg" />
+                  <div className="w-6 h-6 border-t-3 border-r-3 border-[var(--md-primary)] rounded-tr-lg" />
+                </div>
+                {/* Animated Horizontal Laser Scan Line */}
+                <div className="w-full h-0.5 bg-[var(--md-primary)] animate-pulse shadow-[0_0_12px_var(--md-primary)]" />
+                <div className="flex justify-between">
+                  <div className="w-6 h-6 border-b-3 border-l-3 border-[var(--md-primary)] rounded-bl-lg" />
+                  <div className="w-6 h-6 border-b-3 border-r-3 border-[var(--md-primary)] rounded-br-lg" />
+                </div>
               </div>
 
+              {/* Torch Toggle Pill */}
+              <button
+                type="button"
+                onClick={handleToggleTorch}
+                className="absolute top-4 right-4 z-20 px-3 py-1.5 rounded-full bg-black/60 backdrop-blur-md text-white text-xs font-display flex items-center gap-1.5 cursor-pointer shadow-md active:scale-95 m3-state-layer"
+                title="Toggle Torch"
+              >
+                <MaterialIcon name={isTorchOn ? 'flash_on' : 'flash_off'} size={16} />
+                <span>Torch</span>
+              </button>
+
               {isInitializing && (
-                <div className="absolute inset-0 bg-neutral-950/80 flex flex-col items-center justify-center gap-2 text-neutral-400 text-xs">
-                  <Loader2 className="w-6 h-6 animate-spin text-[#00FF41]" />
-                  <span className="font-mono">Opening Camera...</span>
+                <div className="absolute inset-0 bg-[var(--md-surface-container-high)]/90 flex flex-col items-center justify-center gap-2 text-[var(--md-on-surface-variant)] text-xs font-display">
+                  <MaterialIcon name="refresh" size={24} className="animate-spin text-[var(--md-primary)]" />
+                  <span>Starting Camera...</span>
                 </div>
               )}
             </div>
 
-            <p className="text-[11px] text-center text-neutral-400 font-sans">
-              Align barcode within frame to auto-detect packaged food items.
+            <p className="text-xs text-center text-[var(--md-on-surface-variant)] font-sans">
+              Align barcode within corner brackets to auto-detect food.
             </p>
 
             {/* Error Message */}
             {scanError && (
-              <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-xs flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 shrink-0" />
+              <div className="p-3 rounded-[16px] bg-[var(--md-error-container)] text-[var(--md-on-error-container)] text-xs flex items-center gap-2">
+                <MaterialIcon name="error" size={18} />
                 <span>{scanError}</span>
               </div>
             )}
 
-            {/* Manual Barcode Fallback */}
+            {/* Manual Barcode Input Fallback */}
             <form onSubmit={handleManualSubmit} className="pt-1 space-y-2">
               <div className="flex items-center gap-2">
                 <div className="relative flex-1">
-                  <Barcode className="w-3.5 h-3.5 text-neutral-500 absolute left-3 top-1/2 -translate-y-1/2" />
                   <input
                     type="text"
                     value={manualCode}
                     onChange={(e) => setManualCode(e.target.value)}
-                    placeholder="Or enter barcode number..."
-                    className="w-full min-h-[44px] bg-neutral-950 border border-white/5 rounded-xl pl-9 pr-3 py-2.5 text-xs font-mono text-neutral-100 placeholder-neutral-500 focus:outline-none focus:border-[#00FF41]/60 focus:ring-1 focus:ring-[#00FF41]/40"
+                    placeholder="Enter barcode number..."
+                    className="w-full h-12 bg-[var(--md-surface-container)] text-[var(--md-on-surface)] rounded-full px-4 text-xs font-mono font-bold focus:outline-none focus:ring-2 focus:ring-[var(--md-primary)] placeholder-[var(--md-on-surface-variant)]"
                   />
                 </div>
                 <button
                   type="submit"
                   disabled={!manualCode.trim()}
-                  className="min-h-[44px] px-3.5 py-2 rounded-xl text-xs font-mono font-bold bg-[#00FF41] hover:bg-[#00FF41]/90 text-neutral-950 disabled:opacity-40 cursor-pointer shadow-md transition-all active:scale-95 flex items-center justify-center"
+                  className="h-12 px-5 rounded-full text-xs font-display font-bold bg-[var(--md-primary)] text-[var(--md-on-primary)] disabled:opacity-40 cursor-pointer shadow-sm active:scale-95 m3-state-layer"
                 >
                   Lookup
                 </button>
               </div>
             </form>
-
-            {/* Cancel Button */}
-            <button
-              type="button"
-              onClick={handleClose}
-              className="w-full min-h-[44px] py-2.5 rounded-xl text-xs font-mono font-semibold bg-neutral-800 hover:bg-neutral-700 text-neutral-200 transition-colors cursor-pointer flex items-center justify-center"
-            >
-              Cancel
-            </button>
-          </m.div>
+          </div>
         </m.div>
-      )}
-    </AnimatePresence>
+      </div>
+    </AnimatePresence>,
+    document.body
   );
-
-  if (typeof document === 'undefined') {
-    return content;
-  }
-
-  return createPortal(content, document.body);
 };

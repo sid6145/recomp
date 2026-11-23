@@ -1,15 +1,12 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import { m, AnimatePresence } from 'framer-motion';
 import {
-  Search,
   Sparkles,
   Loader2,
   AlertCircle,
   Database,
   Compass,
   Globe,
-  Camera,
-  X,
   PlusCircle,
 } from 'lucide-react';
 import { initializeDatabase } from '../db/dbSeeder';
@@ -28,6 +25,7 @@ import {
 } from '../utils/openFoodFacts';
 import { db, type FoodItem } from '../db/db';
 import { useHaptics } from '../hooks/useHaptics';
+import { MaterialIcon } from './MaterialIcon';
 
 export interface FoodSearchDashboardProps {
   onBottomSheetToggle?: (isOpen: boolean) => void;
@@ -355,90 +353,97 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
             inputRef.current?.blur();
           }
         }}
-        className="relative overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/95 md:bg-neutral-900/90 md:backdrop-blur-xl shadow-2xl p-6 sm:p-8 space-y-6 touch-pan-y"
+        className="relative overflow-hidden rounded-[28px] bg-[var(--md-surface-container)] text-[var(--md-on-surface)] shadow-lg p-6 sm:p-8 space-y-6 touch-pan-y"
       >
-        {/* Ambient Glows */}
-        <div className="pointer-events-none absolute -top-24 -right-24 w-72 h-72 bg-[#00FF41]/10 rounded-full blur-3xl transform-gpu will-change-transform" />
-        <div className="pointer-events-none absolute -bottom-24 -left-24 w-72 h-72 bg-sky-500/10 rounded-full blur-3xl transform-gpu will-change-transform" />
-
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/5 pb-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--md-outline-variant)]/20 pb-5">
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold tracking-tight text-neutral-100 font-sans">
+            <h2 className="text-2xl font-bold tracking-tight text-[var(--md-on-surface)] font-display">
               Food Search
             </h2>
-            <p className="text-xs sm:text-sm text-neutral-400 font-sans">
+            <p className="text-xs sm:text-sm text-[var(--md-on-surface-variant)] font-sans">
               Search local foods, online database, or scan a barcode.
             </p>
           </div>
           <div>{getStatusBadge()}</div>
         </div>
 
-        {/* Search Bar & Action Buttons Container */}
+        {/* Persistent M3 Pill Search Bar (56px height, rounded-full, --md-surface-container-high) */}
         <div className="space-y-3">
           {/* Main Input Form with mobile submit & dismiss */}
           <form onSubmit={handleFormSubmit} action="#" className="relative group w-full">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-neutral-400 group-focus-within:text-[#00FF41] transition-colors">
-              {isSearchingLocal ? (
-                <Loader2 className="w-5 h-5 animate-spin text-[#00FF41]" />
-              ) : (
-                <Search className="w-5 h-5" />
-              )}
-            </div>
-            <input
-              ref={inputRef}
-              type="text"
-              inputMode="search"
-              enterKeyHint="search"
-              autoComplete="off"
-              autoCorrect="off"
-              spellCheck={false}
-              disabled={!dbReady}
-              value={query}
-              onChange={handleQueryChange}
-              onFocus={(e) => {
-                setTimeout(() => {
-                  e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }, 150);
-              }}
-              placeholder={
-                dbReady
-                  ? 'Semantic search (e.g., "dal", "egg", "rice", "Oreo", "Nutella")...'
-                  : 'Seeding local database...'
-              }
-              className="w-full bg-neutral-950/90 border border-white/5 rounded-2xl pl-12 pr-12 py-3.5 text-base sm:text-sm font-medium text-neutral-100 placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-[#00FF41]/50 focus:border-[#00FF41]/60 shadow-lg shadow-black/40 transition-all disabled:opacity-50 font-sans"
-            />
-            {query.length > 0 ? (
-              <button
-                type="button"
-                onClick={handleClearQuery}
-                aria-label="Clear search"
-                className="absolute inset-y-0 right-0 pr-3.5 pl-2 flex items-center justify-center min-w-[44px] min-h-[44px] text-neutral-400 hover:text-neutral-100 cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            ) : (
-              <div className="hidden sm:flex absolute inset-y-0 right-0 pr-4 items-center pointer-events-none">
-                <kbd className="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-lg border border-white/10 bg-neutral-900 text-[10px] font-mono text-neutral-400">
-                  <span className="text-xs">⌘</span>K
-                </kbd>
+            <div className="relative w-full h-14 rounded-full bg-[var(--md-surface-container-high)] text-[var(--md-on-surface)] flex items-center shadow-sm transition-all focus-within:ring-2 focus-within:ring-[var(--md-primary)]">
+              <div className="pl-4 pr-2 flex items-center pointer-events-none text-[var(--md-on-surface-variant)] group-focus-within:text-[var(--md-primary)] transition-colors">
+                {isSearchingLocal ? (
+                  <Loader2 className="w-5 h-5 animate-spin text-[var(--md-primary)]" />
+                ) : (
+                  <MaterialIcon name="search" size={24} />
+                )}
               </div>
-            )}
+
+              <input
+                ref={inputRef}
+                type="text"
+                inputMode="search"
+                enterKeyHint="search"
+                autoComplete="off"
+                autoCorrect="off"
+                spellCheck={false}
+                disabled={!dbReady}
+                value={query}
+                onChange={handleQueryChange}
+                onFocus={(e) => {
+                  setTimeout(() => {
+                    e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }, 150);
+                }}
+                placeholder={
+                  dbReady
+                    ? 'Search Indian & global foods (e.g., "paneer", "dal", "roti")...'
+                    : 'Seeding local database...'
+                }
+                className="flex-1 bg-transparent text-base sm:text-sm font-medium text-[var(--md-on-surface)] placeholder-[var(--md-on-surface-variant)] focus:outline-none disabled:opacity-50 font-sans pr-2"
+              />
+
+              {/* Right cluster: Clear button (if query) + Barcode Scanner button */}
+              <div className="flex items-center gap-1 pr-2">
+                {query.length > 0 && (
+                  <button
+                    type="button"
+                    onClick={handleClearQuery}
+                    aria-label="Clear search"
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-[var(--md-on-surface-variant)] hover:text-[var(--md-on-surface)] hover:bg-[var(--md-on-surface)]/10 m3-state-layer cursor-pointer"
+                  >
+                    <MaterialIcon name="close" size={20} />
+                  </button>
+                )}
+
+                <button
+                  type="button"
+                  onClick={handleOpenScanner}
+                  aria-label="Scan Barcode"
+                  title="Scan barcode with camera"
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-[var(--md-primary)] hover:bg-[var(--md-on-surface)]/10 m3-state-layer cursor-pointer"
+                >
+                  <MaterialIcon name="barcode_scanner" size={22} />
+                </button>
+              </div>
+            </div>
           </form>
 
-          {/* Action Row: Direct "Search Online" & "Scan Barcode" Buttons (min 44px touch targets) */}
-          <div className="flex flex-wrap items-center justify-between gap-2.5 pt-0.5">
+          {/* Action Row: Direct "Search Online" & "Scan Barcode" Buttons */}
+          <div className="flex flex-wrap items-center justify-between gap-2.5 pt-1">
             <div className="flex flex-wrap items-center gap-2">
               <button
                 type="button"
                 onClick={handleSearchOnline}
                 disabled={isGlobalSearching || !query.trim()}
-                className="min-h-[44px] inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-mono font-bold transition-all bg-[#00FF41] hover:bg-[#00FF41]/90 text-neutral-950 shadow-md shadow-[#00FF41]/10 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+                className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-display font-semibold transition-all bg-[var(--md-primary)] hover:bg-[var(--md-primary)]/90 text-[var(--md-on-primary)] shadow-sm active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed m3-state-layer cursor-pointer"
               >
                 {isGlobalSearching ? (
-                  <Loader2 className="w-3.5 h-3.5 animate-spin text-neutral-950" />
+                  <Loader2 className="w-4 h-4 animate-spin text-[var(--md-on-primary)]" />
                 ) : (
-                  <Globe className="w-3.5 h-3.5 text-neutral-950" />
+                  <MaterialIcon name="public" size={18} />
                 )}
                 <span>Search Online</span>
               </button>
@@ -446,25 +451,25 @@ export const FoodSearchDashboard: React.FC<FoodSearchDashboardProps> = ({
               <button
                 type="button"
                 onClick={handleOpenScanner}
-                className="min-h-[44px] inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-white/5 hover:border-white/10 shadow-md active:scale-95 cursor-pointer"
+                className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-display font-semibold transition-all bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)] shadow-sm active:scale-95 m3-state-layer cursor-pointer"
               >
-                <Camera className="w-3.5 h-3.5 text-[#00FF41]" />
+                <MaterialIcon name="barcode_scanner" size={18} />
                 <span>Scan Barcode</span>
               </button>
 
               <button
                 type="button"
                 onClick={handleOpenCustomFoodModal}
-                className="min-h-[44px] inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-mono font-semibold transition-all bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-white/5 hover:border-white/10 shadow-md active:scale-95 cursor-pointer"
+                className="min-h-[44px] inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-display font-semibold transition-all bg-[var(--md-surface-container-highest)] text-[var(--md-on-surface)] shadow-sm active:scale-95 m3-state-layer cursor-pointer"
                 title="Add custom food with macros to database"
               >
-                <PlusCircle className="w-3.5 h-3.5 text-[#00FF41]" />
+                <MaterialIcon name="add_circle" size={18} />
                 <span>Add Custom Food</span>
               </button>
             </div>
 
             {query.trim() && (
-              <span className="text-[11px] text-neutral-500 font-mono">
+              <span className="text-[11px] text-[var(--md-on-surface-variant)] font-mono">
                 Tap Search Online for external brands
               </span>
             )}

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { m } from 'framer-motion';
-import { PiggyBank, Sparkles, ShieldCheck } from 'lucide-react';
+import { MaterialIcon } from './MaterialIcon';
 import {
   calculateCurrentWeekBank,
   syncBankTelemetry,
@@ -44,119 +44,102 @@ export const WeekendVaultCard: React.FC = React.memo(() => {
 
   return (
     <div
-      className={`w-full h-full flex flex-col justify-between p-5 rounded-2xl bg-zinc-900/95 md:bg-[var(--surface-card)] md:backdrop-blur-xl border border-[var(--surface-border)] shadow-[var(--surface-highlight),var(--accent-glow)] transition-all duration-500 hover:border-white/10 ${
-        isOverdrive ? 'ring-1 ring-emerald-400/30' : ''
+      className={`w-full h-full flex flex-col justify-between p-5 rounded-[24px] bg-[var(--md-secondary-container)] text-[var(--md-on-secondary-container)] shadow-md transition-colors duration-300 ${
+        isOverdrive ? 'ring-2 ring-[var(--md-primary)]' : ''
       }`}
     >
       {/* Top Section: Header, Subtitle, Balance & Progress */}
       <div>
-        {/* Header Row: Clean 2-Column Layout */}
+        {/* Header Row */}
         <div className="flex items-center justify-between gap-3">
-          {/* Left: Icon box + Title */}
           <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-9 h-9 rounded-xl shrink-0 flex items-center justify-center bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.15)]">
-              <PiggyBank className="w-4 h-4" />
+            <div className="w-10 h-10 rounded-full shrink-0 flex items-center justify-center bg-[var(--md-surface)]/20 text-[var(--md-on-secondary-container)]">
+              <MaterialIcon name="savings" size={22} filled />
             </div>
-            <h3 className="text-sm font-semibold tracking-wide uppercase text-zinc-100 whitespace-nowrap font-mono truncate">
+            <h3 className="text-sm font-bold tracking-tight uppercase font-display truncate">
               Weekend Bank
             </h3>
           </div>
 
-          {/* Right: Status Pill */}
-          <span
-            className={`px-2.5 py-1 rounded-full text-[11px] font-mono whitespace-nowrap shrink-0 border ${
-              bankState.isWeekend
-                ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
-                : 'bg-cyan-500/10 border-cyan-500/30 text-cyan-300'
-            }`}
-          >
+          <span className="px-3 py-1 rounded-full text-[11px] font-display font-semibold whitespace-nowrap shrink-0 bg-[var(--md-surface)]/20 text-[var(--md-on-secondary-container)]">
             {bankState.isWeekend ? 'Spend Mode' : 'Auto-Sweep'}
           </span>
         </div>
 
-        {/* Subtitle directly below */}
-        <p className="text-xs text-zinc-400 truncate mt-1.5 font-sans">
+        {/* Subtitle */}
+        <p className="text-xs opacity-80 truncate mt-2 font-sans">
           {bankState.isWeekend
             ? 'Sat & Sun overages draw from this balance first'
             : 'Unused weekday deficit banked for weekend flexibility'}
         </p>
 
         {/* Hero Balance Row */}
-        <div className="flex items-baseline justify-between mt-4 pt-3 border-t border-white/5">
-          <span className="text-xs text-zinc-400 uppercase font-mono">Available Balance</span>
+        <div className="flex items-baseline justify-between mt-4 pt-3 border-t border-[var(--md-on-secondary-container)]/10">
+          <span className="text-xs uppercase font-display font-semibold opacity-75">
+            Available Balance
+          </span>
           <div className="flex items-baseline">
             <AnimatedNumber
               value={bankState.bankedCalories}
               prefix="+"
-              className={`text-2xl font-mono font-bold tabular-nums text-emerald-400 ${
-                isOverdrive ? 'drop-shadow-[0_0_10px_rgba(52,211,153,0.45)]' : ''
-              }`}
+              className="text-2xl font-mono font-bold tabular-nums"
             />
-            <span className="text-xs text-emerald-400/70 font-mono ml-1">kcal</span>
+            <span className="text-xs font-mono ml-1 opacity-75">kcal</span>
           </div>
         </div>
 
-        {/* Progress Bar & Accumulation Info */}
-        <div className="mt-2.5 space-y-1.5">
-          <div className="flex items-center justify-between text-xs font-mono text-zinc-400">
-            <span className="flex items-center gap-1.5">
-              <Sparkles className="w-3 h-3 text-cyan-400 shrink-0" />
+        {/* M3 Segmented Progress Bar & Accumulation Info */}
+        <div className="mt-3 space-y-1.5">
+          <div className="flex items-center justify-between text-xs font-mono opacity-85">
+            <span className="flex items-center gap-1.5 font-display text-xs">
+              <MaterialIcon name="bolt" size={14} filled />
               <span>Weekly Accumulation</span>
             </span>
-            <span className="tabular-nums text-zinc-300">
+            <span className="tabular-nums font-bold">
               {bankState.totalEarnedThisWeek} / {bankState.maxWeeklyCapacity} kcal
             </span>
           </div>
 
-          <div className="w-full h-1.5 rounded-full bg-zinc-950/80 border border-white/5 overflow-hidden p-0">
+          <div className="w-full h-2 rounded-full bg-[var(--md-surface)]/20 overflow-hidden">
             <m.div
               initial={{ scaleX: 0 }}
               animate={{ scaleX: Math.min(1, Math.max(0, fillPercentage / 100)) }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
-              className="h-full origin-left w-full rounded-full bg-gradient-to-r from-cyan-500 to-emerald-400 shadow-[0_0_10px_rgba(6,182,212,0.3)]"
+              className="h-full origin-left w-full rounded-full bg-[var(--md-primary)]"
             />
           </div>
         </div>
       </div>
 
-      {/* Bottom Section: Mon–Fri Strip (mt-auto pt-4) */}
+      {/* Bottom Section: Mon–Fri Strip */}
       <div className="mt-auto pt-4">
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-5 gap-1.5">
           {bankState.weekdaySweeps.map((sweep) => (
             <div
               key={sweep.dayName}
-              className={`py-2 px-1 rounded-xl border flex flex-col items-center justify-center text-center transition-all ${
+              className={`py-2 px-1 rounded-[16px] flex flex-col items-center justify-center text-center transition-all ${
                 sweep.sweptCalories > 0
-                  ? 'bg-zinc-950/70 border-emerald-500/30'
+                  ? 'bg-[var(--md-surface)]/25 font-bold'
                   : sweep.isPastOrToday
-                  ? 'bg-zinc-950/50 border-white/5'
-                  : 'bg-zinc-950/20 border-white/5 opacity-40'
+                  ? 'bg-[var(--md-surface)]/10 opacity-70'
+                  : 'bg-[var(--md-surface)]/5 opacity-40'
               }`}
             >
-              <span className="text-[10px] font-mono font-bold text-zinc-400 uppercase">
+              <span className="text-[10px] font-display font-bold uppercase">
                 {sweep.dayName}
               </span>
-              <span
-                className={`text-xs font-mono font-bold mt-0.5 tabular-nums ${
-                  sweep.sweptCalories > 0
-                    ? 'text-emerald-400'
-                    : sweep.isPastOrToday
-                    ? 'text-zinc-500'
-                    : 'text-zinc-600'
-                }`}
-              >
+              <span className="text-xs font-mono font-bold mt-0.5 tabular-nums">
                 {sweep.sweptCalories > 0 ? `+${sweep.sweptCalories}` : '-'}
               </span>
             </div>
           ))}
         </div>
 
-        {/* Weekend Spending Notice if applicable */}
         {bankState.isWeekend && bankState.spentThisWeekend > 0 && (
-          <div className="mt-2.5 p-2 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-between text-xs font-mono text-amber-300">
-            <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-3.5 h-3.5 text-amber-400" />
-              <span>Weekend deficit spent:</span>
+          <div className="mt-2.5 p-2 rounded-[16px] bg-[var(--md-surface)]/20 flex items-center justify-between text-xs font-mono">
+            <span className="flex items-center gap-1.5 font-display font-medium">
+              <MaterialIcon name="shield" size={16} filled />
+              <span>Weekend spent:</span>
             </span>
             <span className="font-bold tabular-nums">-{bankState.spentThisWeekend} kcal</span>
           </div>
@@ -165,3 +148,5 @@ export const WeekendVaultCard: React.FC = React.memo(() => {
     </div>
   );
 });
+
+WeekendVaultCard.displayName = 'WeekendVaultCard';

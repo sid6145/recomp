@@ -15,7 +15,7 @@ export const GlobalBackground: React.FC = () => {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none select-none bg-neutral-950"
+      className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none select-none bg-[var(--md-surface,#0a0a0a)] transition-colors duration-500"
     >
       {/* ============================================================ */}
       {/* LAYER 1: BASE & TACTICAL GRID (rgba(255,255,255,0.03))       */}
